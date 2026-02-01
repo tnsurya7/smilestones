@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smilestones Child Development Centre
+
+A modern, responsive website for Smilestones Child Development Centre built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- 🎨 Modern Google-inspired design system
+- 📱 Fully responsive (mobile & desktop)
+- ⚡ Fast loading with Next.js optimization
+- 🎭 Smooth animations with Framer Motion
+- 🔍 SEO optimized
+- ♿ Accessibility compliant
+- 🎯 Professional UI/UX
+
+## Pages
+
+- Home - Hero section with services overview
+- About Us - Mission, vision, and leadership
+- Services - Comprehensive therapy services
+- Programs - Specialized development programs
+- Milestones - Developmental milestones guide
+- Our Team - Professional team profiles
+- Contact - Contact form and information
+
+## Tech Stack
+
+- **Framework**: Next.js 16
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Forms**: React Hook Form + Zod validation
+- **Icons**: Lucide React
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Statistics
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 500+ Children Helped
+- 10+ Years Experience
+- 4 Locations
 
-## Learn More
+## Contact
 
-To learn more about Next.js, take a look at the following resources:
+- Phone: +91 98765 43210
+- Email: info@smilestones.com
+- Website: [smilestones.com](https://smilestones.com)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© 2026 Smilestones Child Development Centre. All rights reserved.
