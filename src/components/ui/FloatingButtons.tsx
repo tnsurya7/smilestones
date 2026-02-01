@@ -7,69 +7,20 @@ import { useState } from 'react';
 const FloatingButtons = () => {
   const [isVisible, setIsVisible] = useState(true);
 
-  const containerVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.2,
-        delayChildren: 1
-      }
-    }
-  };
-
-  const buttonVariants = {
-    hidden: { 
-      opacity: 0, 
-      x: 100, 
-      scale: 0.8 
-    },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 20
-      }
-    }
-  };
-
-  const hoverVariants = {
-    hover: { 
-      scale: 1.1,
-      rotate: [0, -5, 5, 0],
-      transition: {
-        rotate: {
-          duration: 0.5,
-          ease: "easeInOut"
-        },
-        scale: {
-          duration: 0.2
-        }
-      }
-    },
-    tap: { 
-      scale: 0.95,
-      transition: { duration: 0.1 }
-    }
-  };
-
   if (!isVisible) return null;
 
   return (
     <motion.div 
       className="floating-buttons-container"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: 1 }}
     >
       {/* WhatsApp Button */}
       <motion.div
-        variants={buttonVariants}
+        initial={{ opacity: 0, x: 100, scale: 0.8 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1 }}
         className="relative group"
       >
         <motion.a
@@ -77,9 +28,8 @@ const FloatingButtons = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="floating-btn floating-btn-whatsapp text-white relative overflow-hidden"
-          variants={hoverVariants}
-          whileHover="hover"
-          whileTap="tap"
+          whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+          whileTap={{ scale: 0.95 }}
           aria-label="Contact us on WhatsApp"
         >
           {/* Ripple effect */}
@@ -112,15 +62,16 @@ const FloatingButtons = () => {
 
       {/* Phone Call Button */}
       <motion.div
-        variants={buttonVariants}
+        initial={{ opacity: 0, x: 100, scale: 0.8 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.2 }}
         className="relative group"
       >
         <motion.a
           href="tel:+919876543210"
           className="floating-btn floating-btn-phone text-white relative overflow-hidden"
-          variants={hoverVariants}
-          whileHover="hover"
-          whileTap="tap"
+          whileHover={{ scale: 1.1, rotate: [0, 15, -15, 0] }}
+          whileTap={{ scale: 0.95 }}
           aria-label="Call us now"
         >
           {/* Ripple effect */}
