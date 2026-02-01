@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   description: "Professional child development centre providing assessment, therapy, training, and counseling for children with developmental delays, learning difficulties, speech disorders, autism, ADHD, and emotional/behavioral challenges.",
   keywords: "child development, autism therapy, speech therapy, occupational therapy, ABA therapy, ADHD support, learning disabilities, Chennai, Anna Nagar, Trustpuram, Puducherry",
   authors: [{ name: "Dr. P. Sudhakar" }],
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/smilestones-logo.jpeg', sizes: '192x192', type: 'image/jpeg' },
+    ],
+    apple: [
+      { url: '/smilestones-logo.jpeg', sizes: '180x180', type: 'image/jpeg' },
+    ],
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     title: "Smilestones - Helping Children Reach Their Full Potential",
     description: "Professional child development centre led by Dr. P. Sudhakar, the first developmental pediatrician in India licensed to practice Applied Behavior Analysis.",
@@ -53,10 +63,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#FFD43B" />
+        <link rel="manifest" href="/manifest.json" />
         <StructuredData />
       </head>
       <body className="antialiased">
