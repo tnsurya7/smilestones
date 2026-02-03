@@ -70,7 +70,7 @@ const ContactForm = () => {
   ];
 
   return (
-    <section className="py-12 md:py-20 section-bg-gradient">
+    <section className="py-12 md:py-20 section-bg-gradient pt-28 md:pt-32">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Information */}
