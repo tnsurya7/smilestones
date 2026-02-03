@@ -77,11 +77,11 @@ export default function ProgramsPage() {
   ];
 
   return (
-    <main className="min-h-screen">
+    <main>
       <Header />
       
       {/* Breadcrumbs */}
-      <div className="pt-32 pb-8 bg-gray-50">
+      <div className="pb-8 bg-gray-50">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-600">
             <span>Home</span> → <span className="text-blue-600 font-medium">Programs</span>
@@ -107,64 +107,69 @@ export default function ProgramsPage() {
       <section className="py-12 md:py-20 section-gradient">
         <div className="container mx-auto px-4">
           <div className="space-y-12 md:space-y-16">
-            {programs.map((program, index) => (
-              <div key={program.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
-                <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                  <div className="glass-card-strong p-6 md:p-8">
-                    <div className="flex items-center mb-4">
-                      <div className="w-3 h-3 bg-blue-600 rounded-full mr-3"></div>
-                      <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{program.subtitle}</span>
-                    </div>
-                    
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{program.title}</h2>
-                    <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-6">{program.description}</p>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                      <div className="bg-blue-50 p-3 md:p-4 rounded-lg">
-                        <div className="text-xs md:text-sm text-blue-600 font-semibold">Duration</div>
-                        <div className="text-gray-900 font-medium text-sm md:text-base">{program.duration}</div>
+            {programs.map((program, index) => {
+              const gradientClasses = ['hover-card-blue', 'hover-card-green', 'hover-card-purple'];
+              const gradientClass = gradientClasses[index % gradientClasses.length];
+              
+              return (
+                <div key={program.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+                  <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
+                    <div className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8`}>
+                      <div className="flex items-center mb-3 md:mb-4">
+                        <div className="w-2 h-2 md:w-3 md:h-3 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
+                        <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{program.subtitle}</span>
                       </div>
-                      <div className="bg-green-50 p-3 md:p-4 rounded-lg">
-                        <div className="text-xs md:text-sm text-green-600 font-semibold">Age Group</div>
-                        <div className="text-gray-900 font-medium text-sm md:text-base">{program.ageGroup}</div>
+                      
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{program.title}</h2>
+                      <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{program.description}</p>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-4 md:mb-6">
+                        <div className="bg-blue-50 p-3 md:p-4 rounded-lg">
+                          <div className="text-xs md:text-sm text-blue-600 font-semibold">Duration</div>
+                          <div className="text-gray-900 font-medium text-sm md:text-base">{program.duration}</div>
+                        </div>
+                        <div className="bg-green-50 p-3 md:p-4 rounded-lg">
+                          <div className="text-xs md:text-sm text-green-600 font-semibold">Age Group</div>
+                          <div className="text-gray-900 font-medium text-sm md:text-base">{program.ageGroup}</div>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <Link href="/contact" className="btn-primary text-center block sm:inline-block">
-                      Enroll Now
-                    </Link>
-                  </div>
-                </div>
-                
-                <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <div className="space-y-6 md:space-y-8">
-                    <div className="glass-card p-4 md:p-6">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Program Features</h3>
-                      <ul className="space-y-3">
-                        {program.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            <span className="text-gray-600 text-sm md:text-base">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="glass-card p-4 md:p-6">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Expected Outcomes</h3>
-                      <ul className="space-y-3">
-                        {program.outcomes.map((outcome, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <div className="w-2 h-2 bg-green-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            <span className="text-gray-600 text-sm md:text-base">{outcome}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      
+                      <Link href="/contact" className="btn-primary text-center block sm:inline-block">
+                        <span>Enroll Now</span>
+                      </Link>
                     </div>
                   </div>
+                  
+                  <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
+                    <div className="space-y-6 md:space-y-8">
+                      <div className={`universal-card hover-card-effect ${gradientClass} p-4 md:p-6`}>
+                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Program Features</h3>
+                        <ul className="space-y-2 md:space-y-3">
+                          {program.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-start">
+                              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
+                              <span className="text-gray-600 text-sm md:text-base">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className={`universal-card hover-card-effect ${gradientClass} p-4 md:p-6`}>
+                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Expected Outcomes</h3>
+                        <ul className="space-y-2 md:space-y-3">
+                          {program.outcomes.map((outcome, idx) => (
+                            <li key={idx} className="flex items-start">
+                              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
+                              <span className="text-gray-600 text-sm md:text-base">{outcome}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -172,7 +177,7 @@ export default function ProgramsPage() {
       {/* CTA Section */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="glass-card-strong p-8 md:p-12 text-center max-w-4xl mx-auto">
+          <div className="universal-card hover-card-effect p-8 md:p-12 text-center max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
               Ready to Join Our Programs?
             </h2>
@@ -181,10 +186,10 @@ export default function ProgramsPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="btn-primary text-center">
-                Get Started
+                <span>Get Started</span>
               </Link>
               <a href="tel:+919876543210" className="btn-secondary text-center">
-                Call for Information
+                <span>Call for Information</span>
               </a>
             </div>
           </div>

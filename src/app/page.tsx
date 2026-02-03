@@ -8,7 +8,7 @@ import FloatingButtons from '@/components/ui/FloatingButtons';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main>
       <Header />
       <Hero />
       <Services />

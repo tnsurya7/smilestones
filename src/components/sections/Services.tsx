@@ -82,7 +82,7 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-20 section-gradient">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <motion.div
@@ -90,13 +90,13 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Our <span className="text-blue-600">Services</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+            Comprehensive Child Development Services
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Comprehensive child development services tailored to meet each child's unique needs and help them thrive.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Evidence-based therapies and support programs designed to help every child reach their full potential.
           </p>
         </motion.div>
 
@@ -104,6 +104,37 @@ const Services = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {services.map((service, index) => {
             const IconComponent = service.icon;
+            const gradientClasses = [
+              'hover-card-blue',
+              'hover-card-green', 
+              'hover-card-red',
+              'hover-card-purple',
+              'hover-card-yellow',
+              'hover-card-indigo',
+              'hover-card-blue',
+              'hover-card-green',
+              'hover-card-red',
+              'hover-card-purple',
+              'hover-card-yellow',
+              'hover-card-indigo'
+            ];
+            const gradientClass = gradientClasses[index % gradientClasses.length];
+            const iconGradients = [
+              'from-purple-500 to-blue-500',
+              'from-blue-500 to-cyan-500', 
+              'from-cyan-500 to-green-500',
+              'from-green-500 to-yellow-500',
+              'from-yellow-500 to-red-500',
+              'from-red-500 to-pink-500',
+              'from-pink-500 to-purple-500',
+              'from-indigo-500 to-purple-500',
+              'from-teal-500 to-blue-500',
+              'from-orange-500 to-red-500',
+              'from-emerald-500 to-teal-500',
+              'from-violet-500 to-purple-500'
+            ];
+            const iconGradient = iconGradients[index % iconGradients.length];
+            
             return (
               <motion.div
                 key={service.title}
@@ -113,32 +144,55 @@ const Services = () => {
                 viewport={{ once: true }}
                 className="group"
               >
-                <div className="service-card h-full">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors duration-300">
-                    <IconComponent className="w-6 h-6 text-blue-600" />
-                  </div>
+                <motion.div 
+                  className={`universal-card hover-card-effect ${gradientClass} h-full relative overflow-hidden`}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <motion.div 
+                    className={`w-16 h-16 bg-gradient-to-br ${iconGradient} rounded-2xl flex items-center justify-center mb-6 shadow-lg relative z-10`}
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <IconComponent className="w-8 h-8 text-white" />
+                  </motion.div>
                   
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-blue-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                     {service.title}
                   </h3>
                   
-                  <p className="text-gray-600 leading-relaxed mb-4 text-sm">
+                  <p className="text-gray-600 leading-relaxed mb-6">
                     {service.description}
                   </p>
                   
-                  <Link 
-                    href="/services"
-                    className="text-blue-600 hover:text-blue-800 font-semibold text-sm inline-flex items-center group-hover:translate-x-1 transition-transform"
+                  <motion.div
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
-                    Learn More →
-                  </Link>
-                </div>
+                    <Link 
+                      href="/services"
+                      className={`inline-flex items-center font-semibold bg-gradient-to-r ${iconGradient} bg-clip-text text-transparent hover:opacity-80 transition-opacity`}
+                    >
+                      Learn More 
+                      <motion.span
+                        className="ml-2"
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        →
+                      </motion.span>
+                    </Link>
+                  </motion.div>
+
+                  {/* Premium shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-1000"></div>
+                </motion.div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* CTA section */}
+        {/* Premium CTA section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,22 +200,47 @@ const Services = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <div className="glass-card-strong p-12 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Ready to Get Started?
-            </h3>
-            <p className="text-xl text-gray-600 mb-8">
-              Schedule a consultation to discuss your child's needs and create a personalized treatment plan.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="btn-primary">
-                <Calendar className="w-5 h-5 mr-2" />
-                Book Consultation
-              </Link>
-              <Link href="/services" className="btn-secondary">
-                View All Services
-              </Link>
+          <div className="premium-cta-card">
+            <div className="cta-content">
+              <motion.div
+                initial={{ scale: 0.9 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.6 }}
+                className="cta-header"
+              >
+                <h3 className="cta-title">Ready to Get Started?</h3>
+                <p className="cta-description">
+                  Schedule a consultation to discuss your child's needs and create a personalized treatment plan.
+                </p>
+              </motion.div>
+              
+              <motion.div 
+                className="cta-buttons"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                  <Link href="/contact" className="premium-gradient-btn primary">
+                    <Calendar className="btn-icon" />
+                    <span className="btn-text">Book Appointment</span>
+                    <div className="btn-gradient-overlay"></div>
+                    <div className="btn-glow-effect"></div>
+                  </Link>
+                </motion.div>
+                
+                <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                  <Link href="/services" className="premium-gradient-btn secondary blue">
+                    <span className="btn-text">View All Services</span>
+                    <div className="btn-gradient-overlay"></div>
+                    <div className="btn-glow-effect"></div>
+                  </Link>
+                </motion.div>
+              </motion.div>
             </div>
+            
+            {/* Animated background pattern */}
+            <div className="animated-bg-pattern"></div>
           </div>
         </motion.div>
       </div>

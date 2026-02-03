@@ -99,11 +99,11 @@ export default function ServicesPage() {
   ];
 
   return (
-    <main className="min-h-screen">
+    <main>
       <Header />
       
       {/* Breadcrumbs */}
-      <div className="pt-32 pb-8 bg-gray-50">
+      <div className="pb-8 bg-gray-50">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-600">
             <span>Home</span> → <span className="text-blue-600 font-medium">Services</span>
@@ -112,13 +112,13 @@ export default function ServicesPage() {
       </div>
 
       {/* Services Hero */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
               Our <span className="text-blue-600">Services</span>
             </h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed px-4">
               Comprehensive child development services tailored to meet each child's unique needs and help them thrive in all areas of development.
             </p>
           </div>
@@ -126,30 +126,46 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 section-gradient">
+      <section className="py-12 md:py-20 section-gradient">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => {
               const IconComponent = service.icon;
+              const gradientClasses = [
+                'hover-card-blue',
+                'hover-card-green', 
+                'hover-card-red',
+                'hover-card-purple',
+                'hover-card-yellow',
+                'hover-card-indigo',
+                'hover-card-blue',
+                'hover-card-green',
+                'hover-card-red',
+                'hover-card-purple',
+                'hover-card-yellow',
+                'hover-card-indigo'
+              ];
+              const gradientClass = gradientClasses[index % gradientClasses.length];
+              
               return (
-                <div key={service.title} className="service-card">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                      <IconComponent className="w-6 h-6 text-blue-600" />
+                <div key={service.title} className={`universal-card hover-card-effect ${gradientClass} p-6`}>
+                  <div className="flex items-center mb-4 md:mb-6">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3 md:mr-4">
+                      <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900">{service.title}</h3>
                   </div>
                   
-                  <p className="text-gray-600 leading-relaxed mb-6">
+                  <p className="text-gray-600 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
                     {service.description}
                   </p>
                   
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-3">Key Features:</h4>
-                    <ul className="space-y-2">
+                  <div className="mb-4 md:mb-6">
+                    <h4 className="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">Key Features:</h4>
+                    <ul className="space-y-1 md:space-y-2">
                       {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-gray-600">
-                          <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                        <li key={idx} className="flex items-center text-xs md:text-sm text-gray-600">
+                          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
                           {feature}
                         </li>
                       ))}
@@ -158,7 +174,7 @@ export default function ServicesPage() {
                   
                   <Link 
                     href="/contact"
-                    className="text-blue-600 hover:text-blue-800 font-semibold inline-flex items-center"
+                    className="text-blue-600 hover:text-blue-800 font-semibold inline-flex items-center text-sm md:text-base transition-colors"
                   >
                     Learn More →
                   </Link>
@@ -170,21 +186,21 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="glass-card-strong p-12 text-center max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+          <div className="universal-card hover-card-effect p-8 md:p-12 text-center max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
               Ready to Get Started?
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">
               Schedule a consultation to discuss your child's needs and create a personalized treatment plan.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="btn-primary">
-                Book Consultation
+                <span>Book Consultation</span>
               </Link>
               <a href="tel:+919876543210" className="btn-secondary">
-                Call Now
+                <span>Call Now</span>
               </a>
             </div>
           </div>

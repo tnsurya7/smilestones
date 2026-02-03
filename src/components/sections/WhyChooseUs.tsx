@@ -69,7 +69,7 @@ const WhyChooseUs = () => {
                 viewport={{ once: true }}
                 className="group"
               >
-                <div className="service-card h-full text-center">
+                <div className="universal-card h-full text-center">
                   <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6 mx-auto group-hover:bg-blue-200 transition-colors duration-300">
                     <IconComponent className="w-8 h-8 text-blue-600" />
                   </div>
@@ -95,7 +95,7 @@ const WhyChooseUs = () => {
           viewport={{ once: true }}
           className="mt-20"
         >
-          <div className="glass-card-strong p-12 text-center">
+          <div className="universal-card p-12 text-center">
             <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               Our Philosophy
             </h3>

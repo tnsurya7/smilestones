@@ -12,11 +12,9 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen">
+    <main>
       <Header />
-      <div className="pt-32">
-        <ContactForm />
-      </div>
+      <ContactForm />
       <FloatingButtons />
       <Footer />
     </main>
