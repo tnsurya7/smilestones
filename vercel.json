@@ -1,6 +1,4 @@
 {
-  "version": 2,
-  "name": "smilestones",
   "github": {
     "enabled": true,
     "autoAlias": true
