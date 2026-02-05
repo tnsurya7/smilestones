@@ -48,7 +48,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the website.
 
 ## Contact
 
-- Phone: +91 98765 43210
+- Phone: +91 9445051166 (Main)
+- Phone: +91 8300230491 (Secondary)
 - Email: info@smilestones.com
 - Website: [smilestones.com](https://smilestones.com)
 

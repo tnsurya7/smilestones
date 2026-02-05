@@ -2238,3 +2238,148 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
 }
+
+
+/* ============================= */
+/* ADMIN LOGIN TEXT VISIBILITY */
+/* ============================= */
+
+/* Enable text selection with visible highlight */
+.admin-login-page ::selection {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.admin-login-page ::-moz-selection {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+/* Text on gradient background (outside white card) - FORCE BLACK */
+.admin-login-page > div > div > h1,
+.admin-login-page > div > div > p,
+.admin-login-page > div > div.text-center h1,
+.admin-login-page > div > div.text-center p,
+.admin-login-page > div > div.mt-8 p {
+  color: #000000 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* White card content gets dark text */
+.admin-login-page .bg-white h1,
+.admin-login-page .bg-white h2,
+.admin-login-page .bg-white h3,
+.admin-login-page .bg-white p,
+.admin-login-page .bg-white span,
+.admin-login-page .bg-white label,
+.admin-login-page .bg-white div {
+  color: #111827 !important;
+}
+
+/* Input fields */
+.admin-login-page input {
+  color: #111827 !important;
+}
+
+/* Input placeholders */
+.admin-login-page input::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Buttons with gradients keep white text */
+.admin-login-page button.bg-gradient-to-r,
+.admin-login-page button.bg-gradient-to-r *,
+.admin-login-page button.bg-gradient-to-r span {
+  color: #ffffff !important;
+}
+
+/* Error messages on gray background */
+.admin-login-page .bg-gray-100,
+.admin-login-page .bg-gray-100 * {
+  color: #000000 !important;
+}
+
+/* Icons maintain their colors */
+.admin-login-page svg {
+  color: inherit !important;
+}
+
+
+/* ------------------------------ */
+/* ADMIN DASHBOARD COLOR FIX */
+/* ------------------------------ */
+
+/* Only apply dark text to white/light backgrounds */
+.admin-dashboard .bg-white h1,
+.admin-dashboard .bg-white h2,
+.admin-dashboard .bg-white h3,
+.admin-dashboard .bg-white h4,
+.admin-dashboard .bg-white p,
+.admin-dashboard .bg-white span,
+.admin-dashboard .bg-white div {
+  color: #111827 !important;
+}
+
+/* Gray backgrounds also need dark text */
+.admin-dashboard .bg-gray-50 h1,
+.admin-dashboard .bg-gray-50 h2,
+.admin-dashboard .bg-gray-50 h3,
+.admin-dashboard .bg-gray-50 th,
+.admin-dashboard .bg-gray-50 td {
+  color: #111827 !important;
+}
+
+/* Table text */
+.admin-dashboard table th,
+.admin-dashboard table td {
+  color: #111827 !important;
+}
+
+/* Ensure gradient backgrounds keep white text */
+.admin-dashboard .bg-gradient-to-r,
+.admin-dashboard .bg-gradient-to-r *,
+.admin-dashboard .bg-gradient-to-br,
+.admin-dashboard .bg-gradient-to-br * {
+  color: #ffffff !important;
+}
+
+/* Buttons with gradient backgrounds */
+.admin-dashboard button.bg-gradient-to-r,
+.admin-dashboard button.bg-gradient-to-r *,
+.admin-dashboard a.bg-gradient-to-r,
+.admin-dashboard a.bg-gradient-to-r * {
+  color: #ffffff !important;
+}
+
+/* Enable text selection with visible highlight */
+.admin-dashboard ::selection {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.admin-dashboard ::-moz-selection {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+/* Specific color overrides for utility classes */
+.admin-dashboard .text-gray-900 {
+  color: #111827 !important;
+}
+
+.admin-dashboard .text-gray-600 {
+  color: #4b5563 !important;
+}
+
+.admin-dashboard .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.admin-dashboard .text-white {
+  color: #ffffff !important;
+}
+
+/* Icons should inherit their parent color */
+.admin-dashboard svg {
+  color: inherit;
+}

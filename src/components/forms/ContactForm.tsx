@@ -70,7 +70,7 @@ const ContactForm = () => {
   ];
 
   return (
-    <section className="py-12 md:py-20 section-bg-gradient pt-28 md:pt-32">
+    <section className="py-12 md:py-20 section-bg-gradient pt-36 md:pt-40">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Information */}
@@ -99,8 +99,8 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="font-bold mb-1 text-sm md:text-base" style={{ color: '#ffffff' }}>Phone</h3>
-                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>Main Office: +91 98765 43210</p>
-                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>Emergency: +91 98765 43211</p>
+                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>Main Office: +91 9445051166</p>
+                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>Secondary: +91 8300230491</p>
                 </div>
               </div>
 
@@ -210,7 +210,7 @@ const ContactForm = () => {
                       {...register('phone')}
                       type="tel"
                       className="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm md:text-base"
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 9445051166"
                     />
                     {errors.phone && (
                       <p className="mt-1 text-xs md:text-sm text-red-600">{errors.phone.message}</p>

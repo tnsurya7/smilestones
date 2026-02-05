@@ -6,7 +6,7 @@ const Footer = () => {
     {
       name: 'Chennai - Anna Nagar',
       address: '123 Anna Nagar, Chennai - 600040',
-      phone: '+91 98765 43210',
+      phone: '+91 9445051166',
     },
     {
       name: 'Chennai - Trustpuram',
@@ -82,6 +82,19 @@ const Footer = () => {
                 <Youtube size={20} />
               </a>
             </div>
+
+            {/* Admin Access Button */}
+            <div className="mt-6">
+              <Link 
+                href="/admin/login"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 text-sm font-semibold"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Admin Portal
+              </Link>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -123,8 +136,14 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-gray-300">Main Office</p>
-                  <a href="tel:+919876543210" className="text-white hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
-                    +91 98765 43210
+                  <a href="tel:+919445051166" className="text-white hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
+                    +91 9445051166
+                  </a>
+                </div>
+                <div>
+                  <p className="text-gray-300">Secondary</p>
+                  <a href="tel:+918300230491" className="text-white hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
+                    +91 8300230491
                   </a>
                 </div>
               </div>
@@ -196,7 +215,7 @@ const Footer = () => {
             <p className="text-gray-300 text-sm mb-4 md:mb-0">
               © 2026 Smilestones Child Development Centre. All rights reserved.
             </p>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex flex-wrap gap-4 md:gap-6 text-sm justify-center md:justify-end">
               <Link href="/privacy" className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
                 Privacy Policy
               </Link>
@@ -205,6 +224,9 @@ const Footer = () => {
               </Link>
               <Link href="/sitemap" className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
                 Sitemap
+              </Link>
+              <Link href="/admin/login" className="text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 font-semibold">
+                Admin
               </Link>
             </div>
           </div>

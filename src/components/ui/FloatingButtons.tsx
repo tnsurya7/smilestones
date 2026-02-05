@@ -94,7 +94,7 @@ const FloatingButtons = () => {
           
           {/* Tooltip */}
           <div className="floating-btn-tooltip">
-            Call Now: +91 98765 43210
+            Call Now: +91 9445051166
           </div>
           
           {/* Shine effect */}
