@@ -24,7 +24,7 @@ const FloatingButtons = () => {
         className="relative group"
       >
         <motion.a
-          href="https://wa.me/919876543210?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services%20for%20my%20child."
+          href="https://wa.me/919445051166?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services%20for%20my%20child."
           target="_blank"
           rel="noopener noreferrer"
           className="floating-btn floating-btn-whatsapp text-white relative overflow-hidden"
@@ -68,7 +68,7 @@ const FloatingButtons = () => {
         className="relative group"
       >
         <motion.a
-          href="tel:+919876543210"
+          href="tel:+919445051166"
           className="floating-btn floating-btn-phone text-white relative overflow-hidden"
           whileHover={{ scale: 1.1, rotate: [0, 15, -15, 0] }}
           whileTap={{ scale: 0.95 }}
