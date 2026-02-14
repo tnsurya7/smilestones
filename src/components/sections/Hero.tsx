@@ -109,7 +109,7 @@ const Hero = () => {
                 whileTap={{ scale: 0.95 }}
                 className="premium-btn-wrapper"
               >
-                <Link href="/contact" className="premium-gradient-btn primary">
+                <Link href="/appointment" className="premium-gradient-btn primary">
                   <Calendar size={20} className="btn-icon" />
                   <span className="btn-text">Book Appointment</span>
                   <div className="btn-gradient-overlay"></div>
@@ -122,7 +122,7 @@ const Hero = () => {
                 whileTap={{ scale: 0.95 }}
                 className="premium-btn-wrapper"
               >
-                <a href="tel:+919876543210" className="premium-gradient-btn secondary blue">
+                <a href="tel:+919445051166" className="premium-gradient-btn secondary blue">
                   <Phone size={20} className="btn-icon" />
                   <span className="btn-text">Call Now</span>
                   <div className="btn-gradient-overlay"></div>
@@ -136,7 +136,7 @@ const Hero = () => {
                 className="premium-btn-wrapper"
               >
                 <a 
-                  href="https://wa.me/919876543210" 
+                  href="https://wa.me/919445051166" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="premium-gradient-btn secondary green"

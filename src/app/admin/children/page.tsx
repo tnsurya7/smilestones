@@ -15,7 +15,8 @@ import {
   Phone,
   Calendar,
   FileText,
-  Users
+  Users,
+  Activity
 } from 'lucide-react';
 
 // Extended Child type with doctor name
@@ -256,12 +257,21 @@ export default function ChildrenPage() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => router.push(`/admin/sessions?child_id=${child.id}`)}
-                  className="w-full mt-3 sm:mt-4 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all text-xs sm:text-sm"
-                >
-                  View Sessions
-                </button>
+                <div className="flex gap-2 mt-3 sm:mt-4">
+                  <button
+                    onClick={() => router.push(`/admin/sessions?child_id=${child.id}`)}
+                    className="flex-1 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all text-xs sm:text-sm"
+                  >
+                    Sessions
+                  </button>
+                  <button
+                    onClick={() => router.push(`/admin/emr/${child.id}`)}
+                    className="flex-1 px-3 sm:px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-xl hover:from-green-700 hover:to-green-800 transition-all text-xs sm:text-sm flex items-center justify-center gap-1"
+                  >
+                    <Activity className="w-3.5 h-3.5" />
+                    EMR
+                  </button>
+                </div>
               </div>
             ))
           )}
