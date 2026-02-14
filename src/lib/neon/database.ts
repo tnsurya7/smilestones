@@ -175,6 +175,36 @@ export async function getSessionsByChildId(childId: string): Promise<Session[]> 
   return result as Session[];
 }
 
+export async function updateSession(id: string, updates: Partial<Session>): Promise<Session | null> {
+  const result = await sql`
+    UPDATE sessions
+    SET 
+      child_id = COALESCE(${updates.child_id}, child_id),
+      doctor_id = COALESCE(${updates.doctor_id}, doctor_id),
+      date = COALESCE(${updates.date}, date),
+      attendance = COALESCE(${updates.attendance}, attendance),
+      eye_contact = COALESCE(${updates.eye_contact}, eye_contact),
+      follow_instructions = COALESCE(${updates.follow_instructions}, follow_instructions),
+      speech_attempt = COALESCE(${updates.speech_attempt}, speech_attempt),
+      motor_improvement = COALESCE(${updates.motor_improvement}, motor_improvement),
+      skill_level = COALESCE(${updates.skill_level}, skill_level),
+      activities = COALESCE(${updates.activities ? JSON.stringify(updates.activities) : null}, activities),
+      notes = COALESCE(${updates.notes}, notes),
+      next_goal = COALESCE(${updates.next_goal}, next_goal)
+    WHERE id = ${id}
+    RETURNING *
+  `;
+  return result[0] as Session || null;
+}
+
+export async function deleteSession(id: string): Promise<boolean> {
+  const result = await sql`
+    DELETE FROM sessions WHERE id = ${id}
+    RETURNING id
+  `;
+  return result.length > 0;
+}
+
 // ==================== PARENT APPOINTMENTS ====================
 
 export async function getParentAppointments() {
