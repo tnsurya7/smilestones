@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getStats } from '@/lib/localStorage';
+import { getStats } from '@/lib/neon/database';
 import { 
   Users, 
   Calendar, 
@@ -36,12 +36,20 @@ export default function AdminDashboard() {
   }, [user, loading, router]);
 
   useEffect(() => {
-    // Load stats from localStorage
+    // Load stats from database
     if (user) {
-      const data = getStats();
-      setStats(data);
+      loadStats();
     }
   }, [user]);
+
+  const loadStats = async () => {
+    try {
+      const data = await getStats();
+      setStats(data);
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  };
 
   if (loading) {
     return (

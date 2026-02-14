@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getSessions, getChildById, getDoctorById, Session } from '@/lib/localStorage';
+import { getSessions, getChildById, getDoctorById, Session } from '@/lib/neon/database';
 import { generateSessionPDF } from '@/lib/pdfExport';
 import { 
   ArrowLeft,

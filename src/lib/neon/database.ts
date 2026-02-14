@@ -81,6 +81,13 @@ export async function deleteDoctor(id: string): Promise<boolean> {
   return result.length > 0;
 }
 
+export async function getDoctorById(id: string): Promise<Doctor | null> {
+  const result = await sql`
+    SELECT * FROM doctors WHERE id = ${id}
+  `;
+  return result[0] as Doctor || null;
+}
+
 // ==================== CHILDREN ====================
 
 export async function getChildren(): Promise<Child[]> {

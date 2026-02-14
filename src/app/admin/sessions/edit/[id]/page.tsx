@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getChildren, getSessions, updateSession } from '@/lib/localStorage';
+import { getChildren, getSessions, updateSession } from '@/lib/neon/database';
 import { 
   Save,
   X,

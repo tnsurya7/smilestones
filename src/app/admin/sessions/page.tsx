@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getSessions, getChildren, getDoctors, deleteSession } from '@/lib/localStorage';
+import { getSessions, getChildren, getDoctors, deleteSession } from '@/lib/neon/database';
 import { generateSessionPDF } from '@/lib/pdfExport';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 

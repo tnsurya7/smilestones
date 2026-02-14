@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getChildren } from '@/lib/localStorage';
+import { getChildren } from '@/lib/neon/database';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 
   FileText,

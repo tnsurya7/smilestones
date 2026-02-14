@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getDoctors, addDoctor, updateDoctor, deleteDoctor, Doctor } from '@/lib/localStorage';
+import { getDoctors, addDoctor, updateDoctor, deleteDoctor, Doctor } from '@/lib/neon/database';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 
   UserPlus, 
@@ -39,46 +39,55 @@ export default function DoctorsPage() {
   }, [user, loading, router]);
 
   useEffect(() => {
-    // Load doctors from localStorage
+    // Load doctors from database
     if (user) {
       loadDoctors();
     }
   }, [user]);
 
-  const loadDoctors = () => {
-    const data = getDoctors();
-    setDoctors(data);
+  const loadDoctors = async () => {
+    try {
+      const data = await getDoctors();
+      setDoctors(data);
+    } catch (error) {
+      console.error('Error loading doctors:', error);
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (editingDoctor) {
-      // Update existing doctor
-      const updates: Partial<Doctor> = {
-        name: formData.name,
-        email: formData.email,
-        username: formData.username,
-        role: formData.role,
-      };
-      if (formData.password) {
-        updates.password = formData.password;
+    try {
+      if (editingDoctor) {
+        // Update existing doctor
+        const updates: Partial<Doctor> = {
+          name: formData.name,
+          email: formData.email,
+          username: formData.username,
+          role: formData.role,
+        };
+        if (formData.password) {
+          updates.password = formData.password;
+        }
+        await updateDoctor(editingDoctor.id, updates);
+      } else {
+        // Add new doctor
+        await addDoctor({
+          name: formData.name,
+          email: formData.email,
+          username: formData.username,
+          password: formData.password,
+          role: formData.role,
+        });
       }
-      updateDoctor(editingDoctor.id, updates);
-    } else {
-      // Add new doctor
-      addDoctor({
-        name: formData.name,
-        email: formData.email,
-        username: formData.username,
-        password: formData.password,
-        role: formData.role,
-      });
+      
+      await loadDoctors();
+      setShowModal(false);
+      resetForm();
+    } catch (error) {
+      console.error('Error saving doctor:', error);
+      alert('Error saving doctor. Please try again.');
     }
-    
-    loadDoctors();
-    setShowModal(false);
-    resetForm();
   };
 
   const resetForm = () => {
@@ -104,10 +113,15 @@ export default function DoctorsPage() {
     setShowModal(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this doctor?')) {
-      deleteDoctor(id);
-      loadDoctors();
+      try {
+        await deleteDoctor(id);
+        await loadDoctors();
+      } catch (error) {
+        console.error('Error deleting doctor:', error);
+        alert('Error deleting doctor. Please try again.');
+      }
     }
   };
 

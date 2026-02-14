@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getChildren, addChild, updateChild, deleteChild, getDoctors, Child } from '@/lib/localStorage';
+import { getChildren, addChild, updateChild, deleteChild, getDoctors, Child } from '@/lib/neon/database';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 
   UserPlus, 
@@ -48,56 +48,74 @@ export default function ChildrenPage() {
   }, [user, loading, router]);
 
   useEffect(() => {
-    // Load children and doctors from localStorage
+    // Load children and doctors from database
     if (user) {
-      loadChildren();
-      setDoctors(getDoctors());
+      loadData();
     }
   }, [user]);
 
-  const loadChildren = () => {
-    const data = getChildren();
-    const doctorsData = getDoctors();
-    
-    // Add doctor names to children
-    const childrenWithDoctors: ChildWithDoctor[] = data.map(child => ({
-      ...child,
-      assigned_doctor_name: child.assigned_doctor_id 
-        ? doctorsData.find(d => d.id === child.assigned_doctor_id)?.name 
-        : undefined
-    }));
-    
-    setChildren(childrenWithDoctors);
+  const loadData = async () => {
+    try {
+      await loadChildren();
+      const doctorsData = await getDoctors();
+      setDoctors(doctorsData);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const loadChildren = async () => {
+    try {
+      const data = await getChildren();
+      const doctorsData = await getDoctors();
+      
+      // Add doctor names to children
+      const childrenWithDoctors: ChildWithDoctor[] = data.map(child => ({
+        ...child,
+        assigned_doctor_name: child.assigned_doctor_id 
+          ? doctorsData.find(d => d.id === child.assigned_doctor_id)?.name 
+          : undefined
+      }));
+      
+      setChildren(childrenWithDoctors);
+    } catch (error) {
+      console.error('Error loading children:', error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (editingChild) {
-      // Update existing child
-      updateChild(editingChild.id, {
-        name: formData.name,
-        age: parseInt(formData.age),
-        diagnosis: formData.diagnosis,
-        parent_name: formData.parent_name,
-        phone: formData.phone,
-        assigned_doctor_id: formData.assigned_doctor_id || null,
-      });
-    } else {
-      // Add new child
-      addChild({
-        name: formData.name,
-        age: parseInt(formData.age),
-        diagnosis: formData.diagnosis,
-        parent_name: formData.parent_name,
-        phone: formData.phone,
-        assigned_doctor_id: formData.assigned_doctor_id || null,
-      });
+    try {
+      if (editingChild) {
+        // Update existing child
+        await updateChild(editingChild.id, {
+          name: formData.name,
+          age: parseInt(formData.age),
+          diagnosis: formData.diagnosis,
+          parent_name: formData.parent_name,
+          phone: formData.phone,
+          assigned_doctor_id: formData.assigned_doctor_id || null,
+        });
+      } else {
+        // Add new child
+        await addChild({
+          name: formData.name,
+          age: parseInt(formData.age),
+          diagnosis: formData.diagnosis,
+          parent_name: formData.parent_name,
+          phone: formData.phone,
+          assigned_doctor_id: formData.assigned_doctor_id || null,
+        });
+      }
+      
+      await loadChildren();
+      setShowModal(false);
+      resetForm();
+    } catch (error) {
+      console.error('Error saving child:', error);
+      alert('Error saving child. Please try again.');
     }
-    
-    loadChildren();
-    setShowModal(false);
-    resetForm();
   };
 
   const resetForm = () => {
@@ -125,10 +143,15 @@ export default function ChildrenPage() {
     setShowModal(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this child profile?')) {
-      deleteChild(id);
-      loadChildren();
+      try {
+        await deleteChild(id);
+        await loadChildren();
+      } catch (error) {
+        console.error('Error deleting child:', error);
+        alert('Error deleting child. Please try again.');
+      }
     }
   };
 

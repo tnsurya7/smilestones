@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { getChildById, getSessionsByChildId } from '@/lib/localStorage';
+import { getChildById, getSessionsByChildId } from '@/lib/neon/database';
 import { TextArea } from '@/components/admin/FormComponents';
 import { FileText, Calendar, User, Save, Activity } from 'lucide-react';
 
