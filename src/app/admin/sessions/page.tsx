@@ -59,35 +59,46 @@ function SessionsContent() {
     }
   }, [user, childId]);
 
-  const loadSessions = () => {
-    const sessionsData = getSessions();
-    const childrenData = getChildren();
-    const doctorsData = getDoctors();
-    
-    // Add child and doctor names
-    const sessionsWithDetails = sessionsData.map(session => {
-      const child = childrenData.find(c => c.id === session.child_id);
-      const doctor = doctorsData.find(d => d.id === session.doctor_id);
+  const loadSessions = async () => {
+    try {
+      const sessionsData = await getSessions();
+      const childrenData = await getChildren();
+      const doctorsData = await getDoctors();
       
-      return {
-        ...session,
-        child_name: child?.name || 'Unknown',
-        doctor_name: doctor?.name || 'Unknown',
-      };
-    });
-    
-    // Filter by child if specified
-    const filtered = childId 
-      ? sessionsWithDetails.filter(s => s.child_id === childId)
-      : sessionsWithDetails;
-    
-    setSessions(filtered as any);
+      // Add child and doctor names
+      const sessionsWithDetails = sessionsData.map(session => {
+        const child = childrenData.find(c => c.id === session.child_id);
+        const doctor = doctorsData.find(d => d.id === session.doctor_id);
+        
+        return {
+          ...session,
+          child_name: child?.name || 'Unknown',
+          doctor_name: doctor?.name || 'Unknown',
+        };
+      });
+      
+      // Filter by child if specified
+      const filtered = childId 
+        ? sessionsWithDetails.filter(s => s.child_id === childId)
+        : sessionsWithDetails;
+      
+      setSessions(filtered as any);
+    } catch (error) {
+      console.error('Error loading sessions:', error);
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this session?')) {
-      deleteSession(id);
-      loadSessions();
+      try {
+        await deleteSession(id);
+        await loadSessions();
+      } catch (error) {
+        console.error('Error deleting session:', error);
+        alert('Error deleting session. Please try again.');
+      }
+    }
+  };
     }
   };
 

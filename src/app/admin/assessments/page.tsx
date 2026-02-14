@@ -43,28 +43,33 @@ export default function AssessmentsPage() {
     }
   }, [user]);
 
-  const loadAssessments = () => {
-    const keys = Object.keys(localStorage).filter(key => 
-      key.startsWith('child_assessment_')
-    );
-    
-    const loadedAssessments: Assessment[] = keys.map(key => {
-      const data = JSON.parse(localStorage.getItem(key) || '{}');
-      const childId = key.replace('child_assessment_', '');
-      const children = getChildren();
-      const child = children.find(c => c.id === childId);
+  const loadAssessments = async () => {
+    try {
+      const keys = Object.keys(localStorage).filter(key => 
+        key.startsWith('child_assessment_')
+      );
       
-      return {
-        id: childId,
-        childId: childId,
-        childName: child?.name || data.childName || 'Unknown',
-        createdAt: data.createdAt || new Date().toISOString(),
-        updatedAt: data.updatedAt || new Date().toISOString(),
-        status: data.status || 'draft'
-      };
-    });
-    
-    setAssessments(loadedAssessments);
+      const children = await getChildren();
+      
+      const loadedAssessments: Assessment[] = keys.map(key => {
+        const data = JSON.parse(localStorage.getItem(key) || '{}');
+        const childId = key.replace('child_assessment_', '');
+        const child = children.find(c => c.id === childId);
+        
+        return {
+          id: childId,
+          childId: childId,
+          childName: child?.name || data.childName || 'Unknown',
+          createdAt: data.createdAt || new Date().toISOString(),
+          updatedAt: data.updatedAt || new Date().toISOString(),
+          status: data.status || 'draft'
+        };
+      });
+      
+      setAssessments(loadedAssessments);
+    } catch (error) {
+      console.error('Error loading assessments:', error);
+    }
   };
 
   const handleDelete = (id: string) => {

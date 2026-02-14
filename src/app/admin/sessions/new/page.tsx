@@ -55,9 +55,18 @@ export default function NewSessionPage() {
 
   useEffect(() => {
     if (user) {
-      setChildren(getChildren());
+      loadChildren();
     }
   }, [user]);
+
+  const loadChildren = async () => {
+    try {
+      const data = await getChildren();
+      setChildren(data);
+    } catch (error) {
+      console.error('Error loading children:', error);
+    }
+  };
 
   const handleActivityToggle = (activity: string) => {
     setFormData(prev => ({
@@ -68,7 +77,7 @@ export default function NewSessionPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.child_id) {
@@ -76,23 +85,28 @@ export default function NewSessionPage() {
       return;
     }
     
-    // Add session with current user as doctor
-    addSession({
-      child_id: formData.child_id,
-      doctor_id: user?.id || '1',
-      date: formData.date,
-      attendance: formData.attendance,
-      eye_contact: formData.eye_contact,
-      follow_instructions: formData.follow_instructions,
-      speech_attempt: formData.speech_attempt,
-      motor_improvement: formData.motor_improvement,
-      skill_level: formData.skill_level,
-      activities: formData.activities,
-      notes: formData.notes,
-      next_goal: formData.next_goal,
-    });
-    
-    router.push('/admin/sessions');
+    try {
+      // Add session with current user as doctor
+      await addSession({
+        child_id: formData.child_id,
+        doctor_id: user?.id || '1',
+        date: formData.date,
+        attendance: formData.attendance,
+        eye_contact: formData.eye_contact,
+        follow_instructions: formData.follow_instructions,
+        speech_attempt: formData.speech_attempt,
+        motor_improvement: formData.motor_improvement,
+        skill_level: formData.skill_level,
+        activities: formData.activities,
+        notes: formData.notes,
+        next_goal: formData.next_goal,
+      });
+      
+      router.push('/admin/sessions');
+    } catch (error) {
+      console.error('Error creating session:', error);
+      alert('Error creating session. Please try again.');
+    }
   };
 
   if (loading) {

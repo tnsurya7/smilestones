@@ -31,31 +31,39 @@ export default function ReportsPage() {
     }
   }, [user]);
 
-  const loadData = () => {
-    const childrenData = getChildren();
-    const doctorsData = getDoctors();
-    
-    // Add doctor names and session counts
-    const childrenWithDetails = childrenData.map(child => {
-      const doctor = doctorsData.find(d => d.id === child.assigned_doctor_id);
-      const sessions = getSessionsByChildId(child.id);
+  const loadData = async () => {
+    try {
+      const childrenData = await getChildren();
+      const doctorsData = await getDoctors();
       
-      return {
-        ...child,
-        doctor_name: doctor?.name || 'Not assigned',
-        session_count: sessions.length,
-      };
-    });
-    
-    setChildren(childrenWithDetails);
+      // Add doctor names and session counts
+      const childrenWithDetails = await Promise.all(childrenData.map(async child => {
+        const doctor = doctorsData.find(d => d.id === child.assigned_doctor_id);
+        const sessions = await getSessionsByChildId(child.id);
+        
+        return {
+          ...child,
+          doctor_name: doctor?.name || 'Not assigned',
+          session_count: sessions.length,
+        };
+      }));
+      
+      setChildren(childrenWithDetails);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
   };
 
-  const handleDownloadChildReport = (childId: string) => {
-    const child = children.find(c => c.id === childId);
-    if (!child) return;
-    
-    const sessions = getSessionsByChildId(childId);
-    generateChildReportPDF(child, sessions, child.doctor_name);
+  const handleDownloadChildReport = async (childId: string) => {
+    try {
+      const child = children.find(c => c.id === childId);
+      if (!child) return;
+      
+      const sessions = await getSessionsByChildId(childId);
+      generateChildReportPDF(child, sessions, child.doctor_name);
+    } catch (error) {
+      console.error('Error generating report:', error);
+    }
   };
 
   const handleDownloadAllReports = () => {

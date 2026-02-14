@@ -39,19 +39,23 @@ export default function SessionDetailPage() {
     }
   }, [user, sessionId]);
 
-  const loadSession = () => {
-    const sessions = getSessions();
-    const foundSession = sessions.find(s => s.id === sessionId);
-    
-    if (foundSession) {
-      setSession(foundSession);
+  const loadSession = async () => {
+    try {
+      const sessions = await getSessions();
+      const foundSession = sessions.find(s => s.id === sessionId);
       
-      const child = getChildById(foundSession.child_id);
-      const doctor = getDoctorById(foundSession.doctor_id);
-      
-      setChildName(child?.name || 'Unknown');
-      setDoctorName(doctor?.name || 'Unknown');
-      setChildDetails(child);
+      if (foundSession) {
+        setSession(foundSession);
+        
+        const child = await getChildById(foundSession.child_id);
+        const doctor = await getDoctorById(foundSession.doctor_id);
+        
+        setChildName(child?.name || 'Unknown');
+        setDoctorName(doctor?.name || 'Unknown');
+        setChildDetails(child);
+      }
+    } catch (error) {
+      console.error('Error loading session:', error);
     }
   };
 
