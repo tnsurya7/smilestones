@@ -42,9 +42,18 @@ export default function ParentUpdatesPage() {
 
   useEffect(() => {
     if (user) {
-      setChildren(getChildren());
+      loadChildren();
     }
   }, [user]);
+
+  const loadChildren = async () => {
+    try {
+      const data = await getChildren();
+      setChildren(data);
+    } catch (error) {
+      console.error('Error loading children:', error);
+    }
+  };
 
   useEffect(() => {
     if (selectedChildId) {

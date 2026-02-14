@@ -56,29 +56,42 @@ export default function EditSessionPage() {
 
   useEffect(() => {
     if (user && sessionId) {
-      setChildren(getChildren());
-      loadSession();
+      loadData();
     }
   }, [user, sessionId]);
 
-  const loadSession = () => {
-    const sessions = getSessions();
-    const session = sessions.find(s => s.id === sessionId);
-    
-    if (session) {
-      setFormData({
-        child_id: session.child_id,
-        date: session.date,
-        attendance: session.attendance,
-        eye_contact: session.eye_contact,
-        follow_instructions: session.follow_instructions,
-        speech_attempt: session.speech_attempt,
-        motor_improvement: session.motor_improvement,
-        skill_level: session.skill_level,
-        activities: session.activities,
-        notes: session.notes,
-        next_goal: session.next_goal,
-      });
+  const loadData = async () => {
+    try {
+      const childrenData = await getChildren();
+      setChildren(childrenData);
+      await loadSession();
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  };
+
+  const loadSession = async () => {
+    try {
+      const sessions = await getSessions();
+      const session = sessions.find(s => s.id === sessionId);
+      
+      if (session) {
+        setFormData({
+          child_id: session.child_id,
+          date: session.date,
+          attendance: session.attendance,
+          eye_contact: session.eye_contact,
+          follow_instructions: session.follow_instructions,
+          speech_attempt: session.speech_attempt,
+          motor_improvement: session.motor_improvement,
+          skill_level: session.skill_level,
+          activities: session.activities,
+          notes: session.notes,
+          next_goal: session.next_goal,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading session:', error);
     }
   };
 
@@ -91,30 +104,35 @@ export default function EditSessionPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.child_id) {
       alert('Please select a child');
       return;
     }
-    
-    // Update session
-    updateSession(sessionId, {
-      child_id: formData.child_id,
-      date: formData.date,
-      attendance: formData.attendance,
-      eye_contact: formData.eye_contact,
-      follow_instructions: formData.follow_instructions,
-      speech_attempt: formData.speech_attempt,
-      motor_improvement: formData.motor_improvement,
-      skill_level: formData.skill_level,
-      activities: formData.activities,
-      notes: formData.notes,
-      next_goal: formData.next_goal,
-    });
-    
-    router.push('/admin/sessions');
+
+    try {
+      // Update session
+      await updateSession(sessionId, {
+        child_id: formData.child_id,
+        date: formData.date,
+        attendance: formData.attendance,
+        eye_contact: formData.eye_contact,
+        follow_instructions: formData.follow_instructions,
+        speech_attempt: formData.speech_attempt,
+        motor_improvement: formData.motor_improvement,
+        skill_level: formData.skill_level,
+        activities: formData.activities,
+        notes: formData.notes,
+        next_goal: formData.next_goal,
+      });
+      
+      router.push('/admin/sessions');
+    } catch (error) {
+      console.error('Error updating session:', error);
+      alert('Error updating session. Please try again.');
+    }
   };
 
   if (loading) {

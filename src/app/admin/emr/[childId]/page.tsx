@@ -44,32 +44,36 @@ export default function EMRPage() {
     }
   }, [user, childId]);
 
-  const loadData = () => {
-    // Load child data
-    const childData = getChildById(childId);
-    if (!childData) {
-      alert('Child not found');
-      router.push('/admin/children');
-      return;
-    }
-    setChild(childData);
+  const loadData = async () => {
+    try {
+      // Load child data
+      const childData = await getChildById(childId);
+      if (!childData) {
+        alert('Child not found');
+        router.push('/admin/children');
+        return;
+      }
+      setChild(childData);
 
-    // Load sessions
-    const sessionData = getSessionsByChildId(childId);
-    setSessions(sessionData);
+      // Load sessions
+      const sessionData = await getSessionsByChildId(childId);
+      setSessions(sessionData);
 
-    // Load assessments
-    const assessmentKey = `child_assessment_${childId}`;
-    const assessmentData = localStorage.getItem(assessmentKey);
-    if (assessmentData) {
-      setAssessments([JSON.parse(assessmentData)]);
-    }
+      // Load assessments
+      const assessmentKey = `child_assessment_${childId}`;
+      const assessmentData = localStorage.getItem(assessmentKey);
+      if (assessmentData) {
+        setAssessments([JSON.parse(assessmentData)]);
+      }
 
-    // Load EMR data
-    const emrKey = `emr_${childId}`;
-    const emrDataStored = localStorage.getItem(emrKey);
-    if (emrDataStored) {
-      setEmrData(JSON.parse(emrDataStored));
+      // Load EMR data
+      const emrKey = `emr_${childId}`;
+      const emrDataStored = localStorage.getItem(emrKey);
+      if (emrDataStored) {
+        setEmrData(JSON.parse(emrDataStored));
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
     }
   };
 

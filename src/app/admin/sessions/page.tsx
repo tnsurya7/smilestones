@@ -99,8 +99,6 @@ function SessionsContent() {
       }
     }
   };
-    }
-  };
 
   const handleDownloadPDF = (session: any) => {
     generateSessionPDF(
