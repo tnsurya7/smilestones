@@ -39,10 +39,18 @@ export interface Session {
   created_at: string;
 }
 
+// Helper to ensure we're on server-side
+function ensureServerSide() {
+  if (!sql) {
+    throw new Error('Database operations can only be performed on the server-side');
+  }
+}
+
 // ==================== DOCTORS ====================
 
 export async function getDoctors(): Promise<Doctor[]> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     SELECT * FROM doctors 
     ORDER BY created_at DESC
   `;
@@ -50,7 +58,8 @@ export async function getDoctors(): Promise<Doctor[]> {
 }
 
 export async function addDoctor(doctor: Omit<Doctor, 'id' | 'created_at'>): Promise<Doctor> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     INSERT INTO doctors (name, email, username, password, role)
     VALUES (${doctor.name}, ${doctor.email}, ${doctor.username}, ${doctor.password}, ${doctor.role})
     RETURNING *
@@ -59,7 +68,8 @@ export async function addDoctor(doctor: Omit<Doctor, 'id' | 'created_at'>): Prom
 }
 
 export async function updateDoctor(id: string, updates: Partial<Doctor>): Promise<Doctor | null> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     UPDATE doctors
     SET 
       name = COALESCE(${updates.name}, name),
@@ -74,7 +84,8 @@ export async function updateDoctor(id: string, updates: Partial<Doctor>): Promis
 }
 
 export async function deleteDoctor(id: string): Promise<boolean> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     DELETE FROM doctors WHERE id = ${id}
     RETURNING id
   `;
@@ -82,7 +93,8 @@ export async function deleteDoctor(id: string): Promise<boolean> {
 }
 
 export async function getDoctorById(id: string): Promise<Doctor | null> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     SELECT * FROM doctors WHERE id = ${id}
   `;
   return result[0] as Doctor || null;
@@ -91,7 +103,8 @@ export async function getDoctorById(id: string): Promise<Doctor | null> {
 // ==================== CHILDREN ====================
 
 export async function getChildren(): Promise<Child[]> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     SELECT * FROM children 
     ORDER BY created_at DESC
   `;
@@ -99,7 +112,8 @@ export async function getChildren(): Promise<Child[]> {
 }
 
 export async function addChild(child: Omit<Child, 'id' | 'created_at'>): Promise<Child> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     INSERT INTO children (name, age, diagnosis, parent_name, phone, assigned_doctor_id)
     VALUES (${child.name}, ${child.age}, ${child.diagnosis}, ${child.parent_name}, ${child.phone}, ${child.assigned_doctor_id})
     RETURNING *
@@ -108,7 +122,8 @@ export async function addChild(child: Omit<Child, 'id' | 'created_at'>): Promise
 }
 
 export async function updateChild(id: string, updates: Partial<Child>): Promise<Child | null> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     UPDATE children
     SET 
       name = COALESCE(${updates.name}, name),
@@ -124,7 +139,8 @@ export async function updateChild(id: string, updates: Partial<Child>): Promise<
 }
 
 export async function deleteChild(id: string): Promise<boolean> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     DELETE FROM children WHERE id = ${id}
     RETURNING id
   `;
@@ -132,7 +148,8 @@ export async function deleteChild(id: string): Promise<boolean> {
 }
 
 export async function getChildById(id: string): Promise<Child | null> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     SELECT * FROM children WHERE id = ${id}
   `;
   return result[0] as Child || null;
@@ -141,7 +158,8 @@ export async function getChildById(id: string): Promise<Child | null> {
 // ==================== SESSIONS ====================
 
 export async function getSessions(): Promise<Session[]> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     SELECT * FROM sessions 
     ORDER BY date DESC, created_at DESC
   `;
@@ -149,7 +167,8 @@ export async function getSessions(): Promise<Session[]> {
 }
 
 export async function addSession(session: Omit<Session, 'id' | 'created_at'>): Promise<Session> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     INSERT INTO sessions (
       child_id, doctor_id, date, attendance, eye_contact, 
       follow_instructions, speech_attempt, motor_improvement, 
@@ -167,7 +186,8 @@ export async function addSession(session: Omit<Session, 'id' | 'created_at'>): P
 }
 
 export async function getSessionsByChildId(childId: string): Promise<Session[]> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     SELECT * FROM sessions 
     WHERE child_id = ${childId}
     ORDER BY date DESC
@@ -176,7 +196,8 @@ export async function getSessionsByChildId(childId: string): Promise<Session[]> 
 }
 
 export async function updateSession(id: string, updates: Partial<Session>): Promise<Session | null> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     UPDATE sessions
     SET 
       child_id = COALESCE(${updates.child_id}, child_id),
@@ -198,7 +219,8 @@ export async function updateSession(id: string, updates: Partial<Session>): Prom
 }
 
 export async function deleteSession(id: string): Promise<boolean> {
-  const result = await sql`
+  ensureServerSide();
+  const result = await sql!`
     DELETE FROM sessions WHERE id = ${id}
     RETURNING id
   `;
@@ -208,11 +230,12 @@ export async function deleteSession(id: string): Promise<boolean> {
 // ==================== STATS ====================
 
 export async function getStats() {
+  ensureServerSide();
   const [childrenCount, doctorsCount, sessionsCount, todaySessions] = await Promise.all([
-    sql`SELECT COUNT(*) as count FROM children`,
-    sql`SELECT COUNT(*) as count FROM doctors`,
-    sql`SELECT COUNT(*) as count FROM sessions`,
-    sql`SELECT COUNT(*) as count FROM sessions WHERE date = CURRENT_DATE`
+    sql!`SELECT COUNT(*) as count FROM children`,
+    sql!`SELECT COUNT(*) as count FROM doctors`,
+    sql!`SELECT COUNT(*) as count FROM sessions`,
+    sql!`SELECT COUNT(*) as count FROM sessions WHERE date = CURRENT_DATE`
   ]);
 
   return {
