@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getChildren, getSessions, getDoctors, getSessionsByChildId } from '@/lib/neon/database';
+import { getChildren, getSessions, getDoctors, getSessionsByChildId } from '@/lib/api-client';
 import { generateChildReportPDF } from '@/lib/pdfExport';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 

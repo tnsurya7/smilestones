@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getDoctors, addDoctor, updateDoctor, deleteDoctor, Doctor } from '@/lib/neon/database';
+import { getDoctors, addDoctor, updateDoctor, deleteDoctor, Doctor } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 
   UserPlus, 

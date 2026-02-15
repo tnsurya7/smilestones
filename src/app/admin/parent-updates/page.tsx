@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { getChildren } from '@/lib/neon/database';
+import { getChildren } from '@/lib/api-client';
 import { TextArea } from '@/components/admin/FormComponents';
 import { MessageSquare, Video, Award, Save, Search } from 'lucide-react';
 

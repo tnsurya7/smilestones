@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getChildren } from '@/lib/neon/database';
+import { getChildren } from '@/lib/api-client';
 import { 
   Save, 
   ArrowLeft, 

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getStats } from '@/lib/neon/database';
+import { getStats } from '@/lib/api-client';
 import { 
   Users, 
   Calendar, 
