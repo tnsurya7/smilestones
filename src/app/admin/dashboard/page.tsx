@@ -23,6 +23,7 @@ export default function AdminDashboard() {
     sessionsToday: 0,
     totalSessions: 0,
   });
+  const [statsLoading, setStatsLoading] = useState(true);
 
   const handleSignOut = async () => {
     await signOut();
@@ -44,10 +45,13 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
+      setStatsLoading(true);
       const data = await getStats();
       setStats(data);
     } catch (error) {
       console.error('Error loading stats:', error);
+    } finally {
+      setStatsLoading(false);
     }
   };
 

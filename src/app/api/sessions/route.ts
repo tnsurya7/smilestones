@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getSessions, addSession, updateSession, deleteSession, getSessionsByChildId } from '@/lib/neon/database';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -8,11 +10,19 @@ export async function GET(request: Request) {
     
     if (childId) {
       const sessions = await getSessionsByChildId(childId);
-      return NextResponse.json(sessions);
+      return NextResponse.json(sessions, {
+        headers: {
+          'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+        },
+      });
     }
     
     const sessions = await getSessions();
-    return NextResponse.json(sessions);
+    return NextResponse.json(sessions, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+      },
+    });
   } catch (error) {
     console.error('Error fetching sessions:', error);
     return NextResponse.json({ error: 'Failed to fetch sessions' }, { status: 500 });

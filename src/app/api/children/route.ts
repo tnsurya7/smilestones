@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getChildren, addChild, updateChild, deleteChild, getChildById } from '@/lib/neon/database';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -8,11 +10,19 @@ export async function GET(request: Request) {
     
     if (id) {
       const child = await getChildById(id);
-      return NextResponse.json(child);
+      return NextResponse.json(child, {
+        headers: {
+          'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+        },
+      });
     }
     
     const children = await getChildren();
-    return NextResponse.json(children);
+    return NextResponse.json(children, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+      },
+    });
   } catch (error) {
     console.error('Error fetching children:', error);
     return NextResponse.json({ error: 'Failed to fetch children' }, { status: 500 });

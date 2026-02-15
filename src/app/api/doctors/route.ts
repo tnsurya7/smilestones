@@ -1,10 +1,17 @@
 import { NextResponse } from 'next/server';
 import { getDoctors, addDoctor, updateDoctor, deleteDoctor } from '@/lib/neon/database';
 
+// Disable caching for mutations, enable for reads
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const doctors = await getDoctors();
-    return NextResponse.json(doctors);
+    return NextResponse.json(doctors, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+      },
+    });
   } catch (error) {
     console.error('Error fetching doctors:', error);
     return NextResponse.json({ error: 'Failed to fetch doctors' }, { status: 500 });

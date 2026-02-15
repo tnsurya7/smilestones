@@ -231,17 +231,23 @@ export async function deleteSession(id: string): Promise<boolean> {
 
 export async function getStats() {
   ensureServerSide();
-  const [childrenCount, doctorsCount, sessionsCount, todaySessions] = await Promise.all([
-    sql!`SELECT COUNT(*) as count FROM children`,
-    sql!`SELECT COUNT(*) as count FROM doctors`,
-    sql!`SELECT COUNT(*) as count FROM sessions`,
-    sql!`SELECT COUNT(*) as count FROM sessions WHERE date = CURRENT_DATE`
-  ]);
+  
+  // Use a single query with CTEs for better performance
+  const result = await sql!`
+    WITH stats AS (
+      SELECT 
+        (SELECT COUNT(*) FROM children) as children_count,
+        (SELECT COUNT(*) FROM doctors) as doctors_count,
+        (SELECT COUNT(*) FROM sessions) as sessions_count,
+        (SELECT COUNT(*) FROM sessions WHERE date = CURRENT_DATE) as today_count
+    )
+    SELECT * FROM stats
+  `;
 
   return {
-    totalChildren: Number(childrenCount[0].count),
-    totalDoctors: Number(doctorsCount[0].count),
-    totalSessions: Number(sessionsCount[0].count),
-    sessionsToday: Number(todaySessions[0].count)
+    totalChildren: Number(result[0].children_count),
+    totalDoctors: Number(result[0].doctors_count),
+    totalSessions: Number(result[0].sessions_count),
+    sessionsToday: Number(result[0].today_count)
   };
 }
