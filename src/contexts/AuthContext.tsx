@@ -37,31 +37,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signIn(emailOrUsername: string, password: string) {
-    // Check against environment variables (required)
-    const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    try {
+      // Call the login API route
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: emailOrUsername, password }),
+      });
 
-    if (!adminUsername || !adminPassword) {
-      throw new Error('Admin credentials not configured. Please check environment variables.');
-    }
+      if (!response.ok) {
+        throw new Error('Invalid credentials');
+      }
 
-    if (emailOrUsername === adminUsername && password === adminPassword) {
-      // Mock user for testing
-      const mockUser: User = {
-        id: '1',
-        name: 'Super Admin',
-        username: adminUsername,
-        role: 'super_admin',
-        created_at: new Date().toISOString(),
-      };
+      const userData = await response.json();
       
       // Save to state and localStorage
-      setUser(mockUser);
-      localStorage.setItem('admin_user', JSON.stringify(mockUser));
-      return;
+      setUser(userData);
+      localStorage.setItem('admin_user', JSON.stringify(userData));
+    } catch (error) {
+      console.error('Login error:', error);
+      throw new Error('Invalid credentials');
     }
-
-    throw new Error('Invalid credentials');
   }
 
   async function signOut() {
