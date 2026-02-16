@@ -49,7 +49,7 @@ export default function ParentRegistrationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <AdminPageHeader title="Parent Registrations" />
+        <AdminPageHeader title="Parents Registrations" />
 
         {/* Search Bar */}
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
@@ -70,9 +70,9 @@ export default function ParentRegistrationsPage() {
           {filteredRegistrations.length === 0 ? (
             <div className="col-span-full bg-white rounded-xl shadow-lg p-12 text-center">
               <UserPlus className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg mb-2">No registrations found</p>
-              <p className="text-gray-400 text-sm">
-                Parent registrations will appear here
+              <p className="text-gray-900 text-lg mb-2 font-semibold">No registrations found</p>
+              <p className="text-gray-600 text-sm">
+                Parents registrations will appear here
               </p>
             </div>
           ) : (

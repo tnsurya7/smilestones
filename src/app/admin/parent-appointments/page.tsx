@@ -48,7 +48,7 @@ export default function ParentAppointmentsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <AdminPageHeader title="Parent Appointments" />
+        <AdminPageHeader title="Parents Appointments" />
 
         {/* Search Bar */}
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
@@ -69,9 +69,9 @@ export default function ParentAppointmentsPage() {
           {filteredAppointments.length === 0 ? (
             <div className="text-center py-12 sm:py-16">
               <Calendar className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-base sm:text-lg mb-2">No appointments found</p>
-              <p className="text-gray-400 text-xs sm:text-sm">
-                Parent appointments will appear here
+              <p className="text-gray-900 text-base sm:text-lg mb-2 font-semibold">No appointments found</p>
+              <p className="text-gray-600 text-xs sm:text-sm">
+                Parents appointments will appear here
               </p>
             </div>
           ) : (

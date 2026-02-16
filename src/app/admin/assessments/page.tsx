@@ -99,7 +99,7 @@ export default function AssessmentsPage() {
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <AdminPageHeader title="Child Assessments" />
+        <AdminPageHeader title="ASD Case Sheet" />
         
         {/* New Assessment Button */}
         <div className="mb-6">
@@ -108,7 +108,7 @@ export default function AssessmentsPage() {
             className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-            New Assessment
+            New Case Sheet
           </button>
         </div>
 
@@ -131,9 +131,9 @@ export default function AssessmentsPage() {
           {filteredAssessments.length === 0 ? (
             <div className="text-center py-12 sm:py-16">
               <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-base sm:text-lg mb-2">No assessments found</p>
+              <p className="text-gray-500 text-base sm:text-lg mb-2">No case sheets found</p>
               <p className="text-gray-400 text-xs sm:text-sm">
-                Create your first assessment to get started
+                Create your first case sheet to get started
               </p>
             </div>
           ) : (

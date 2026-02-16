@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getChildren } from '@/lib/api-client';
 import { 
@@ -8,8 +8,7 @@ import {
   ArrowLeft, 
   ArrowRight, 
   Check,
-  Printer,
-  RefreshCw
+  Printer
 } from 'lucide-react';
 
 // Import section components
@@ -23,9 +22,6 @@ import PeriNatalHistory from './assessment-sections/PeriNatalHistory';
 import AfterBirthHistory from './assessment-sections/AfterBirthHistory';
 import DevelopmentalHistory from './assessment-sections/DevelopmentalHistory';
 import MedicalHistory from './assessment-sections/MedicalHistory';
-import FunctionalSkills from './assessment-sections/FunctionalSkills';
-import CognitiveMilestones from './assessment-sections/CognitiveMilestones';
-import ClinicalNotes from './assessment-sections/ClinicalNotes';
 
 const SECTIONS = [
   { id: 1, title: 'Basic Child Details', component: BasicDetails },
@@ -38,51 +34,12 @@ const SECTIONS = [
   { id: 8, title: 'After Birth History', component: AfterBirthHistory },
   { id: 9, title: 'Developmental History', component: DevelopmentalHistory },
   { id: 10, title: 'Medical History', component: MedicalHistory },
-  { id: 11, title: 'Functional & Cognitive Skills', component: FunctionalSkills },
-  { id: 12, title: 'Cognitive Milestone Tracker', component: CognitiveMilestones },
-  { id: 13, title: 'Final Clinical Notes', component: ClinicalNotes },
 ];
 
 export default function AssessmentForm({ childId }: { childId?: string }) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
-  const [autoSaving, setAutoSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
-
-  useEffect(() => {
-    // Load existing data if editing
-    if (childId) {
-      const saved = localStorage.getItem(`child_assessment_${childId}`);
-      if (saved) {
-        setFormData(JSON.parse(saved));
-      }
-    }
-  }, [childId]);
-
-  // Auto-save on every change
-  useEffect(() => {
-    if (Object.keys(formData).length > 0) {
-      setAutoSaving(true);
-      const timer = setTimeout(() => {
-        saveToLocalStorage();
-        setAutoSaving(false);
-        setLastSaved(new Date());
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [formData]);
-
-  const saveToLocalStorage = () => {
-    const id = childId || formData.childId || `temp_${Date.now()}`;
-    const dataToSave = {
-      ...formData,
-      updatedAt: new Date().toISOString(),
-      createdAt: formData.createdAt || new Date().toISOString(),
-      status: currentStep === SECTIONS.length ? 'completed' : 'draft',
-    };
-    localStorage.setItem(`child_assessment_${id}`, JSON.stringify(dataToSave));
-  };
 
   const handleDataChange = (sectionData: any) => {
     setFormData((prev: any) => ({ ...prev, ...sectionData }));
@@ -118,29 +75,6 @@ export default function AssessmentForm({ childId }: { childId?: string }) {
 
   return (
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      {/* Auto-Save Status Banner */}
-      {(autoSaving || lastSaved) && (
-        <div className="fixed top-20 right-4 z-50 print:hidden">
-          <div className={`px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 transition-all ${
-            autoSaving 
-              ? 'bg-blue-500 text-white' 
-              : 'bg-green-500 text-white'
-          }`}>
-            {autoSaving ? (
-              <>
-                <RefreshCw className="w-4 h-4 animate-spin" />
-                <span className="text-sm font-semibold">Saving...</span>
-              </>
-            ) : (
-              <>
-                <Check className="w-4 h-4" />
-                <span className="text-sm font-semibold">Draft Auto-Saved</span>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Header */}
       <div className="bg-white border-b border-gray-200 shadow-sm print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -155,14 +89,14 @@ export default function AssessmentForm({ childId }: { childId?: string }) {
               <div>
                 <div className="flex items-center gap-3">
                   <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-                    Child Assessment Form
+                    ASD Case Sheet
                   </h1>
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                     currentStep === SECTIONS.length
                       ? 'bg-green-100 text-green-800'
-                      : 'bg-yellow-100 text-yellow-800'
+                      : 'bg-blue-100 text-blue-800'
                   }`}>
-                    Status: {currentStep === SECTIONS.length ? 'Completed' : 'Draft'}
+                    {currentStep === SECTIONS.length ? 'Ready to Submit' : 'In Progress'}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
@@ -237,13 +171,12 @@ export default function AssessmentForm({ childId }: { childId?: string }) {
           ) : (
             <button
               onClick={() => {
-                saveToLocalStorage();
                 router.push('/admin/assessments');
               }}
               className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 rounded-xl transition-all shadow-lg font-semibold"
             >
               <Check className="w-5 h-5" />
-              Complete Assessment
+              Complete Case Sheet
             </button>
           )}
         </div>

@@ -156,7 +156,7 @@ export default function ParentUpdatesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <AdminPageHeader title="Parent Communication & Motivation" />
+        <AdminPageHeader title="Parents Updates" />
 
         {/* Save Message */}
         {saveMessage && (
@@ -183,7 +183,7 @@ export default function ParentUpdatesPage() {
 
             <div className="space-y-2 max-h-96 overflow-y-auto">
               {filteredChildren.length === 0 ? (
-                <p className="text-gray-500 text-xs sm:text-sm text-center py-4">No children found</p>
+                <p className="text-gray-900 text-xs sm:text-sm text-center py-4 font-semibold">No children found</p>
               ) : (
                 filteredChildren.map((child) => (
                   <button
@@ -208,7 +208,7 @@ export default function ParentUpdatesPage() {
             {!selectedChildId ? (
               <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 text-center">
                 <MessageSquare className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-                <p className="text-gray-500 text-base sm:text-lg">Select a child to manage updates</p>
+                <p className="text-gray-900 text-base sm:text-lg font-semibold">Select a child to manage updates</p>
               </div>
             ) : (
               <>
@@ -249,7 +249,7 @@ export default function ParentUpdatesPage() {
                       </div>
                     ))}
                     {updateData.achievements.length === 0 && (
-                      <p className="text-gray-400 text-xs sm:text-sm text-center py-3 sm:py-4">No achievements added yet</p>
+                      <p className="text-gray-900 text-xs sm:text-sm text-center py-3 sm:py-4 font-semibold">No achievements added yet</p>
                     )}
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function ParentUpdatesPage() {
                       </div>
                     ))}
                     {updateData.motivationalMessages.length === 0 && (
-                      <p className="text-gray-400 text-xs sm:text-sm text-center py-3 sm:py-4">No messages added yet</p>
+                      <p className="text-gray-900 text-xs sm:text-sm text-center py-3 sm:py-4 font-semibold">No messages added yet</p>
                     )}
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export default function ParentUpdatesPage() {
                       </div>
                     ))}
                     {updateData.videoLinks.length === 0 && (
-                      <p className="text-gray-400 text-xs sm:text-sm text-center py-3 sm:py-4">No video links added yet</p>
+                      <p className="text-gray-900 text-xs sm:text-sm text-center py-3 sm:py-4 font-semibold">No video links added yet</p>
                     )}
                   </div>
                 </div>
