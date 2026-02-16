@@ -26,6 +26,7 @@ const BasicDetails: React.FC<Props> = ({ data, onChange }) => {
           onChange={(v) => handleChange('childName', v)}
           required
           placeholder="Enter child's full name"
+          disabled={!!data.childId}
         />
         
         <TextInput

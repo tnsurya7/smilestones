@@ -48,7 +48,22 @@ export default function AssessmentForm({ childId, assessmentId }: { childId?: st
     if (assessmentId) {
       loadAssessment();
     }
-  }, [assessmentId]);
+    // Pre-fill child data if childId is provided
+    if (childId && children.length > 0) {
+      const child = children.find(c => c.id === childId);
+      if (child) {
+        setFormData(prev => ({
+          ...prev,
+          childId: child.id,
+          childName: child.name,
+          age: child.age.toString(),
+          parentName: child.parent_name,
+          phoneNumber: child.phone,
+          diagnosis: child.diagnosis
+        }));
+      }
+    }
+  }, [assessmentId, childId, children]);
 
   const loadChildren = async () => {
     try {
@@ -74,6 +89,20 @@ export default function AssessmentForm({ childId, assessmentId }: { childId?: st
 
   const handleDataChange = (sectionData: any) => {
     setFormData((prev: any) => ({ ...prev, ...sectionData }));
+  };
+
+  const handleChildSelect = (selectedChildId: string) => {
+    const child = children.find(c => c.id === selectedChildId);
+    if (child) {
+      setFormData({
+        childId: child.id,
+        childName: child.name,
+        age: child.age.toString(),
+        parentName: child.parent_name,
+        phoneNumber: child.phone,
+        diagnosis: child.diagnosis
+      });
+    }
   };
 
   const handleNext = () => {
@@ -209,13 +238,13 @@ export default function AssessmentForm({ childId, assessmentId }: { childId?: st
       {/* Form Content */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Child Selector (if no childId provided) */}
-        {!childId && currentStep === 1 && !formData.childId && (
+        {!childId && currentStep === 1 && (
           <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Select Child</h3>
             <select
               value={formData.childId || ''}
-              onChange={(e) => setFormData({ ...formData, childId: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onChange={(e) => handleChildSelect(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               required
             >
               <option value="">-- Select a child --</option>
@@ -225,6 +254,9 @@ export default function AssessmentForm({ childId, assessmentId }: { childId?: st
                 </option>
               ))}
             </select>
+            {!formData.childId && (
+              <p className="text-red-600 text-sm mt-2">Please select a child to continue</p>
+            )}
           </div>
         )}
 

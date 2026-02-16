@@ -290,3 +290,149 @@ export const generateChildReportPDF = (
   const fileName = `Report_${child.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
   doc.save(fileName);
 };
+
+
+// Generate Assessment/Case Sheet PDF
+export const generateAssessmentPDF = (
+  assessment: any,
+  childName: string
+) => {
+  const doc = new jsPDF();
+  
+  // Header
+  doc.setFillColor(102, 126, 234);
+  doc.rect(0, 0, 210, 40, 'F');
+  
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(24);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Smilestones', 105, 15, { align: 'center' });
+  
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Child Development Centre', 105, 25, { align: 'center' });
+  
+  doc.setFontSize(12);
+  doc.text('ASD Case Sheet', 105, 33, { align: 'center' });
+  
+  // Reset text color
+  doc.setTextColor(0, 0, 0);
+  
+  let yPos = 50;
+  
+  // Basic Information
+  doc.setFontSize(16);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Basic Child Details', 14, yPos);
+  yPos += 10;
+  
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  
+  const data = assessment.data || assessment;
+  
+  if (data.childName) {
+    doc.text(`Child Name: ${data.childName}`, 14, yPos);
+    yPos += 7;
+  }
+  if (data.age) {
+    doc.text(`Age: ${data.age} years`, 14, yPos);
+    yPos += 7;
+  }
+  if (data.dob) {
+    doc.text(`Date of Birth: ${data.dob}`, 14, yPos);
+    yPos += 7;
+  }
+  if (data.gender) {
+    doc.text(`Gender: ${data.gender}`, 14, yPos);
+    yPos += 7;
+  }
+  if (data.parentName) {
+    doc.text(`Parent Name: ${data.parentName}`, 14, yPos);
+    yPos += 7;
+  }
+  if (data.phoneNumber) {
+    doc.text(`Phone: ${data.phoneNumber}`, 14, yPos);
+    yPos += 7;
+  }
+  if (data.address) {
+    doc.text(`Address: ${data.address}`, 14, yPos);
+    yPos += 7;
+  }
+  
+  yPos += 5;
+  
+  // Add all other sections dynamically
+  const sections = [
+    { key: 'parentFamilyDetails', title: 'Parent & Family Details' },
+    { key: 'languageExposure', title: 'Language Exposure' },
+    { key: 'familyHomeInfo', title: 'Family & Home Information' },
+    { key: 'parentalConcerns', title: 'Parental Concerns' },
+    { key: 'familyHistory', title: 'Family History' },
+    { key: 'periNatalHistory', title: 'Peri-Natal History' },
+    { key: 'afterBirthHistory', title: 'After Birth History' },
+    { key: 'developmentalHistory', title: 'Developmental History' },
+    { key: 'medicalHistory', title: 'Medical History' }
+  ];
+  
+  sections.forEach(section => {
+    if (data[section.key] && Object.keys(data[section.key]).length > 0) {
+      // Check if we need a new page
+      if (yPos > 250) {
+        doc.addPage();
+        yPos = 20;
+      }
+      
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text(section.title, 14, yPos);
+      yPos += 8;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      
+      const sectionData = data[section.key];
+      Object.entries(sectionData).forEach(([key, value]) => {
+        if (value && value !== '' && value !== 'No') {
+          const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+          const valueStr = Array.isArray(value) ? value.join(', ') : String(value);
+          
+          // Handle long text
+          const lines = doc.splitTextToSize(`${label}: ${valueStr}`, 180);
+          lines.forEach((line: string) => {
+            if (yPos > 280) {
+              doc.addPage();
+              yPos = 20;
+            }
+            doc.text(line, 14, yPos);
+            yPos += 5;
+          });
+        }
+      });
+      
+      yPos += 5;
+    }
+  });
+  
+  // Footer
+  const pageCount = doc.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(9);
+    doc.setTextColor(128, 128, 128);
+    doc.text(
+      `Page ${i} of ${pageCount}`,
+      105,
+      290,
+      { align: 'center' }
+    );
+    doc.text(
+      `Generated on ${new Date().toLocaleDateString()}`,
+      14,
+      290
+    );
+  }
+  
+  // Save the PDF
+  doc.save(`ASD-Case-Sheet-${childName}-${new Date().toISOString().split('T')[0]}.pdf`);
+};

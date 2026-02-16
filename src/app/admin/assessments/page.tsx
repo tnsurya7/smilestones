@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildren, getAssessments, deleteAssessment } from '@/lib/api-client';
+import { generateAssessmentPDF } from '@/lib/pdfExport';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 
   FileText,
@@ -76,6 +77,20 @@ export default function AssessmentsPage() {
         console.error('Error deleting assessment:', error);
         alert('Failed to delete case sheet. Please try again.');
       }
+    }
+  };
+
+  const handleDownloadPDF = async (assessmentId: string) => {
+    try {
+      const assessmentsData = await getAssessments();
+      const assessment = assessmentsData.find(a => a.id === assessmentId);
+      if (assessment) {
+        const childName = assessment.child_name || 'Unknown';
+        generateAssessmentPDF(assessment, childName);
+      }
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      alert('Failed to download PDF. Please try again.');
     }
   };
 
@@ -196,6 +211,13 @@ export default function AssessmentsPage() {
                             title="Edit"
                           >
                             <Edit className="w-4 h-4 sm:w-5 sm:h-5" />
+                          </button>
+                          <button
+                            onClick={() => handleDownloadPDF(assessment.id)}
+                            className="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                            title="Download PDF"
+                          >
+                            <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                           </button>
                           <button
                             onClick={() => handleDelete(assessment.id)}
