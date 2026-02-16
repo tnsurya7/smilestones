@@ -164,7 +164,7 @@ export default function ReportsPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-gray-900 text-sm sm:text-base">{child.name}</h3>
-                        <p className="text-xs sm:text-sm text-gray-600">{child.age} years old</p>
+                        <p className="text-xs sm:text-sm text-gray-900 font-semibold">{child.age} years old</p>
                       </div>
                     </div>
                   </div>
@@ -172,19 +172,19 @@ export default function ReportsPage() {
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-xs sm:text-sm">
                       <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
-                      <span className="text-gray-600">Diagnosis:</span>
+                      <span className="text-gray-900 font-semibold">Diagnosis:</span>
                       <span className="font-medium text-gray-900 truncate">{child.diagnosis}</span>
                     </div>
 
                     <div className="flex items-center gap-2 text-xs sm:text-sm">
                       <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
-                      <span className="text-gray-600">Doctor:</span>
+                      <span className="text-gray-900 font-semibold">Doctor:</span>
                       <span className="font-medium text-gray-900 truncate">{child.doctor_name}</span>
                     </div>
 
                     <div className="flex items-center gap-2 text-xs sm:text-sm">
                       <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
-                      <span className="text-gray-600">Sessions:</span>
+                      <span className="text-gray-900 font-semibold">Sessions:</span>
                       <span className="font-medium text-gray-900">{child.session_count}</span>
                     </div>
                   </div>

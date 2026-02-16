@@ -225,7 +225,7 @@ export default function ChildrenPage() {
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900 text-sm sm:text-base">{child.name}</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">{child.age} years old</p>
+                      <p className="text-xs sm:text-sm text-gray-900 font-semibold">{child.age} years old</p>
                     </div>
                   </div>
                   <div className="flex gap-1 sm:gap-2">
@@ -247,33 +247,33 @@ export default function ChildrenPage() {
                 <div className="space-y-2 sm:space-y-3">
                   <div className="flex items-center gap-2 text-xs sm:text-sm">
                     <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-600">Diagnosis:</span>
+                    <span className="text-gray-900 font-semibold">Diagnosis:</span>
                     <span className="font-medium text-gray-900 truncate">{child.diagnosis}</span>
                   </div>
 
                   <div className="flex items-center gap-2 text-xs sm:text-sm">
                     <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-600">Parent:</span>
+                    <span className="text-gray-900 font-semibold">Parent:</span>
                     <span className="font-medium text-gray-900 truncate">{child.parent_name}</span>
                   </div>
 
                   <div className="flex items-center gap-2 text-xs sm:text-sm">
                     <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-600">Phone:</span>
+                    <span className="text-gray-900 font-semibold">Phone:</span>
                     <span className="font-medium text-gray-900">{child.phone}</span>
                   </div>
 
                   {child.assigned_doctor_name && (
                     <div className="flex items-center gap-2 text-xs sm:text-sm">
                       <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                      <span className="text-gray-600">Doctor:</span>
+                      <span className="text-gray-900 font-semibold">Doctor:</span>
                       <span className="font-medium text-gray-900 truncate">{child.assigned_doctor_name}</span>
                     </div>
                   )}
 
                   <div className="flex items-center gap-2 text-xs sm:text-sm">
                     <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-gray-600">Added:</span>
+                    <span className="text-gray-900 font-semibold">Added:</span>
                     <span className="font-medium text-gray-900">
                       {new Date(child.created_at).toLocaleDateString()}
                     </span>

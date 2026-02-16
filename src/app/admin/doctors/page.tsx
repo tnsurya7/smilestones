@@ -207,8 +207,8 @@ export default function DoctorsPage() {
                           <span className="font-medium text-gray-900 text-sm sm:text-base">{doctor.name}</span>
                         </div>
                       </td>
-                      <td className="hidden md:table-cell px-6 py-4 text-gray-600 text-sm">{doctor.email}</td>
-                      <td className="hidden lg:table-cell px-6 py-4 text-gray-600 text-sm">{doctor.username}</td>
+                      <td className="hidden md:table-cell px-6 py-4 text-gray-900 text-sm font-semibold">{doctor.email}</td>
+                      <td className="hidden lg:table-cell px-6 py-4 text-gray-900 text-sm font-semibold">{doctor.username}</td>
                       <td className="px-3 sm:px-6 py-3 sm:py-4">
                         <span className={`inline-flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                           doctor.role === 'super_admin' 

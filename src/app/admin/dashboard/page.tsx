@@ -181,7 +181,7 @@ export default function AdminDashboard() {
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 Welcome back, {user.name}!
               </h1>
-              <p className="text-sm sm:text-base text-gray-600 mt-1">
+              <p className="text-sm sm:text-base text-gray-900 font-semibold mt-1">
                 Here's what's happening with your clinic today
               </p>
             </div>
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
                   </div>
                   <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                 </div>
-                <h3 className="text-gray-600 text-xs sm:text-sm font-medium mb-1">
+                <h3 className="text-gray-900 text-xs sm:text-sm font-semibold mb-1">
                   {stat.title}
                 </h3>
                 <p className="text-2xl sm:text-3xl font-bold text-gray-900">
@@ -243,7 +243,7 @@ export default function AdminDashboard() {
                   <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1 sm:mb-2">
                     {action.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-600">
+                  <p className="text-xs sm:text-sm text-gray-900 font-semibold">
                     {action.description}
                   </p>
                 </button>
@@ -264,8 +264,8 @@ export default function AdminDashboard() {
           </div>
           <div className="text-center py-8 sm:py-12">
             <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-            <p className="text-gray-500 text-base sm:text-lg">No recent activity</p>
-            <p className="text-gray-400 text-xs sm:text-sm mt-2">
+            <p className="text-gray-900 text-base sm:text-lg font-semibold">No recent activity</p>
+            <p className="text-gray-800 text-xs sm:text-sm mt-2 font-semibold">
               Activity will appear here once you start managing children and sessions
             </p>
           </div>

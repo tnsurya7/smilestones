@@ -241,7 +241,7 @@ function SessionsContent() {
                           <span className="text-gray-900">{session.child_name}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-gray-600">{session.doctor_name}</td>
+                      <td className="px-6 py-4 text-gray-900 font-semibold">{session.doctor_name}</td>
                       <td className="px-6 py-4">
                         {session.attendance ? (
                           <span className="inline-flex items-center gap-1 text-green-600">

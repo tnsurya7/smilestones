@@ -158,9 +158,9 @@ export default function ViewAssessmentPage() {
           })}
 
           {/* Metadata */}
-          <div className="mt-8 pt-6 border-t text-sm text-gray-600">
-            <p>Created: {new Date(assessment.created_at).toLocaleString()}</p>
-            <p>Last Updated: {new Date(assessment.updated_at).toLocaleString()}</p>
+          <div className="mt-8 pt-6 border-t text-sm">
+            <p className="text-gray-900 font-semibold">Created: {new Date(assessment.created_at).toLocaleString()}</p>
+            <p className="text-gray-900 font-semibold">Last Updated: {new Date(assessment.updated_at).toLocaleString()}</p>
           </div>
         </div>
       </div>
