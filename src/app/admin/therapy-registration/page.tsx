@@ -10,14 +10,14 @@ import { UserPlus, CreditCard, CheckCircle, Download, Search } from 'lucide-reac
 
 interface Registration {
   id: string;
-  childName: string;
-  parentName: string;
+  child_name: string;
+  parent_name: string;
   phone: string;
   email: string;
-  therapyTypes: string[];
-  paymentMode: string;
-  referralCode: string;
-  createdAt: string;
+  therapy_types: string[];
+  payment_mode: string;
+  referral_code: string;
+  created_at: string;
 }
 
 export default function TherapyRegistrationPage() {
