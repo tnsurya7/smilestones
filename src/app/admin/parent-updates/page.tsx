@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { getChildren } from '@/lib/api-client';
+import { getChildren, getParentUpdates, saveParentUpdates } from '@/lib/api-client';
 import { TextArea } from '@/components/admin/FormComponents';
 import { MessageSquare, Video, Award, Save, Search } from 'lucide-react';
 
@@ -61,12 +61,18 @@ export default function ParentUpdatesPage() {
     }
   }, [selectedChildId]);
 
-  const loadUpdateData = (childId: string) => {
-    const key = `parent_updates_${childId}`;
-    const data = localStorage.getItem(key);
-    if (data) {
-      setUpdateData(JSON.parse(data));
-    } else {
+  const loadUpdateData = async (childId: string) => {
+    try {
+      const data = await getParentUpdates(childId);
+      setUpdateData({
+        childId: childId,
+        achievements: data.achievements || [],
+        motivationalMessages: data.motivational_messages || [],
+        videoLinks: data.video_links || [],
+        lastUpdated: data.last_updated || new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Error loading updates:', error);
       setUpdateData({
         childId: childId,
         achievements: [],
@@ -77,18 +83,26 @@ export default function ParentUpdatesPage() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!selectedChildId) return;
     
-    const key = `parent_updates_${selectedChildId}`;
-    const updatedData = {
-      ...updateData,
-      lastUpdated: new Date().toISOString()
-    };
-    localStorage.setItem(key, JSON.stringify(updatedData));
-    setUpdateData(updatedData);
-    setSaveMessage('Saved successfully!');
-    setTimeout(() => setSaveMessage(''), 3000);
+    try {
+      await saveParentUpdates({
+        child_id: selectedChildId,
+        achievements: updateData.achievements,
+        motivational_messages: updateData.motivationalMessages,
+        video_links: updateData.videoLinks
+      });
+      
+      setSaveMessage('Saved successfully!');
+      setTimeout(() => setSaveMessage(''), 3000);
+      
+      // Reload data
+      await loadUpdateData(selectedChildId);
+    } catch (error) {
+      console.error('Error saving updates:', error);
+      alert('Failed to save updates. Please try again.');
+    }
   };
 
   const addAchievement = () => {

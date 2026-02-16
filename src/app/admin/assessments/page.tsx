@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getChildren } from '@/lib/api-client';
+import { getChildren, getAssessments, deleteAssessment } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { 
   FileText,
@@ -45,24 +45,19 @@ export default function AssessmentsPage() {
 
   const loadAssessments = async () => {
     try {
-      const keys = Object.keys(localStorage).filter(key => 
-        key.startsWith('child_assessment_')
-      );
-      
+      const assessmentsData = await getAssessments();
       const children = await getChildren();
       
-      const loadedAssessments: Assessment[] = keys.map(key => {
-        const data = JSON.parse(localStorage.getItem(key) || '{}');
-        const childId = key.replace('child_assessment_', '');
-        const child = children.find(c => c.id === childId);
+      const loadedAssessments: Assessment[] = assessmentsData.map(assessment => {
+        const child = children.find(c => c.id === assessment.child_id);
         
         return {
-          id: childId,
-          childId: childId,
-          childName: child?.name || data.childName || 'Unknown',
-          createdAt: data.createdAt || new Date().toISOString(),
-          updatedAt: data.updatedAt || new Date().toISOString(),
-          status: data.status || 'draft'
+          id: assessment.id,
+          childId: assessment.child_id,
+          childName: child?.name || assessment.child_name || 'Unknown',
+          createdAt: assessment.created_at,
+          updatedAt: assessment.updated_at,
+          status: assessment.status
         };
       });
       
@@ -72,10 +67,15 @@ export default function AssessmentsPage() {
     }
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this assessment?')) {
-      localStorage.removeItem(`child_assessment_${id}`);
-      loadAssessments();
+  const handleDelete = async (id: string) => {
+    if (confirm('Are you sure you want to delete this case sheet?')) {
+      try {
+        await deleteAssessment(id);
+        await loadAssessments();
+      } catch (error) {
+        console.error('Error deleting assessment:', error);
+        alert('Failed to delete case sheet. Please try again.');
+      }
     }
   };
 

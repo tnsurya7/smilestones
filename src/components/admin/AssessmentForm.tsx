@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getChildren } from '@/lib/api-client';
+import { getChildren, addAssessment, updateAssessment, getAssessments } from '@/lib/api-client';
 import { 
   Save, 
   ArrowLeft, 
@@ -36,10 +36,41 @@ const SECTIONS = [
   { id: 10, title: 'Medical History', component: MedicalHistory },
 ];
 
-export default function AssessmentForm({ childId }: { childId?: string }) {
+export default function AssessmentForm({ childId, assessmentId }: { childId?: string; assessmentId?: string }) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
+  const [saving, setSaving] = useState(false);
+  const [children, setChildren] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadChildren();
+    if (assessmentId) {
+      loadAssessment();
+    }
+  }, [assessmentId]);
+
+  const loadChildren = async () => {
+    try {
+      const data = await getChildren();
+      setChildren(data);
+    } catch (error) {
+      console.error('Error loading children:', error);
+    }
+  };
+
+  const loadAssessment = async () => {
+    try {
+      if (!assessmentId) return;
+      const assessments = await getAssessments();
+      const assessment = assessments.find(a => a.id === assessmentId);
+      if (assessment) {
+        setFormData(assessment.data || {});
+      }
+    } catch (error) {
+      console.error('Error loading assessment:', error);
+    }
+  };
 
   const handleDataChange = (sectionData: any) => {
     setFormData((prev: any) => ({ ...prev, ...sectionData }));
@@ -68,6 +99,41 @@ export default function AssessmentForm({ childId }: { childId?: string }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleComplete = async () => {
+    try {
+      setSaving(true);
+      
+      // Validate that child is selected
+      if (!formData.childId && !childId) {
+        alert('Please select a child before completing the case sheet');
+        setSaving(false);
+        return;
+      }
+
+      const selectedChildId = childId || formData.childId;
+
+      if (assessmentId) {
+        // Update existing assessment
+        await updateAssessment(assessmentId, formData, 'completed');
+      } else {
+        // Create new assessment
+        await addAssessment({
+          child_id: selectedChildId,
+          data: formData,
+          status: 'completed'
+        });
+      }
+
+      alert('Case sheet saved successfully!');
+      router.push('/admin/assessments');
+    } catch (error) {
+      console.error('Error saving assessment:', error);
+      alert('Failed to save case sheet. Please try again.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const CurrentSectionComponent = SECTIONS[currentStep - 1].component;
@@ -142,6 +208,26 @@ export default function AssessmentForm({ childId }: { childId?: string }) {
 
       {/* Form Content */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Child Selector (if no childId provided) */}
+        {!childId && currentStep === 1 && !formData.childId && (
+          <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Select Child</h3>
+            <select
+              value={formData.childId || ''}
+              onChange={(e) => setFormData({ ...formData, childId: e.target.value })}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            >
+              <option value="">-- Select a child --</option>
+              {children.map((child) => (
+                <option key={child.id} value={child.id}>
+                  {child.name} - {child.age} years - {child.diagnosis}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
           <CurrentSectionComponent 
             data={formData} 
@@ -170,13 +256,12 @@ export default function AssessmentForm({ childId }: { childId?: string }) {
             </button>
           ) : (
             <button
-              onClick={() => {
-                router.push('/admin/assessments');
-              }}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 rounded-xl transition-all shadow-lg font-semibold"
+              onClick={handleComplete}
+              disabled={saving}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 rounded-xl transition-all shadow-lg font-semibold disabled:opacity-50"
             >
               <Check className="w-5 h-5" />
-              Complete Case Sheet
+              {saving ? 'Saving...' : 'Complete Case Sheet'}
             </button>
           )}
         </div>

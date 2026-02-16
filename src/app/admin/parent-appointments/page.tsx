@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getParentAppointments } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { Calendar, Phone, Clock, Search } from 'lucide-react';
 
@@ -24,10 +25,12 @@ export default function ParentAppointmentsPage() {
     }
   }, [user]);
 
-  const loadAppointments = () => {
-    const data = localStorage.getItem('parent_appointments');
-    if (data) {
-      setAppointments(JSON.parse(data));
+  const loadAppointments = async () => {
+    try {
+      const data = await getParentAppointments();
+      setAppointments(data);
+    } catch (error) {
+      console.error('Error loading appointments:', error);
     }
   };
 

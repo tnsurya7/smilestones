@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getParentPayments } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { UserPlus, Search, CheckCircle, CreditCard } from 'lucide-react';
 
@@ -24,10 +25,12 @@ export default function ParentRegistrationsPage() {
     }
   }, [user]);
 
-  const loadRegistrations = () => {
-    const data = localStorage.getItem('parent_payments');
-    if (data) {
-      setRegistrations(JSON.parse(data));
+  const loadRegistrations = async () => {
+    try {
+      const data = await getParentPayments();
+      setRegistrations(data);
+    } catch (error) {
+      console.error('Error loading registrations:', error);
     }
   };
 

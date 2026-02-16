@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getAppointments, addAppointment } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { TextInput } from '@/components/admin/FormComponents';
 import { Phone, Calendar, Clock, MessageSquare, CheckCircle, Search } from 'lucide-react';
@@ -42,10 +43,12 @@ export default function AppointmentsPage() {
     }
   }, [user]);
 
-  const loadAppointments = () => {
-    const data = localStorage.getItem('appointments');
-    if (data) {
-      setAppointments(JSON.parse(data));
+  const loadAppointments = async () => {
+    try {
+      const data = await getAppointments();
+      setAppointments(data);
+    } catch (error) {
+      console.error('Error loading appointments:', error);
     }
   };
 
@@ -63,32 +66,32 @@ export default function AppointmentsPage() {
     }, 3000);
   };
 
-  const handleScheduleSubmit = (e: React.FormEvent) => {
+  const handleScheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!date || !time || !service) return;
 
-    const newAppointment: Appointment = {
-      id: Date.now().toString(),
-      phone,
-      date,
-      time,
-      service,
-      status: 'confirmed',
-      createdAt: new Date().toISOString()
-    };
+    try {
+      await addAppointment({
+        phone,
+        date,
+        time,
+        service
+      });
 
-    const updated = [...appointments, newAppointment];
-    localStorage.setItem('appointments', JSON.stringify(updated));
-    setAppointments(updated);
+      await loadAppointments();
 
-    const message = `Your appointment at Smilestones Centre is confirmed for ${new Date(date).toLocaleDateString()} at ${time}.`;
-    setMessageText(message);
-    setShowMessage(true);
+      const message = `Your appointment at Smilestones Centre is confirmed for ${new Date(date).toLocaleDateString()} at ${time}.`;
+      setMessageText(message);
+      setShowMessage(true);
 
-    setTimeout(() => {
-      setShowMessage(false);
-      resetForm();
-    }, 3000);
+      setTimeout(() => {
+        setShowMessage(false);
+        resetForm();
+      }, 3000);
+    } catch (error) {
+      console.error('Error saving appointment:', error);
+      alert('Failed to save appointment. Please try again.');
+    }
   };
 
   const resetForm = () => {

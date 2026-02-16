@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getTherapyRegistrations, addTherapyRegistration } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { TextInput, CheckboxGroup } from '@/components/admin/FormComponents';
 import { UserPlus, CreditCard, CheckCircle, Download, Search } from 'lucide-react';
@@ -47,10 +48,12 @@ export default function TherapyRegistrationPage() {
     }
   }, [user]);
 
-  const loadRegistrations = () => {
-    const data = localStorage.getItem('therapy_registrations');
-    if (data) {
-      setRegistrations(JSON.parse(data));
+  const loadRegistrations = async () => {
+    try {
+      const data = await getTherapyRegistrations();
+      setRegistrations(data);
+    } catch (error) {
+      console.error('Error loading registrations:', error);
     }
   };
 
@@ -59,41 +62,42 @@ export default function TherapyRegistrationPage() {
     return `SMILE-THERAPY-${random}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!childName || !parentName || !phone || therapyTypes.length === 0 || !paymentMode) {
       alert('Please fill all required fields');
       return;
     }
 
-    const newRegistration: Registration = {
-      id: Date.now().toString(),
-      childName,
-      parentName,
-      phone,
-      email,
-      therapyTypes,
-      paymentMode,
-      referralCode: generateReferralCode(),
-      createdAt: new Date().toISOString()
-    };
+    try {
+      const newRegistration = await addTherapyRegistration({
+        child_name: childName,
+        parent_name: parentName,
+        phone,
+        email,
+        therapy_types: therapyTypes,
+        payment_mode: paymentMode,
+        referral_code: generateReferralCode()
+      });
 
-    const updated = [...registrations, newRegistration];
-    localStorage.setItem('therapy_registrations', JSON.stringify(updated));
-    setRegistrations(updated);
-    setCurrentRegistration(newRegistration);
-    setShowSuccess(true);
+      await loadRegistrations();
+      setCurrentRegistration(newRegistration);
+      setShowSuccess(true);
 
-    // Reset form
-    setChildName('');
-    setParentName('');
-    setPhone('');
-    setEmail('');
-    setTherapyTypes([]);
-    setPaymentMode('');
+      // Reset form
+      setChildName('');
+      setParentName('');
+      setPhone('');
+      setEmail('');
+      setTherapyTypes([]);
+      setPaymentMode('');
+    } catch (error) {
+      console.error('Error saving registration:', error);
+      alert('Failed to save registration. Please try again.');
+    }
   };
 
-  const handlePrintBill = (reg: Registration) => {
+  const handlePrintBill = (reg: any) => {
     const billContent = `
 SMILESTONES CHILD DEVELOPMENT CENTRE
 =====================================
@@ -102,19 +106,19 @@ THERAPY REGISTRATION RECEIPT
 ----------------------------
 
 Registration ID: ${reg.id}
-Date: ${new Date(reg.createdAt).toLocaleDateString()}
+Date: ${new Date(reg.created_at).toLocaleDateString()}
 
-Child Name: ${reg.childName}
-Parent Name: ${reg.parentName}
+Child Name: ${reg.child_name}
+Parent Name: ${reg.parent_name}
 Phone: ${reg.phone}
 Email: ${reg.email || 'N/A'}
 
 Therapy Types:
-${reg.therapyTypes.map(t => `- ${t}`).join('\n')}
+${reg.therapy_types.map((t: string) => `- ${t}`).join('\n')}
 
-Payment Mode: ${reg.paymentMode}
+Payment Mode: ${reg.payment_mode}
 
-Referral Code: ${reg.referralCode}
+Referral Code: ${reg.referral_code}
 
 Thank you for choosing Smilestones Centre!
     `;
@@ -128,9 +132,9 @@ Thank you for choosing Smilestones Centre!
   };
 
   const filteredRegistrations = registrations.filter(reg =>
-    reg.childName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    reg.child_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     reg.phone.includes(searchQuery) ||
-    reg.referralCode.toLowerCase().includes(searchQuery.toLowerCase())
+    reg.referral_code.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) {
@@ -159,12 +163,12 @@ Thank you for choosing Smilestones Centre!
                 
                 <div className="bg-blue-50 rounded-lg p-4 mb-4">
                   <p className="text-sm text-gray-600 mb-1">Unique Referral Code</p>
-                  <p className="text-2xl font-bold text-blue-600">{currentRegistration.referralCode}</p>
+                  <p className="text-2xl font-bold text-blue-600">{currentRegistration.referral_code}</p>
                 </div>
 
                 <div className="text-left bg-gray-50 rounded-lg p-4 mb-4 text-sm">
-                  <p className="mb-1"><strong>Child:</strong> {currentRegistration.childName}</p>
-                  <p className="mb-1"><strong>Parent:</strong> {currentRegistration.parentName}</p>
+                  <p className="mb-1"><strong>Child:</strong> {currentRegistration.child_name}</p>
+                  <p className="mb-1"><strong>Parent:</strong> {currentRegistration.parent_name}</p>
                   <p><strong>Phone:</strong> {currentRegistration.phone}</p>
                 </div>
 
@@ -304,8 +308,8 @@ Thank you for choosing Smilestones Centre!
                   <div key={reg.id} className="border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <p className="font-semibold text-gray-900 text-sm sm:text-base">{reg.childName}</p>
-                        <p className="text-xs sm:text-sm text-gray-600">{reg.parentName}</p>
+                        <p className="font-semibold text-gray-900 text-sm sm:text-base">{reg.child_name}</p>
+                        <p className="text-xs sm:text-sm text-gray-600">{reg.parent_name}</p>
                       </div>
                       <button
                         onClick={() => handlePrintBill(reg)}
@@ -314,6 +318,16 @@ Thank you for choosing Smilestones Centre!
                       >
                         <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </button>
+                    </div>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2">{reg.phone}</p>
+                    <div className="bg-blue-50 rounded px-2 py-1 inline-block mb-2">
+                      <p className="text-xs font-mono text-blue-700">{reg.referral_code}</p>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      {new Date(reg.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))
                     </div>
                     <p className="text-xs sm:text-sm text-gray-600 mb-2">{reg.phone}</p>
                     <div className="bg-blue-50 rounded px-2 py-1 inline-block mb-2">
