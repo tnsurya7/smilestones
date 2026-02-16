@@ -52,7 +52,7 @@ export default function AssessmentForm({ childId, assessmentId }: { childId?: st
     if (childId && children.length > 0) {
       const child = children.find(c => c.id === childId);
       if (child) {
-        setFormData(prev => ({
+        setFormData((prev: any) => ({
           ...prev,
           childId: child.id,
           childName: child.name,
