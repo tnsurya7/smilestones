@@ -145,8 +145,8 @@ export default function ReportsPage() {
           {children.length === 0 ? (
             <div className="text-center py-8 sm:py-12">
               <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-base sm:text-lg">No children found</p>
-              <p className="text-gray-400 text-xs sm:text-sm mt-2">
+              <p className="text-gray-900 text-base sm:text-lg font-semibold">No children found</p>
+              <p className="text-gray-700 text-xs sm:text-sm mt-2">
                 Add children to generate reports
               </p>
             </div>

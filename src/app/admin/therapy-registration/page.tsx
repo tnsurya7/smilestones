@@ -297,7 +297,7 @@ Thank you for choosing Smilestones Centre!
               {filteredRegistrations.length === 0 ? (
                 <div className="text-center py-6 sm:py-8">
                   <UserPlus className="w-10 h-10 sm:w-12 sm:h-12 text-gray-300 mx-auto mb-2 sm:mb-3" />
-                  <p className="text-gray-500 text-sm sm:text-base">No registrations yet</p>
+                  <p className="text-gray-900 text-sm sm:text-base font-semibold">No registrations yet</p>
                 </div>
               ) : (
                 filteredRegistrations.map((reg) => (

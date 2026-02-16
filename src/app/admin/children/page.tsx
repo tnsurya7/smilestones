@@ -207,8 +207,8 @@ export default function ChildrenPage() {
           {filteredChildren.length === 0 ? (
             <div className="col-span-full bg-white rounded-xl sm:rounded-2xl shadow-lg p-8 sm:p-12 text-center">
               <Users className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-500 text-base sm:text-lg">No children found</p>
-              <p className="text-gray-400 text-xs sm:text-sm mt-2">
+              <p className="text-gray-900 text-base sm:text-lg font-semibold">No children found</p>
+              <p className="text-gray-700 text-xs sm:text-sm mt-2">
                 {searchQuery ? 'Try a different search term' : 'Add your first child profile to get started'}
               </p>
             </div>

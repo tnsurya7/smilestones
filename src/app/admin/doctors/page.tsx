@@ -190,8 +190,8 @@ export default function DoctorsPage() {
                   <tr>
                     <td colSpan={5} className="px-3 sm:px-6 py-8 sm:py-12 text-center">
                       <User className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-                      <p className="text-gray-500 text-base sm:text-lg">No doctors found</p>
-                      <p className="text-gray-400 text-xs sm:text-sm mt-2">
+                      <p className="text-gray-900 text-base sm:text-lg font-semibold">No doctors found</p>
+                      <p className="text-gray-700 text-xs sm:text-sm mt-2">
                         {searchQuery ? 'Try a different search term' : 'Add your first doctor to get started'}
                       </p>
                     </td>

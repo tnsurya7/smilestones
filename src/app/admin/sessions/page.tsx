@@ -201,8 +201,8 @@ function SessionsContent() {
           {filteredSessions.length === 0 ? (
             <div className="p-12 text-center">
               <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">No sessions found</p>
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-gray-900 text-lg font-semibold">No sessions found</p>
+              <p className="text-gray-700 text-sm mt-2">
                 {searchQuery || filterDate || filterSkillLevel
                   ? 'Try adjusting your filters'
                   : 'Create your first therapy session to get started'}

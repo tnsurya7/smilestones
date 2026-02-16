@@ -128,13 +128,6 @@ export default function AdminDashboard() {
       gradient: 'from-green-500 to-green-600',
     },
     {
-      title: 'Programs',
-      description: 'Manage therapy programs',
-      icon: ClipboardList,
-      href: '/admin/programs',
-      gradient: 'from-pink-500 to-pink-600',
-    },
-    {
       title: 'Appointments',
       description: 'Online appointment system',
       icon: Calendar,
