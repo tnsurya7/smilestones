@@ -70,6 +70,17 @@ CREATE TABLE IF NOT EXISTS assessments (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Appointments table (admin created appointments)
+CREATE TABLE IF NOT EXISTS appointments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  phone TEXT NOT NULL,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
+  service TEXT NOT NULL,
+  status TEXT DEFAULT 'confirmed',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Parent appointments table (from public booking)
 CREATE TABLE IF NOT EXISTS parent_appointments (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -137,8 +148,10 @@ CREATE INDEX IF NOT EXISTS idx_sessions_child ON sessions(child_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_doctor ON sessions(doctor_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_date ON sessions(date);
 CREATE INDEX IF NOT EXISTS idx_assessments_child ON assessments(child_id);
+CREATE INDEX IF NOT EXISTS idx_appointments_date ON appointments(date);
 CREATE INDEX IF NOT EXISTS idx_parent_appointments_date ON parent_appointments(date);
 CREATE INDEX IF NOT EXISTS idx_parent_payments_unique_code ON parent_payments(unique_code);
+CREATE INDEX IF NOT EXISTS idx_therapy_registrations_code ON therapy_registrations(referral_code);
 CREATE INDEX IF NOT EXISTS idx_emr_child ON emr(child_id);
 CREATE INDEX IF NOT EXISTS idx_parent_updates_child ON parent_updates(child_id);
 

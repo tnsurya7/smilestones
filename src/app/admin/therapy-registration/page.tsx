@@ -328,16 +328,6 @@ Thank you for choosing Smilestones Centre!
                     </p>
                   </div>
                 ))
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-600 mb-2">{reg.phone}</p>
-                    <div className="bg-blue-50 rounded px-2 py-1 inline-block mb-2">
-                      <p className="text-xs font-mono text-blue-700">{reg.referralCode}</p>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      {new Date(reg.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                ))
               )}
             </div>
           </div>
