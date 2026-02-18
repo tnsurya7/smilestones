@@ -11,6 +11,10 @@ A modern, responsive website for Smilestones Child Development Centre built with
 - 🔍 SEO optimized
 - ♿ Accessibility compliant
 - 🎯 Professional UI/UX
+- 🏥 Complete Clinical EMR System
+- 📋 M-CHAT Screening with auto-scoring
+- 📊 DSM-5 Checklist with auto-evaluation
+- 📄 Case Sheet with PDF exports
 
 ## Pages
 
