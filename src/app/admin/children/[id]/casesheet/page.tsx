@@ -478,8 +478,287 @@ export default function CaseSheetPage() {
     doc.save(`Case-Sheet-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
-  const handleDownloadFullClinicalPDF = () => {
-    setToast({ message: 'Full Clinical Report PDF generation coming soon!', type: 'info' });
+  const handleDownloadFullClinicalPDF = async () => {
+    try {
+      // Fetch all data
+      const mchatResponse = await fetch(`/api/mchat?child_id=${childId}`);
+      const mchatData = mchatResponse.ok ? await mchatResponse.json() : null;
+      
+      const dsmResponse = await fetch(`/api/dsm?child_id=${childId}`);
+      const dsmData = dsmResponse.ok ? await dsmResponse.json() : null;
+      
+      const doc = new jsPDF();
+      let yPos = 50;
+      
+      // Header
+      doc.setFillColor(102, 126, 234);
+      doc.rect(0, 0, 210, 40, 'F');
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(24);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Smilestones', 105, 15, { align: 'center' });
+      
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Child Development Centre', 105, 25, { align: 'center' });
+      
+      doc.setFontSize(12);
+      doc.text('Complete Clinical Report', 105, 33, { align: 'center' });
+      
+      doc.setTextColor(0, 0, 0);
+      
+      // ===== M-CHAT SECTION =====
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('M-CHAT Screening Results', 14, yPos);
+      yPos += 10;
+      
+      if (mchatData) {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Total Score: ${mchatData.total_score} / 20`, 14, yPos);
+        yPos += 6;
+        doc.text(`Risk Level: ${mchatData.risk_level}`, 14, yPos);
+        yPos += 10;
+        
+        // M-CHAT Questions
+        const mchatQuestions = [
+          'If you point at something across the room, does your child look at it?',
+          'Have you ever wondered if your child might be deaf?',
+          'Does your child play pretend or make-believe?',
+          'Does your child like climbing on things?',
+          'Does your child make unusual finger movements near their eyes?',
+          'Does your child point with one finger to ask for something or get help?',
+          'Does your child point with one finger to show you something interesting?',
+          'Is your child interested in other children?',
+          'Does your child show you things by bringing them to you or holding them up?',
+          'Does your child respond when you call their name?',
+          'When you smile at your child, does they smile back at you?',
+          'Does your child get upset by everyday noises?',
+          'Does your child walk?',
+          'Does your child look you in the eye when you are talking or playing?',
+          'Does your child try to copy what you do?',
+          'If you turn your head to look at something, does your child look around to see what you are looking at?',
+          'Does your child try to get you to watch them?',
+          'Does your child understand when you tell them to do something?',
+          'If something new happens, does your child look at your face to see how you feel about it?',
+          'Does your child like movement activities?'
+        ];
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('Responses:', 14, yPos);
+        yPos += 6;
+        doc.setFont('helvetica', 'normal');
+        
+        mchatQuestions.forEach((q, idx) => {
+          if (yPos > 270) { doc.addPage(); yPos = 20; }
+          const answer = mchatData.answers?.[`q${idx + 1}`] || 'Not answered';
+          const lines = doc.splitTextToSize(`${idx + 1}. ${q}`, 170);
+          lines.forEach((line: string) => {
+            if (yPos > 280) { doc.addPage(); yPos = 20; }
+            doc.text(line, 14, yPos);
+            yPos += 5;
+          });
+          doc.setFont('helvetica', 'bold');
+          doc.text(`Answer: ${answer}`, 20, yPos);
+          doc.setFont('helvetica', 'normal');
+          yPos += 7;
+        });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.text('M-CHAT screening not completed', 14, yPos);
+        yPos += 10;
+      }
+      
+      // ===== DSM SECTION =====
+      if (yPos > 240) { doc.addPage(); yPos = 20; }
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('DSM-5 Checklist Results', 14, yPos);
+      yPos += 10;
+      
+      if (dsmData) {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`A Criteria: ${dsmData.a_criteria_count} / 3 groups`, 14, yPos);
+        yPos += 6;
+        doc.text(`B Criteria: ${dsmData.b_criteria_count} / 4 groups`, 14, yPos);
+        yPos += 6;
+        doc.text(`C (Early Onset): ${dsmData.c_criteria ? 'Yes' : 'No'}`, 14, yPos);
+        yPos += 6;
+        doc.text(`D (Clinical Impairment): ${dsmData.d_criteria ? 'Yes' : 'No'}`, 14, yPos);
+        yPos += 6;
+        doc.text(`Final: ${dsmData.interpretation}`, 14, yPos);
+        yPos += 10;
+        
+        // DSM Criteria Details
+        const dsmCriteria = [
+          { group: 'A1', label: 'Social-Emotional Reciprocity', questions: [
+            'Abnormal social approach',
+            'Failure of normal back-and-forth conversation',
+            'Reduced sharing of interests/emotions',
+            'Failure to initiate or respond to social interactions'
+          ]},
+          { group: 'A2', label: 'Nonverbal Communication', questions: [
+            'Poorly integrated verbal and nonverbal communication',
+            'Abnormalities in eye contact and body language',
+            'Deficits in understanding and use of gestures',
+            'Total lack of facial expressions and nonverbal communication'
+          ]},
+          { group: 'A3', label: 'Relationships', questions: [
+            'Difficulties adjusting behavior to suit various social contexts',
+            'Difficulties in sharing imaginative play',
+            'Absence of interest in peers'
+          ]},
+          { group: 'B1', label: 'Stereotyped/Repetitive Motor Movements', questions: [
+            'Stereotyped or repetitive motor movements',
+            'Use of objects',
+            'Speech (e.g., echolalia, idiosyncratic phrases)'
+          ]},
+          { group: 'B2', label: 'Insistence on Sameness', questions: [
+            'Insistence on sameness',
+            'Inflexible adherence to routines',
+            'Ritualized patterns of verbal or nonverbal behavior',
+            'Extreme distress at small changes'
+          ]},
+          { group: 'B3', label: 'Restricted Interests', questions: [
+            'Highly restricted, fixated interests',
+            'Abnormal in intensity or focus',
+            'Strong attachment to unusual objects',
+            'Excessively circumscribed or perseverative interests'
+          ]},
+          { group: 'B4', label: 'Sensory Issues', questions: [
+            'Hyper- or hyporeactivity to sensory input',
+            'Unusual interest in sensory aspects of environment',
+            'Excessive smelling or touching of objects',
+            'Visual fascination with lights or movement'
+          ]}
+        ];
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('Detailed Responses:', 14, yPos);
+        yPos += 8;
+        
+        dsmCriteria.forEach((criteria) => {
+          if (yPos > 260) { doc.addPage(); yPos = 20; }
+          doc.setFont('helvetica', 'bold');
+          doc.text(`${criteria.group}: ${criteria.label}`, 14, yPos);
+          yPos += 6;
+          doc.setFont('helvetica', 'normal');
+          
+          criteria.questions.forEach((q, idx) => {
+            if (yPos > 275) { doc.addPage(); yPos = 20; }
+            const key = `${criteria.group.toLowerCase()}_${idx + 1}`;
+            const answer = dsmData.answers?.[key] || 'Not answered';
+            const lines = doc.splitTextToSize(`• ${q}`, 165);
+            lines.forEach((line: string) => {
+              if (yPos > 280) { doc.addPage(); yPos = 20; }
+              doc.text(line, 18, yPos);
+              yPos += 5;
+            });
+            doc.setFont('helvetica', 'bold');
+            doc.text(`Answer: ${answer}`, 22, yPos);
+            doc.setFont('helvetica', 'normal');
+            yPos += 6;
+          });
+          yPos += 3;
+        });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.text('DSM checklist not completed', 14, yPos);
+        yPos += 10;
+      }
+      
+      // ===== CASE SHEET SECTION =====
+      if (yPos > 200) { doc.addPage(); yPos = 20; }
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Clinical Case Sheet', 14, yPos);
+      yPos += 10;
+      
+      // Section 1: Child Identification
+      doc.setFontSize(12);
+      doc.text('Child Identification', 14, yPos);
+      yPos += 8;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const section1 = [
+        ['Child Full Name:', formData.childFullName || 'N/A'],
+        ['Date of Birth:', formData.dob || 'N/A'],
+        ['Age:', formData.age ? `${formData.age} years` : 'N/A'],
+        ['Gender:', formData.gender || 'N/A'],
+        ['UHID:', formData.uhid || 'N/A'],
+        ['Date of Assessment:', formData.dateOfAssessment || 'N/A']
+      ];
+      
+      section1.forEach(([label, value]) => {
+        if (yPos > 275) { doc.addPage(); yPos = 20; }
+        doc.setFont('helvetica', 'bold');
+        doc.text(label, 14, yPos);
+        doc.setFont('helvetica', 'normal');
+        doc.text(value, 70, yPos);
+        yPos += 6;
+      });
+      yPos += 5;
+      
+      // Section 8: Final Clinical Impression
+      if (yPos > 240) { doc.addPage(); yPos = 20; }
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Final Clinical Impression', 14, yPos);
+      yPos += 8;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const diagText = doc.splitTextToSize(`Provisional Diagnosis: ${formData.provisionalDiagnosis || 'N/A'}`, 180);
+      diagText.forEach((line: string) => {
+        if (yPos > 280) { doc.addPage(); yPos = 20; }
+        doc.text(line, 14, yPos);
+        yPos += 5;
+      });
+      yPos += 3;
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text('Recommended Therapies:', 14, yPos);
+      yPos += 6;
+      doc.setFont('helvetica', 'normal');
+      if (formData.recommendedTherapies && formData.recommendedTherapies.length > 0) {
+        formData.recommendedTherapies.forEach((therapy: string) => {
+          if (yPos > 280) { doc.addPage(); yPos = 20; }
+          doc.text(`• ${therapy}`, 20, yPos);
+          yPos += 5;
+        });
+      } else {
+        doc.text('None selected', 20, yPos);
+        yPos += 5;
+      }
+      yPos += 3;
+      
+      doc.text(`Frequency per week: ${formData.frequencyPerWeek || 'N/A'} sessions`, 14, yPos);
+      yPos += 5;
+      doc.text(`Doctor Signature: ${formData.doctorSignatureName || 'N/A'}`, 14, yPos);
+      
+      // Footer
+      const pageCount = doc.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(128, 128, 128);
+        doc.text('Confidential Medical Document', 14, 290);
+        doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
+        doc.text(`Generated: ${new Date().toLocaleDateString()}`, 160, 290);
+      }
+      
+      doc.save(`Full-Clinical-Report-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);
+      setToast({ message: 'Full Clinical Report downloaded successfully!', type: 'success' });
+    } catch (error) {
+      console.error('Error generating Full Clinical PDF:', error);
+      setToast({ message: 'Failed to generate Full Clinical Report. Please try again.', type: 'error' });
+    }
   };
 
   if (loading || !child) {
