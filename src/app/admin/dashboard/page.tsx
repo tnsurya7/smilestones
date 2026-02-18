@@ -114,13 +114,6 @@ export default function AdminDashboard() {
       gradient: 'from-purple-500 to-purple-600',
     },
     {
-      title: 'ASD Case Sheet',
-      description: 'Comprehensive assessment forms',
-      icon: FileText,
-      href: '/admin/assessments',
-      gradient: 'from-indigo-500 to-indigo-600',
-    },
-    {
       title: 'View Sessions',
       description: 'Review therapy session reports',
       icon: Calendar,

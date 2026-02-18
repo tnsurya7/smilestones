@@ -1,0 +1,22 @@
+export const MCHAT_QUESTIONS = [
+  { id: 'q1', text: 'If you point at something across the room, does your child look at it?' },
+  { id: 'q2', text: 'Have you ever wondered if your child might be deaf?' },
+  { id: 'q3', text: 'Does your child play pretend or make-believe?' },
+  { id: 'q4', text: 'Does your child like climbing on things?' },
+  { id: 'q5', text: 'Does your child make unusual finger movements near his or her eyes?' },
+  { id: 'q6', text: 'Does your child point with one finger to ask for something or to get help?' },
+  { id: 'q7', text: 'Does your child point with one finger to show you something interesting?' },
+  { id: 'q8', text: 'Is your child interested in other children?' },
+  { id: 'q9', text: 'Does your child show you things by bringing them to you or holding them up for you to see?' },
+  { id: 'q10', text: 'Does your child respond when you call his or her name?' },
+  { id: 'q11', text: 'When you smile at your child, does he or she smile back at you?' },
+  { id: 'q12', text: 'Does your child get upset by everyday noises?' },
+  { id: 'q13', text: 'Does your child walk?' },
+  { id: 'q14', text: 'Does your child look you in the eye when you are talking to him or her?' },
+  { id: 'q15', text: 'Does your child try to copy what you do?' },
+  { id: 'q16', text: 'If you turn your head to look at something, does your child look around to see what you are looking at?' },
+  { id: 'q17', text: 'Does your child try to get you to watch him or her?' },
+  { id: 'q18', text: 'Does your child understand when you tell him or her to do something?' },
+  { id: 'q19', text: 'If something new happens, does your child look at your face to see how you feel about it?' },
+  { id: 'q20', text: 'Does your child like movement activities?' }
+];
