@@ -197,9 +197,14 @@ export default function CaseSheetPage() {
   const handleDownloadCaseSheetPDF = () => {
     const doc = new jsPDF();
     
-    // Header
+    // Header with logo
     doc.setFillColor(102, 126, 234);
     doc.rect(0, 0, 210, 40, 'F');
+    
+    // Add logo
+    const logo = new Image();
+    logo.src = '/smilestones-logo.jpeg';
+    doc.addImage(logo, 'JPEG', 14, 8, 24, 24);
     
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
@@ -490,9 +495,14 @@ export default function CaseSheetPage() {
       const doc = new jsPDF();
       let yPos = 50;
       
-      // Header
+      // Header with logo
       doc.setFillColor(102, 126, 234);
       doc.rect(0, 0, 210, 40, 'F');
+      
+      // Add logo
+      const logo = new Image();
+      logo.src = '/smilestones-logo.jpeg';
+      doc.addImage(logo, 'JPEG', 14, 8, 24, 24);
       
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(24);
