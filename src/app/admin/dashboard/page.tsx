@@ -155,13 +155,6 @@ export default function AdminDashboard() {
       href: '/admin/parent-updates',
       gradient: 'from-yellow-500 to-yellow-600',
     },
-    {
-      title: 'Export Reports',
-      description: 'Download PDF reports',
-      icon: Download,
-      href: '/admin/reports',
-      gradient: 'from-red-500 to-red-600',
-    },
   ];
 
   return (
