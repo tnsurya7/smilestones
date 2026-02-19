@@ -128,7 +128,7 @@ export default function TherapyPage() {
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Choose Therapy</h1>
-              <p className="text-xs sm:text-sm text-gray-700">Select the services you need</p>
+              <p className="text-xs sm:text-sm text-gray-900 font-semibold">Select the services you need</p>
             </div>
           </div>
         </div>
@@ -174,16 +174,16 @@ export default function TherapyPage() {
 
                 {/* Content */}
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">{therapy.name}</h3>
-                <p className="text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">{therapy.description}</p>
+                <p className="text-xs sm:text-sm text-gray-900 font-semibold mb-3 sm:mb-4">{therapy.description}</p>
 
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex items-start gap-2">
                     <span className="font-bold text-gray-900 min-w-[80px] sm:min-w-[100px]">Duration:</span>
-                    <span className="text-gray-700">{therapy.duration}</span>
+                    <span className="text-gray-900 font-semibold">{therapy.duration}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="font-bold text-gray-900 min-w-[80px] sm:min-w-[100px]">Suitable for:</span>
-                    <span className="text-gray-700">{therapy.suitableFor}</span>
+                    <span className="text-gray-900 font-semibold">{therapy.suitableFor}</span>
                   </div>
                 </div>
               </div>

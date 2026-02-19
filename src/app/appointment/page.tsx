@@ -78,7 +78,7 @@ export default function AppointmentPage() {
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Book Appointment</h1>
-              <p className="text-xs sm:text-sm text-gray-700">Schedule your visit with us</p>
+              <p className="text-xs sm:text-sm text-gray-900 font-semibold">Schedule your visit with us</p>
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function AppointmentPage() {
                 <Phone className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-sm" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Enter Your Mobile Number</h2>
-              <p className="text-sm sm:text-base text-gray-700">We'll send you a WhatsApp confirmation</p>
+              <p className="text-sm sm:text-base text-gray-900 font-semibold">We'll send you a WhatsApp confirmation</p>
             </div>
 
             <form onSubmit={handlePhoneSubmit} className="space-y-6">
@@ -175,7 +175,7 @@ export default function AppointmentPage() {
                 <Calendar className="w-8 h-8 sm:w-10 sm:h-10 text-white drop-shadow-sm" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Schedule Your Visit</h2>
-              <p className="text-sm sm:text-base text-gray-700">Choose your preferred date and time</p>
+              <p className="text-sm sm:text-base text-gray-900 font-semibold">Choose your preferred date and time</p>
             </div>
 
             <form onSubmit={handleScheduleSubmit} className="space-y-6">

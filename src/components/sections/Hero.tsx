@@ -102,7 +102,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start flex-wrap"
             >
               <motion.div 
                 whileHover={{ scale: 1.05, y: -2 }} 
@@ -112,6 +112,19 @@ const Hero = () => {
                 <Link href="/appointment" className="premium-gradient-btn primary">
                   <Calendar size={20} className="btn-icon" />
                   <span className="btn-text">Book Appointment</span>
+                  <div className="btn-gradient-overlay"></div>
+                  <div className="btn-glow-effect"></div>
+                </Link>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -2 }} 
+                whileTap={{ scale: 0.95 }}
+                className="premium-btn-wrapper"
+              >
+                <Link href="/therapy" className="premium-gradient-btn primary">
+                  <Calendar size={20} className="btn-icon" />
+                  <span className="btn-text">Register for Therapy</span>
                   <div className="btn-gradient-overlay"></div>
                   <div className="btn-glow-effect"></div>
                 </Link>
