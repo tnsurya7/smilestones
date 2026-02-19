@@ -83,6 +83,12 @@ export default function TherapyPage() {
       // Get appointment data from localStorage (if exists)
       const appointmentData = JSON.parse(localStorage.getItem('parent_appointment_data') || '{}');
 
+      // Map therapy IDs to therapy names
+      const selectedTherapyNames = selectedTherapies
+        .map(id => therapies.find(t => t.id === id)?.name)
+        .filter(Boolean)
+        .join(', ');
+
       // Save to database via API
       const response = await fetch('/api/therapy-registrations', {
         method: 'POST',
@@ -92,7 +98,7 @@ export default function TherapyPage() {
           parent_name: appointmentData.parentName || 'N/A',
           phone: appointmentData.phone || 'N/A',
           email: appointmentData.email || '',
-          therapy_type: selectedTherapies.map(t => t.name).join(', '),
+          therapy_type: selectedTherapyNames,
           payment_mode: 'Pending',
           status: 'pending'
         })
