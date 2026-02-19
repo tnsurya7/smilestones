@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Phone, MessageCircle, Calendar, Sparkles } from 'lucide-react';
+import { Phone, MessageCircle, Calendar } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -66,27 +66,16 @@ const Hero = () => {
               className="space-y-3 md:space-y-6"
             >
               <div className="flex items-center justify-center lg:justify-start mb-2 md:mb-4">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="mr-2 md:mr-3"
-                >
-                  <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-yellow-500" />
-                </motion.div>
-                <span className="text-xs md:text-sm font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent uppercase tracking-wider">
-                  Premium Child Development
-                </span>
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                  <span className="text-blue-900">
+                    Helping Children
+                  </span>
+                  <br />
+                  <span className="text-gray-900">Reach Their</span>
+                  <br />
+                  <span className="text-gray-900">Full Potential</span>
+                </h1>
               </div>
-
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="text-blue-900">
-                  Helping Children
-                </span>
-                <br />
-                <span className="text-gray-900">Reach Their</span>
-                <br />
-                <span className="text-gray-900">Full Potential</span>
-              </h1>
             </motion.div>
             
             <motion.p
