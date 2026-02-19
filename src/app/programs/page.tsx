@@ -16,7 +16,6 @@ export default function ProgramsPage() {
       subtitle: 'School Readiness Program',
       description: 'A comprehensive school readiness program designed to prepare children for academic success and social integration in mainstream educational settings.',
       duration: '3-6 months',
-      ageGroup: '4-6 years',
       features: [
         'Pre-academic skill development',
         'Social interaction training',
@@ -37,7 +36,6 @@ export default function ProgramsPage() {
       subtitle: 'Empowering Families',
       description: 'Comprehensive training program that empowers parents with evidence-based strategies and skills to support their child\'s development at home.',
       duration: '8-12 weeks',
-      ageGroup: 'All ages',
       features: [
         'Behavior management techniques',
         'Communication strategies',
@@ -58,7 +56,6 @@ export default function ProgramsPage() {
       subtitle: 'Mainstream Integration',
       description: 'Ongoing support program for children in mainstream educational settings with regular monitoring, consultation, and teacher training.',
       duration: 'Ongoing',
-      ageGroup: '5-18 years',
       features: [
         'Teacher training and consultation',
         'Classroom strategy development',
@@ -81,7 +78,7 @@ export default function ProgramsPage() {
       <Header />
       
       {/* Breadcrumbs */}
-      <div className="pb-8 bg-gray-50">
+      <div className="pt-6 pb-4 bg-gray-50">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-600">
             <span>Home</span> → <span className="text-blue-600 font-medium">Programs</span>
@@ -92,13 +89,31 @@ export default function ProgramsPage() {
       {/* Programs Hero */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
               Our <span className="text-blue-600">Programs</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed px-4">
               Specialized programs designed to support children and families at every stage of development, from early intervention to school integration.
             </p>
+          </div>
+          
+          {/* Program Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+            <div className="bg-gray-100 rounded-lg overflow-hidden">
+              <img 
+                src="/7287a954-7940-49f6-9cca-4db37db0b942.jpg" 
+                alt="Smilestones Program Activities" 
+                className="w-full h-48 md:h-56 lg:h-64 object-contain"
+              />
+            </div>
+            <div className="bg-gray-100 rounded-lg overflow-hidden">
+              <img 
+                src="/68022e53-c10f-49f6-b899-9390a3f4ade7.jpg" 
+                alt="Smilestones Children Learning" 
+                className="w-full h-48 md:h-56 lg:h-64 object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -123,14 +138,10 @@ export default function ProgramsPage() {
                       <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{program.title}</h2>
                       <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{program.description}</p>
                       
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-4 md:mb-6">
+                      <div className="grid grid-cols-1 gap-3 md:gap-4 mb-4 md:mb-6">
                         <div className="bg-blue-50 p-3 md:p-4 rounded-lg">
                           <div className="text-xs md:text-sm text-blue-600 font-semibold">Duration</div>
                           <div className="text-gray-900 font-medium text-sm md:text-base">{program.duration}</div>
-                        </div>
-                        <div className="bg-green-50 p-3 md:p-4 rounded-lg">
-                          <div className="text-xs md:text-sm text-green-600 font-semibold">Age Group</div>
-                          <div className="text-gray-900 font-medium text-sm md:text-base">{program.ageGroup}</div>
                         </div>
                       </div>
                       
