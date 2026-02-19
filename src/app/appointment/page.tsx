@@ -28,34 +28,43 @@ export default function AppointmentPage() {
     }, 3000);
   };
 
-  const handleScheduleSubmit = (e: React.FormEvent) => {
+  const handleScheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!date || !time || !service) {
       alert('Please fill all fields');
       return;
     }
 
-    // Save to localStorage
-    const appointments = JSON.parse(localStorage.getItem('parent_appointments') || '[]');
-    const newAppointment = {
-      id: Date.now().toString(),
-      phone,
-      date,
-      time,
-      service,
-      createdAt: new Date().toISOString()
-    };
-    appointments.push(newAppointment);
-    localStorage.setItem('parent_appointments', JSON.stringify(appointments));
+    try {
+      // Save to database via API
+      const response = await fetch('/api/parent-appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone,
+          date,
+          time,
+          service,
+          status: 'pending'
+        })
+      });
 
-    const message = `Your appointment at Smilestones Centre is confirmed on ${new Date(date).toLocaleDateString()} at ${time}.`;
-    setMessageText(message);
-    setShowMessage(true);
+      if (!response.ok) {
+        throw new Error('Failed to save appointment');
+      }
 
-    setTimeout(() => {
-      setShowMessage(false);
-      router.push('/therapy');
-    }, 3000);
+      const message = `Your appointment at Smilestones Centre is confirmed on ${new Date(date).toLocaleDateString()} at ${time}.`;
+      setMessageText(message);
+      setShowMessage(true);
+
+      setTimeout(() => {
+        setShowMessage(false);
+        router.push('/therapy');
+      }, 3000);
+    } catch (error) {
+      console.error('Error saving appointment:', error);
+      alert('Failed to save appointment. Please try again.');
+    }
   };
 
   return (

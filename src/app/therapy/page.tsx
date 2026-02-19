@@ -73,17 +73,42 @@ export default function TherapyPage() {
     }
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (selectedTherapies.length === 0) {
       alert('Please select at least one therapy');
       return;
     }
 
-    // Save to localStorage
-    const selectedTherapyDetails = therapies.filter(t => selectedTherapies.includes(t.id));
-    localStorage.setItem('parent_selected_therapy', JSON.stringify(selectedTherapyDetails));
+    try {
+      // Get appointment data from localStorage (if exists)
+      const appointmentData = JSON.parse(localStorage.getItem('parent_appointment_data') || '{}');
 
-    router.push('/payment');
+      // Save to database via API
+      const response = await fetch('/api/therapy-registrations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          child_name: appointmentData.childName || 'N/A',
+          parent_name: appointmentData.parentName || 'N/A',
+          phone: appointmentData.phone || 'N/A',
+          email: appointmentData.email || '',
+          therapy_type: selectedTherapies.map(t => t.name).join(', '),
+          payment_mode: 'Pending',
+          status: 'pending'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save registration');
+      }
+
+      // Show success message and redirect
+      alert('Therapy registration submitted successfully! Our team will contact you shortly.');
+      router.push('/');
+    } catch (error) {
+      console.error('Error saving registration:', error);
+      alert('Failed to submit registration. Please try again.');
+    }
   };
 
   return (
@@ -179,7 +204,7 @@ export default function TherapyPage() {
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
         >
-          Continue to Payment
+          Submit Registration
           <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>

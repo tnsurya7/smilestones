@@ -121,20 +121,6 @@ export default function AdminDashboard() {
       gradient: 'from-green-500 to-green-600',
     },
     {
-      title: 'Appointments',
-      description: 'Online appointment system',
-      icon: Calendar,
-      href: '/admin/appointments',
-      gradient: 'from-cyan-500 to-cyan-600',
-    },
-    {
-      title: 'Therapy Registration',
-      description: 'Register new therapy clients',
-      icon: UserPlus,
-      href: '/admin/therapy-registration',
-      gradient: 'from-orange-500 to-orange-600',
-    },
-    {
       title: 'Parents Appointments',
       description: 'View parents bookings',
       icon: Calendar,
