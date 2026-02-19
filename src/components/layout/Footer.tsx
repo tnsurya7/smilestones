@@ -30,12 +30,12 @@ const Footer = () => {
   ];
 
   const services = [
-    { name: 'Autism Therapy', href: '/services/autism-therapy' },
-    { name: 'Speech Therapy', href: '/services/speech-therapy' },
-    { name: 'ABA Therapy', href: '/services/aba-therapy' },
-    { name: 'Occupational Therapy', href: '/services/occupational-therapy' },
-    { name: 'ADHD Support', href: '/services/adhd-support' },
-    { name: 'Learning Disabilities', href: '/services/learning-disabilities' },
+    { name: 'Autism Therapy', href: '/services' },
+    { name: 'Speech Therapy', href: '/services' },
+    { name: 'ABA Therapy', href: '/services' },
+    { name: 'Occupational Therapy', href: '/services' },
+    { name: 'ADHD Support', href: '/services' },
+    { name: 'Learning Disabilities', href: '/services' },
   ];
 
   return (
