@@ -55,18 +55,19 @@ export default function DSMPage() {
 
   const calculateResults = (currentAnswers: Record<string, string>) => {
     // Count A criteria (need at least 2 from A1, A2, A3)
-    const a1Count = ['a1_1', 'a1_2', 'a1_3'].filter(k => currentAnswers[k] === 'Yes').length;
-    const a2Count = ['a2_1', 'a2_2', 'a2_3'].filter(k => currentAnswers[k] === 'Yes').length;
-    const a3Count = ['a3_1', 'a3_2', 'a3_3'].filter(k => currentAnswers[k] === 'Yes').length;
+    // Count all A1 questions (a1_1 to a1_22)
+    const a1Count = Object.keys(currentAnswers).filter(k => k.startsWith('a1_') && currentAnswers[k] === 'Yes').length;
+    const a2Count = Object.keys(currentAnswers).filter(k => k.startsWith('a2_') && currentAnswers[k] === 'Yes').length;
+    const a3Count = Object.keys(currentAnswers).filter(k => k.startsWith('a3_') && currentAnswers[k] === 'Yes').length;
     
     const aGroups = [a1Count > 0 ? 1 : 0, a2Count > 0 ? 1 : 0, a3Count > 0 ? 1 : 0].filter(x => x > 0).length;
     const aCriteriaCount = aGroups;
 
     // Count B criteria (need at least 2 from B1, B2, B3, B4)
-    const b1Count = ['b1_1', 'b1_2', 'b1_3'].filter(k => currentAnswers[k] === 'Yes').length;
-    const b2Count = ['b2_1', 'b2_2'].filter(k => currentAnswers[k] === 'Yes').length;
-    const b3Count = ['b3_1', 'b3_2'].filter(k => currentAnswers[k] === 'Yes').length;
-    const b4Count = ['b4_1', 'b4_2'].filter(k => currentAnswers[k] === 'Yes').length;
+    const b1Count = Object.keys(currentAnswers).filter(k => k.startsWith('b1_') && currentAnswers[k] === 'Yes').length;
+    const b2Count = Object.keys(currentAnswers).filter(k => k.startsWith('b2_') && currentAnswers[k] === 'Yes').length;
+    const b3Count = Object.keys(currentAnswers).filter(k => k.startsWith('b3_') && currentAnswers[k] === 'Yes').length;
+    const b4Count = Object.keys(currentAnswers).filter(k => k.startsWith('b4_') && currentAnswers[k] === 'Yes').length;
     
     const bGroups = [b1Count > 0 ? 1 : 0, b2Count > 0 ? 1 : 0, b3Count > 0 ? 1 : 0, b4Count > 0 ? 1 : 0].filter(x => x > 0).length;
     const bCriteriaCount = bGroups;
