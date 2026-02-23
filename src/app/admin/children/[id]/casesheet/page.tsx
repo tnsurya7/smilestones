@@ -8,6 +8,53 @@ import { ArrowLeft, Save, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import Toast from '@/components/Toast';
 
+// Input Components (defined outside to prevent re-rendering issues)
+const TextInput = ({ label, value, onChange, type = 'text', required = false }: any) => (
+  <div>
+    <label className="block text-sm font-semibold text-gray-900 mb-1">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <input
+      type={type}
+      value={value || ''}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+    />
+  </div>
+);
+
+const TextArea = ({ label, value, onChange, rows = 3 }: any) => (
+  <div>
+    <label className="block text-sm font-semibold text-gray-900 mb-1">{label}</label>
+    <textarea
+      value={value || ''}
+      onChange={(e) => onChange(e.target.value)}
+      rows={rows}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+    />
+  </div>
+);
+
+const RadioGroup = ({ label, value, onChange, options }: any) => (
+  <div>
+    <label className="block text-sm font-semibold text-gray-900 mb-2">{label}</label>
+    <div className="flex gap-4">
+      {options.map((option: string) => (
+        <label key={option} className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            value={option}
+            checked={value === option}
+            onChange={() => onChange(option)}
+            className="w-4 h-4 text-blue-600"
+          />
+          <span className="text-gray-900 font-semibold">{option}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+);
+
 interface CaseSheetData {
   // Section 1: Child Identification
   childFullName: string;
@@ -847,52 +894,6 @@ export default function CaseSheetPage() {
   }
 
   if (!user) return null;
-
-  const TextInput = ({ label, value, onChange, type = 'text', required = false }: any) => (
-    <div>
-      <label className="block text-sm font-semibold text-gray-900 mb-1">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-      />
-    </div>
-  );
-
-  const TextArea = ({ label, value, onChange, rows = 3 }: any) => (
-    <div>
-      <label className="block text-sm font-semibold text-gray-900 mb-1">{label}</label>
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        rows={rows}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-      />
-    </div>
-  );
-
-  const RadioGroup = ({ label, value, onChange, options }: any) => (
-    <div>
-      <label className="block text-sm font-semibold text-gray-900 mb-2">{label}</label>
-      <div className="flex gap-4">
-        {options.map((option: string) => (
-          <label key={option} className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              value={option}
-              checked={value === option}
-              onChange={() => onChange(option)}
-              className="w-4 h-4 text-blue-600"
-            />
-            <span className="text-gray-900 font-semibold">{option}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
