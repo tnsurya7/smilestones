@@ -1,4 +1,20 @@
-export const DSM_QUESTIONS = {
+// Type definitions
+interface DSMQuestion {
+  id: string;
+  text: string;
+  isHeading?: boolean;
+}
+
+interface DSMSection {
+  title: string;
+  questions: DSMQuestion[];
+}
+
+interface DSMQuestions {
+  [key: string]: DSMSection;
+}
+
+export const DSM_QUESTIONS: DSMQuestions = {
   A1: {
     title: 'A1. Social Emotional Reciprocity',
     questions: [
