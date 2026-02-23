@@ -733,8 +733,23 @@ export default function CaseSheetPage() {
             doc.text(line, 14, yPos);
             yPos += 5;
           });
+          
+          // Make answer bold and colored
+          doc.setFont('helvetica', 'normal');
+          doc.text('Answer: ', 20, yPos);
           doc.setFont('helvetica', 'bold');
-          doc.text(`Answer: ${answer}`, 20, yPos);
+          
+          // Set color based on answer
+          if (answer === 'Yes') {
+            doc.setTextColor(34, 197, 94); // Green
+          } else if (answer === 'No') {
+            doc.setTextColor(239, 68, 68); // Red
+          } else {
+            doc.setTextColor(156, 163, 175); // Gray
+          }
+          
+          doc.text(answer, 38, yPos);
+          doc.setTextColor(0, 0, 0); // Reset to black
           doc.setFont('helvetica', 'normal');
           yPos += 7;
         });
@@ -831,8 +846,23 @@ export default function CaseSheetPage() {
               doc.text(line, 18, yPos);
               yPos += 5;
             });
+            
+            // Make answer bold and colored
+            doc.setFont('helvetica', 'normal');
+            doc.text('Answer: ', 22, yPos);
             doc.setFont('helvetica', 'bold');
-            doc.text(`Answer: ${answer}`, 22, yPos);
+            
+            // Set color based on answer
+            if (answer === 'Yes') {
+              doc.setTextColor(34, 197, 94); // Green
+            } else if (answer === 'No') {
+              doc.setTextColor(239, 68, 68); // Red
+            } else {
+              doc.setTextColor(156, 163, 175); // Gray
+            }
+            
+            doc.text(answer, 40, yPos);
+            doc.setTextColor(0, 0, 0); // Reset to black
             doc.setFont('helvetica', 'normal');
             yPos += 6;
           });

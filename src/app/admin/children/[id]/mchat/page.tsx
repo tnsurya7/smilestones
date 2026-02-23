@@ -185,7 +185,24 @@ export default function MCHATPage() {
         doc.text(line, 14, yPos);
         yPos += 5;
       });
-      doc.text(`Answer: ${answer}`, 20, yPos);
+      
+      // Make answer bold and colored
+      doc.setFont('helvetica', 'normal');
+      doc.text('Answer: ', 20, yPos);
+      doc.setFont('helvetica', 'bold');
+      
+      // Set color based on answer
+      if (answer === 'Yes') {
+        doc.setTextColor(34, 197, 94); // Green
+      } else if (answer === 'No') {
+        doc.setTextColor(239, 68, 68); // Red
+      } else {
+        doc.setTextColor(156, 163, 175); // Gray
+      }
+      
+      doc.text(answer, 38, yPos);
+      doc.setTextColor(0, 0, 0); // Reset to black
+      doc.setFont('helvetica', 'normal');
       yPos += 7;
     });
     

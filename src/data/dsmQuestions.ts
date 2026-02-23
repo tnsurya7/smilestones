@@ -80,6 +80,7 @@ export const DSM_QUESTIONS = {
   B1: {
     title: 'B1. Repetitive Movements, Speech, and Use of Objects',
     questions: [
+      { id: 'b1_heading_1', text: 'Stereotyped or repetitive speech', isHeading: true },
       { id: 'b1_1', text: 'Pedantic speech or unusually formal language' },
       { id: 'b1_2', text: 'Echolalia' },
       { id: 'b1_3', text: 'Jargon or gibberish' },
@@ -89,6 +90,7 @@ export const DSM_QUESTIONS = {
       { id: 'b1_7', text: 'Refers to self by own name' },
       { id: 'b1_8', text: 'Preservative language' },
       { id: 'b1_9', text: 'Repetitive vocalizations' },
+      { id: 'b1_heading_2', text: 'Stereotyped or repetitive motor movements', isHeading: true },
       { id: 'b1_10', text: 'Repetitive hand movements' },
       { id: 'b1_11', text: 'Stereotyped or complex whole-body movements' },
       { id: 'b1_12', text: 'Abnormalities of posture' },
@@ -98,11 +100,11 @@ export const DSM_QUESTIONS = {
       { id: 'b1_16', text: 'Repetitively puts hands over ears' },
       { id: 'b1_17', text: 'Perseverative or repetitive action / play / behavior' },
       { id: 'b1_18', text: 'Repetitive picking' },
-      { id: 'b1_19', text: 'Stereotyped or repetitive use of objects' },
-      { id: 'b1_20', text: 'Nonfunctional play with objects' },
-      { id: 'b1_21', text: 'Lines up toys or objects' },
-      { id: 'b1_22', text: 'Repetitively opens and closes doors' },
-      { id: 'b1_23', text: 'Repetitively turns lights on and off' }
+      { id: 'b1_heading_3', text: 'Stereotyped or repetitive use of objects', isHeading: true },
+      { id: 'b1_19', text: 'Nonfunctional play with objects' },
+      { id: 'b1_20', text: 'Lines up toys or objects' },
+      { id: 'b1_21', text: 'Repetitively opens and closes doors' },
+      { id: 'b1_22', text: 'Repetitively turns lights on and off' }
     ]
   },
   B2: {

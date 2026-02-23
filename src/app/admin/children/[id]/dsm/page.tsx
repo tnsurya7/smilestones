@@ -249,9 +249,33 @@ export default function DSMPage() {
           yPos = 20;
         }
         
-        const answer = answers[q.id] || 'Not Answered';
-        doc.text(`• ${q.text}: ${answer}`, 18, yPos);
-        yPos += 5;
+        // Check if this is a heading
+        if (q.isHeading) {
+          doc.setFont('helvetica', 'bold');
+          doc.text(q.text, 18, yPos);
+          doc.setFont('helvetica', 'normal');
+          yPos += 6;
+        } else {
+          const answer = answers[q.id] || 'Not Answered';
+          doc.setFont('helvetica', 'normal');
+          doc.text(`• ${q.text}: `, 18, yPos);
+          
+          // Make answer bold and colored
+          doc.setFont('helvetica', 'bold');
+          if (answer === 'Yes') {
+            doc.setTextColor(34, 197, 94); // Green
+          } else if (answer === 'No') {
+            doc.setTextColor(239, 68, 68); // Red
+          } else {
+            doc.setTextColor(156, 163, 175); // Gray
+          }
+          
+          const textWidth = doc.getTextWidth(`• ${q.text}: `);
+          doc.text(answer, 18 + textWidth, yPos);
+          doc.setTextColor(0, 0, 0); // Reset to black
+          doc.setFont('helvetica', 'normal');
+          yPos += 5;
+        }
       });
       
       yPos += 3;
@@ -392,35 +416,47 @@ export default function DSMPage() {
               <div key={key} className="border-b border-gray-200 pb-6 last:border-0">
                 <h3 className="text-lg font-bold text-gray-900 mb-4">{section.title}</h3>
                 <div className="space-y-4">
-                  {section.questions.map((question) => (
-                    <div key={question.id} className="pl-4">
-                      <p className="text-gray-900 font-semibold mb-2">{question.text}</p>
-                      <div className="flex gap-4">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name={question.id}
-                            value="Yes"
-                            checked={answers[question.id] === 'Yes'}
-                            onChange={() => handleAnswerChange(question.id, 'Yes')}
-                            className="w-4 h-4 text-blue-600"
-                          />
-                          <span className="text-gray-900 font-semibold">Yes</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name={question.id}
-                            value="No"
-                            checked={answers[question.id] === 'No'}
-                            onChange={() => handleAnswerChange(question.id, 'No')}
-                            className="w-4 h-4 text-blue-600"
-                          />
-                          <span className="text-gray-900 font-semibold">No</span>
-                        </label>
+                  {section.questions.map((question) => {
+                    // Check if this is a heading
+                    if (question.isHeading) {
+                      return (
+                        <h4 key={question.id} className="text-base font-bold text-gray-900 mt-4 mb-2">
+                          {question.text}
+                        </h4>
+                      );
+                    }
+                    
+                    // Regular question with Yes/No options
+                    return (
+                      <div key={question.id} className="pl-4">
+                        <p className="text-gray-900 font-semibold mb-2">{question.text}</p>
+                        <div className="flex gap-4">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name={question.id}
+                              value="Yes"
+                              checked={answers[question.id] === 'Yes'}
+                              onChange={() => handleAnswerChange(question.id, 'Yes')}
+                              className="w-4 h-4 text-blue-600"
+                            />
+                            <span className="text-gray-900 font-semibold">Yes</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name={question.id}
+                              value="No"
+                              checked={answers[question.id] === 'No'}
+                              onChange={() => handleAnswerChange(question.id, 'No')}
+                              className="w-4 h-4 text-blue-600"
+                            />
+                            <span className="text-gray-900 font-semibold">No</span>
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}
