@@ -55,15 +55,47 @@ const RadioGroup = ({ label, value, onChange, options }: any) => (
   </div>
 );
 
+const CheckboxGroup = ({ label, values, onChange, options }: any) => {
+  const handleToggle = (option: string) => {
+    const newValues = values.includes(option)
+      ? values.filter((v: string) => v !== option)
+      : [...values, option];
+    onChange(newValues);
+  };
+
+  return (
+    <div>
+      <label className="block text-sm font-semibold text-gray-900 mb-2">{label}</label>
+      <div className="flex flex-wrap gap-3">
+        {options.map((option: string) => (
+          <label key={option} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={values.includes(option)}
+              onChange={() => handleToggle(option)}
+              className="w-4 h-4 text-blue-600 rounded"
+            />
+            <span className="text-gray-900 font-semibold text-sm">{option}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 interface CaseSheetData {
   // Section 1: Child Identification
   childFullName: string;
   dob: string;
   age: string;
   gender: string;
+  birthOrder: string;
   uhid: string;
   dateOfAssessment: string;
   referredBy: string;
+  locality: string; // Urban / Rural
+  familyType: string; // Nuclear / Joint
+  address: string;
   informantName: string;
   relationshipToChild: string;
   contactNumber: string;
@@ -73,23 +105,29 @@ interface CaseSheetData {
   fatherAge: string;
   fatherEducation: string;
   fatherOccupation: string;
+  fatherContactNumber: string;
+  fatherTimeSpends: string;
   motherName: string;
   motherAge: string;
   motherEducation: string;
   motherOccupation: string;
+  motherContactNumber: string;
+  motherTimeSpends: string;
   
-  // Section 2B: Family History (NEW)
+  // Section 2B: Family History
   familySpeechDelayHistory: string;
   intellectualDisabilityInFamily: string;
   developmentalDelayInFamily: string;
   autismInFamily: string;
-  siblingDetails: string; // nil / elder / younger
+  siblingDetails: string;
+  siblingMilestonesAppropriate: string; // Yes/No
   fatherAgeAtDelivery: string;
   motherAgeAtDelivery: string;
-  consanguinity: string; // Yes/No
-  whoIdentifiedFirst: string; // Mother / Father / Grandparent / Pediatrician / Teacher
+  consanguinity: string;
+  whoIdentifiedFirst: string;
   whoSuggestedTherapy: string;
-  residenceType: string; // Individual / Apartment
+  parentalConcerns: string[]; // Speech delay, Hyperactivity, Behavior problem, Eye contact, Not responding to name
+  residenceType: string;
   substanceUse: string;
   sleepPattern: string;
   screenTimeHours: string;
@@ -99,25 +137,32 @@ interface CaseSheetData {
   ageWhenNoticed: string;
   durationOfProblem: string;
   
-  // Section 4: Perinatal History (EXPANDED)
-  conceptionType: string; // Natural / Assisted fertilization
-  termType: string; // Term / Preterm
+  // Section 4: Perinatal History
+  conceptionType: string;
+  antenatalComplications: string[]; // Thyroid, Diabetic, Hypertension, Seizure, Stress, Trauma, Bleeding issues
+  termType: string;
   weeksOfGestation: string;
   pregnancyComplications: string;
-  deliveryType: string; // Normal / LSCS / Assisted
-  assistanceRequiredAtBirth: string; // Yes/No
+  deliveryType: string;
+  assistanceRequiredAtBirth: string;
   apgarScore: string;
   birthHistory: string;
   birthWeight: string;
   
-  // Section 4B: After Birth History (NEW)
-  criedImmediately: string; // Yes/No
+  // Section 4B: After Birth History
+  criedImmediately: string;
   nicuAdmission: string;
-  phototherapy: string; // Yes/No
-  etTube: string; // Yes/No
-  developmentCourse: string; // Normal / Abnormal
+  jaundice: string; // Yes/No
+  phototherapy: string;
+  phototherapyDays: string;
+  etTube: string;
+  etTubeDays: string;
+  seizuresAtBirth: string; // Yes/No
+  febrileSeizure: string; // Yes/No
+  floppinessOrStiffness: string; // Yes/No
+  developmentCourse: string;
   
-  // Section 5: Developmental History (EXPANDED)
+  // Section 5: Developmental History
   milestonesDelay: string;
   speechDelay: string;
   motorDelay: string;
@@ -125,10 +170,12 @@ interface CaseSheetData {
   socialSmileAge: string;
   strangerAnxietyAge: string;
   responseToName: string;
+  nameCallResponseMonths: string;
+  nameCallAdequacy: string; // adequate / inadequate / absent
   reducedNameCallFrequency: string;
   languageMilestoneDelay: string;
   
-  // Section 5B: Functional/Cognitive (NEW)
+  // Section 5B: Functional/Cognitive Assessment
   understandsHouseholdObjects: string;
   operatesMobilePhone: string;
   labelsObjects: string;
@@ -140,6 +187,7 @@ interface CaseSheetData {
   
   // Section 6: Medical History
   seizures: string;
+  seizureMedication: string;
   hearingProblems: string;
   visionProblems: string;
   currentMedication: string;
@@ -167,33 +215,34 @@ export default function CaseSheetPage() {
   const [child, setChild] = useState<any>(null);
   const [formData, setFormData] = useState<CaseSheetData>({
     // Section 1
-    childFullName: '', dob: '', age: '', gender: '', uhid: '', dateOfAssessment: '',
-    referredBy: '', informantName: '', relationshipToChild: '', contactNumber: '',
+    childFullName: '', dob: '', age: '', gender: '', birthOrder: '', uhid: '', dateOfAssessment: '',
+    referredBy: '', locality: '', familyType: '', address: '', informantName: '', relationshipToChild: '', contactNumber: '',
     // Section 2
-    fatherName: '', fatherAge: '', fatherEducation: '', fatherOccupation: '',
-    motherName: '', motherAge: '', motherEducation: '', motherOccupation: '',
+    fatherName: '', fatherAge: '', fatherEducation: '', fatherOccupation: '', fatherContactNumber: '', fatherTimeSpends: '',
+    motherName: '', motherAge: '', motherEducation: '', motherOccupation: '', motherContactNumber: '', motherTimeSpends: '',
     // Section 2B: Family History
     familySpeechDelayHistory: '', intellectualDisabilityInFamily: '', developmentalDelayInFamily: '',
-    autismInFamily: '', siblingDetails: '', fatherAgeAtDelivery: '', motherAgeAtDelivery: '',
-    consanguinity: '', whoIdentifiedFirst: '', whoSuggestedTherapy: '', residenceType: '',
+    autismInFamily: '', siblingDetails: '', siblingMilestonesAppropriate: '', fatherAgeAtDelivery: '', motherAgeAtDelivery: '',
+    consanguinity: '', whoIdentifiedFirst: '', whoSuggestedTherapy: '', parentalConcerns: [], residenceType: '',
     substanceUse: '', sleepPattern: '', screenTimeHours: '',
     // Section 3
     chiefComplaints: '', ageWhenNoticed: '', durationOfProblem: '',
     // Section 4: Perinatal
-    conceptionType: '', termType: '', weeksOfGestation: '', pregnancyComplications: '',
+    conceptionType: '', antenatalComplications: [], termType: '', weeksOfGestation: '', pregnancyComplications: '',
     deliveryType: '', assistanceRequiredAtBirth: '', apgarScore: '', birthHistory: '', birthWeight: '',
     // Section 4B: After Birth
-    criedImmediately: '', nicuAdmission: '', phototherapy: '', etTube: '', developmentCourse: '',
+    criedImmediately: '', nicuAdmission: '', jaundice: '', phototherapy: '', phototherapyDays: '', 
+    etTube: '', etTubeDays: '', seizuresAtBirth: '', febrileSeizure: '', floppinessOrStiffness: '', developmentCourse: '',
     // Section 5: Developmental
     milestonesDelay: '', speechDelay: '', motorDelay: '', regressionOfSkills: '',
-    socialSmileAge: '', strangerAnxietyAge: '', responseToName: '', reducedNameCallFrequency: '',
-    languageMilestoneDelay: '',
+    socialSmileAge: '', strangerAnxietyAge: '', responseToName: '', nameCallResponseMonths: '', nameCallAdequacy: '',
+    reducedNameCallFrequency: '', languageMilestoneDelay: '',
     // Section 5B: Functional/Cognitive
     understandsHouseholdObjects: '', operatesMobilePhone: '', labelsObjects: '',
     identifiesFamilyMembers: '', identifiesSelfInMirror: '', understandsSimpleCommands: '',
     understandsDoubleCommands: '', understands3StepCommands: '',
     // Section 6: Medical
-    seizures: '', hearingProblems: '', visionProblems: '', currentMedication: '',
+    seizures: '', seizureMedication: '', hearingProblems: '', visionProblems: '', currentMedication: '',
     // Section 7: Behavioral
     eyeContact: '', socialInteraction: '', repetitiveBehaviors: '', sensoryIssues: '', attentionSpan: '',
     // Section 8: Assessment
@@ -957,12 +1006,18 @@ export default function CaseSheetPage() {
             <TextInput label="Date of Birth" value={formData.dob} onChange={handleDOBChange} type="date" required />
             <TextInput label="Age (years)" value={formData.age} onChange={(v: string) => handleInputChange('age', v)} type="number" />
             <RadioGroup label="Gender" value={formData.gender} onChange={(v: string) => handleInputChange('gender', v)} options={['Male', 'Female', 'Other']} />
+            <TextInput label="Birth Order" value={formData.birthOrder} onChange={(v: string) => handleInputChange('birthOrder', v)} />
             <TextInput label="UHID / Unique Child ID" value={formData.uhid} onChange={(v: string) => handleInputChange('uhid', v)} />
             <TextInput label="Date of Assessment" value={formData.dateOfAssessment} onChange={(v: string) => handleInputChange('dateOfAssessment', v)} type="date" />
             <TextInput label="Referred By" value={formData.referredBy} onChange={(v: string) => handleInputChange('referredBy', v)} />
+            <RadioGroup label="Locality" value={formData.locality} onChange={(v: string) => handleInputChange('locality', v)} options={['Urban', 'Rural']} />
+            <RadioGroup label="Family Type" value={formData.familyType} onChange={(v: string) => handleInputChange('familyType', v)} options={['Nuclear', 'Joint']} />
             <TextInput label="Informant Name" value={formData.informantName} onChange={(v: string) => handleInputChange('informantName', v)} />
             <TextInput label="Relationship to Child" value={formData.relationshipToChild} onChange={(v: string) => handleInputChange('relationshipToChild', v)} />
             <TextInput label="Contact Number" value={formData.contactNumber} onChange={(v: string) => handleInputChange('contactNumber', v)} type="tel" />
+          </div>
+          <div className="mt-4">
+            <TextArea label="Address" value={formData.address} onChange={(v: string) => handleInputChange('address', v)} rows={2} />
           </div>
         </div>
 
@@ -974,8 +1029,10 @@ export default function CaseSheetPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <TextInput label="Name" value={formData.fatherName} onChange={(v: string) => handleInputChange('fatherName', v)} />
               <TextInput label="Age" value={formData.fatherAge} onChange={(v: string) => handleInputChange('fatherAge', v)} type="number" />
-              <TextInput label="Education" value={formData.fatherEducation} onChange={(v: string) => handleInputChange('fatherEducation', v)} />
+              <TextInput label="Time Spends with Child" value={formData.fatherTimeSpends} onChange={(v: string) => handleInputChange('fatherTimeSpends', v)} />
+              <RadioGroup label="Education" value={formData.fatherEducation} onChange={(v: string) => handleInputChange('fatherEducation', v)} options={['Higher', 'Hr. Sec', 'UG', 'PG']} />
               <TextInput label="Occupation" value={formData.fatherOccupation} onChange={(v: string) => handleInputChange('fatherOccupation', v)} />
+              <TextInput label="Contact Number" value={formData.fatherContactNumber} onChange={(v: string) => handleInputChange('fatherContactNumber', v)} type="tel" />
             </div>
           </div>
           <div>
@@ -983,8 +1040,10 @@ export default function CaseSheetPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <TextInput label="Name" value={formData.motherName} onChange={(v: string) => handleInputChange('motherName', v)} />
               <TextInput label="Age" value={formData.motherAge} onChange={(v: string) => handleInputChange('motherAge', v)} type="number" />
-              <TextInput label="Education" value={formData.motherEducation} onChange={(v: string) => handleInputChange('motherEducation', v)} />
+              <TextInput label="Time Spends with Child" value={formData.motherTimeSpends} onChange={(v: string) => handleInputChange('motherTimeSpends', v)} />
+              <RadioGroup label="Education" value={formData.motherEducation} onChange={(v: string) => handleInputChange('motherEducation', v)} options={['Higher', 'Hr. Sec', 'UG', 'PG']} />
               <TextInput label="Occupation" value={formData.motherOccupation} onChange={(v: string) => handleInputChange('motherOccupation', v)} />
+              <TextInput label="Contact Number" value={formData.motherContactNumber} onChange={(v: string) => handleInputChange('motherContactNumber', v)} type="tel" />
             </div>
           </div>
         </div>
@@ -993,12 +1052,19 @@ export default function CaseSheetPage() {
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 2B: Family History</h2>
           <div className="space-y-4">
+            <CheckboxGroup 
+              label="Parental Concerns" 
+              values={formData.parentalConcerns} 
+              onChange={(v: string[]) => handleInputChange('parentalConcerns', v)} 
+              options={['Speech delay', 'Hyperactivity', 'Behavior problem', 'Eye contact', 'Not responding to name']} 
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <RadioGroup label="Family speech delay history" value={formData.familySpeechDelayHistory} onChange={(v: string) => handleInputChange('familySpeechDelayHistory', v)} options={['Yes', 'No']} />
               <RadioGroup label="Intellectual disability in family" value={formData.intellectualDisabilityInFamily} onChange={(v: string) => handleInputChange('intellectualDisabilityInFamily', v)} options={['Yes', 'No']} />
               <RadioGroup label="Developmental delay in family" value={formData.developmentalDelayInFamily} onChange={(v: string) => handleInputChange('developmentalDelayInFamily', v)} options={['Yes', 'No']} />
               <RadioGroup label="Autism in family" value={formData.autismInFamily} onChange={(v: string) => handleInputChange('autismInFamily', v)} options={['Yes', 'No']} />
               <RadioGroup label="Sibling details" value={formData.siblingDetails} onChange={(v: string) => handleInputChange('siblingDetails', v)} options={['Nil', 'Elder', 'Younger']} />
+              <RadioGroup label="Sibling attained milestones appropriately" value={formData.siblingMilestonesAppropriate} onChange={(v: string) => handleInputChange('siblingMilestonesAppropriate', v)} options={['Yes', 'No']} />
               <TextInput label="Father age at delivery" value={formData.fatherAgeAtDelivery} onChange={(v: string) => handleInputChange('fatherAgeAtDelivery', v)} type="number" />
               <TextInput label="Mother age at delivery" value={formData.motherAgeAtDelivery} onChange={(v: string) => handleInputChange('motherAgeAtDelivery', v)} type="number" />
               <RadioGroup label="Consanguinity" value={formData.consanguinity} onChange={(v: string) => handleInputChange('consanguinity', v)} options={['Yes', 'No']} />
