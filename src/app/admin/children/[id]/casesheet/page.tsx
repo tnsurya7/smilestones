@@ -9,7 +9,7 @@ import jsPDF from 'jspdf';
 import Toast from '@/components/Toast';
 
 interface CaseSheetData {
-  // Section 1
+  // Section 1: Child Identification
   childFullName: string;
   dob: string;
   age: string;
@@ -21,7 +21,7 @@ interface CaseSheetData {
   relationshipToChild: string;
   contactNumber: string;
   
-  // Section 2
+  // Section 2: Parent Details
   fatherName: string;
   fatherAge: string;
   fatherEducation: string;
@@ -31,35 +31,80 @@ interface CaseSheetData {
   motherEducation: string;
   motherOccupation: string;
   
-  // Section 3
+  // Section 2B: Family History (NEW)
+  familySpeechDelayHistory: string;
+  intellectualDisabilityInFamily: string;
+  developmentalDelayInFamily: string;
+  autismInFamily: string;
+  siblingDetails: string; // nil / elder / younger
+  fatherAgeAtDelivery: string;
+  motherAgeAtDelivery: string;
+  consanguinity: string; // Yes/No
+  whoIdentifiedFirst: string; // Mother / Father / Grandparent / Pediatrician / Teacher
+  whoSuggestedTherapy: string;
+  residenceType: string; // Individual / Apartment
+  substanceUse: string;
+  sleepPattern: string;
+  screenTimeHours: string;
+  
+  // Section 3: Chief Complaints
   chiefComplaints: string;
   ageWhenNoticed: string;
   durationOfProblem: string;
   
-  // Section 4
+  // Section 4: Perinatal History (EXPANDED)
+  conceptionType: string; // Natural / Assisted fertilization
+  termType: string; // Term / Preterm
+  weeksOfGestation: string;
   pregnancyComplications: string;
+  deliveryType: string; // Normal / LSCS / Assisted
+  assistanceRequiredAtBirth: string; // Yes/No
+  apgarScore: string;
   birthHistory: string;
-  nicuAdmission: string;
   birthWeight: string;
+  
+  // Section 4B: After Birth History (NEW)
+  criedImmediately: string; // Yes/No
+  nicuAdmission: string;
+  phototherapy: string; // Yes/No
+  etTube: string; // Yes/No
+  developmentCourse: string; // Normal / Abnormal
+  
+  // Section 5: Developmental History (EXPANDED)
   milestonesDelay: string;
   speechDelay: string;
   motorDelay: string;
   regressionOfSkills: string;
+  socialSmileAge: string;
+  strangerAnxietyAge: string;
+  responseToName: string;
+  reducedNameCallFrequency: string;
+  languageMilestoneDelay: string;
   
-  // Section 5
+  // Section 5B: Functional/Cognitive (NEW)
+  understandsHouseholdObjects: string;
+  operatesMobilePhone: string;
+  labelsObjects: string;
+  identifiesFamilyMembers: string;
+  identifiesSelfInMirror: string;
+  understandsSimpleCommands: string;
+  understandsDoubleCommands: string;
+  understands3StepCommands: string;
+  
+  // Section 6: Medical History
   seizures: string;
   hearingProblems: string;
   visionProblems: string;
   currentMedication: string;
   
-  // Section 6
+  // Section 7: Behavioral Observations
   eyeContact: string;
   socialInteraction: string;
   repetitiveBehaviors: string;
   sensoryIssues: string;
   attentionSpan: string;
   
-  // Section 8
+  // Section 8: Assessment & Recommendations
   provisionalDiagnosis: string;
   recommendedTherapies: string[];
   frequencyPerWeek: string;
@@ -74,15 +119,37 @@ export default function CaseSheetPage() {
   
   const [child, setChild] = useState<any>(null);
   const [formData, setFormData] = useState<CaseSheetData>({
+    // Section 1
     childFullName: '', dob: '', age: '', gender: '', uhid: '', dateOfAssessment: '',
     referredBy: '', informantName: '', relationshipToChild: '', contactNumber: '',
+    // Section 2
     fatherName: '', fatherAge: '', fatherEducation: '', fatherOccupation: '',
     motherName: '', motherAge: '', motherEducation: '', motherOccupation: '',
+    // Section 2B: Family History
+    familySpeechDelayHistory: '', intellectualDisabilityInFamily: '', developmentalDelayInFamily: '',
+    autismInFamily: '', siblingDetails: '', fatherAgeAtDelivery: '', motherAgeAtDelivery: '',
+    consanguinity: '', whoIdentifiedFirst: '', whoSuggestedTherapy: '', residenceType: '',
+    substanceUse: '', sleepPattern: '', screenTimeHours: '',
+    // Section 3
     chiefComplaints: '', ageWhenNoticed: '', durationOfProblem: '',
-    pregnancyComplications: '', birthHistory: '', nicuAdmission: '', birthWeight: '',
+    // Section 4: Perinatal
+    conceptionType: '', termType: '', weeksOfGestation: '', pregnancyComplications: '',
+    deliveryType: '', assistanceRequiredAtBirth: '', apgarScore: '', birthHistory: '', birthWeight: '',
+    // Section 4B: After Birth
+    criedImmediately: '', nicuAdmission: '', phototherapy: '', etTube: '', developmentCourse: '',
+    // Section 5: Developmental
     milestonesDelay: '', speechDelay: '', motorDelay: '', regressionOfSkills: '',
+    socialSmileAge: '', strangerAnxietyAge: '', responseToName: '', reducedNameCallFrequency: '',
+    languageMilestoneDelay: '',
+    // Section 5B: Functional/Cognitive
+    understandsHouseholdObjects: '', operatesMobilePhone: '', labelsObjects: '',
+    identifiesFamilyMembers: '', identifiesSelfInMirror: '', understandsSimpleCommands: '',
+    understandsDoubleCommands: '', understands3StepCommands: '',
+    // Section 6: Medical
     seizures: '', hearingProblems: '', visionProblems: '', currentMedication: '',
+    // Section 7: Behavioral
     eyeContact: '', socialInteraction: '', repetitiveBehaviors: '', sensoryIssues: '', attentionSpan: '',
+    // Section 8: Assessment
     provisionalDiagnosis: '', recommendedTherapies: [], frequencyPerWeek: '', doctorSignatureName: ''
   });
   
