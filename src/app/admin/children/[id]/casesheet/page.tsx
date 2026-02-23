@@ -38,7 +38,7 @@ const TextArea = ({ label, value, onChange, rows = 3 }: any) => (
 const RadioGroup = ({ label, value, onChange, options }: any) => (
   <div>
     <label className="block text-sm font-semibold text-gray-900 mb-2">{label}</label>
-    <div className="flex gap-4">
+    <div className="flex flex-wrap gap-3">
       {options.map((option: string) => (
         <label key={option} className="flex items-center gap-2 cursor-pointer">
           <input
@@ -48,7 +48,7 @@ const RadioGroup = ({ label, value, onChange, options }: any) => (
             onChange={() => onChange(option)}
             className="w-4 h-4 text-blue-600"
           />
-          <span className="text-gray-900 font-semibold">{option}</span>
+          <span className="text-gray-900 font-semibold text-sm">{option}</span>
         </label>
       ))}
     </div>
