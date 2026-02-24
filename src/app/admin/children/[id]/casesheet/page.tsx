@@ -437,85 +437,90 @@ export default function CaseSheetPage() {
     doc.text(`Duration of problem: ${formData.durationOfProblem || 'N/A'}`, 14, yPos);
     yPos += 8;
     
-    // Section 4: Developmental History
+    // Section 3: Personal History
     if (yPos > 220) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 4: Developmental History', 14, yPos);
+    doc.text('Section 3: Personal History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    const pregComp = doc.splitTextToSize(`Pregnancy complications: ${formData.pregnancyComplications || 'N/A'}`, 180);
-    pregComp.forEach((line: string) => {
-      if (yPos > 280) { doc.addPage(); yPos = 20; }
-      doc.text(line, 14, yPos);
-      yPos += 5;
-    });
-    yPos += 2;
-    
-    const birthHist = doc.splitTextToSize(`Birth history: ${formData.birthHistory || 'N/A'}`, 180);
-    birthHist.forEach((line: string) => {
-      if (yPos > 280) { doc.addPage(); yPos = 20; }
-      doc.text(line, 14, yPos);
-      yPos += 5;
-    });
-    yPos += 2;
-    
-    doc.text(`NICU admission: ${formData.nicuAdmission || 'N/A'}`, 14, yPos);
+    doc.text(`Conception type: ${formData.conceptionType || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`Term type: ${formData.termType || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`Weeks of gestation: ${formData.weeksOfGestation || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`Delivery type: ${formData.deliveryType || 'N/A'}`, 14, yPos);
     yPos += 5;
     doc.text(`Birth weight: ${formData.birthWeight || 'N/A'} kg`, 14, yPos);
     yPos += 5;
-    doc.text(`Milestones delay noticed: ${formData.milestonesDelay || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    doc.text(`Speech delay: ${formData.speechDelay || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    doc.text(`Motor delay: ${formData.motorDelay || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    doc.text(`Regression of skills: ${formData.regressionOfSkills || 'N/A'}`, 14, yPos);
+    doc.text(`APGAR score: ${formData.apgarScore || 'N/A'}`, 14, yPos);
     yPos += 8;
     
-    // Section 5: Medical History
+    // Section 4: After Birth History
     if (yPos > 250) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 5: Medical History', 14, yPos);
+    doc.text('Section 4: After Birth History', 14, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Cried immediately: ${formData.criedImmediately || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`NICU admission: ${formData.nicuAdmission || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`Phototherapy days: ${formData.phototherapyDays || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`ET days: ${formData.etTubeDays || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`Seizures at birth: ${formData.seizuresAtBirth || 'N/A'}`, 14, yPos);
+    yPos += 8;
+    
+    // Section 5: Developmental History
+    if (yPos > 250) { doc.addPage(); yPos = 20; }
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Section 5: Developmental History', 14, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Social smile: ${formData.socialSmileAge || 'N/A'} months`, 14, yPos);
+    yPos += 5;
+    doc.text(`Stranger anxiety: ${formData.strangerAnxietyAge || 'N/A'} months`, 14, yPos);
+    yPos += 5;
+    doc.text(`Name call response: ${formData.nameCallResponseMonths || 'N/A'} months`, 14, yPos);
+    yPos += 5;
+    doc.text(`Name call adequacy: ${formData.nameCallAdequacy || 'N/A'}`, 14, yPos);
+    yPos += 5;
+    doc.text(`Language milestones delayed: ${formData.languageMilestoneDelay || 'N/A'}`, 14, yPos);
+    yPos += 8;
+    
+    // Section 6: Medical History
+    if (yPos > 250) { doc.addPage(); yPos = 20; }
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Section 6: Medical History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.text(`Seizures: ${formData.seizures || 'N/A'}`, 14, yPos);
     yPos += 5;
-    doc.text(`Hearing problems: ${formData.hearingProblems || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    doc.text(`Vision problems: ${formData.visionProblems || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    const medText = doc.splitTextToSize(`Current medication: ${formData.currentMedication || 'N/A'}`, 180);
-    medText.forEach((line: string) => {
-      if (yPos > 280) { doc.addPage(); yPos = 20; }
-      doc.text(line, 14, yPos);
+    if (formData.seizures === 'Yes') {
+      doc.text(`Seizure medication: ${formData.seizureMedication || 'N/A'}`, 14, yPos);
       yPos += 5;
-    });
+    }
+    doc.text(`Febrile seizure: ${formData.febrileSeizure || 'N/A'}`, 14, yPos);
     yPos += 5;
-    
-    // Section 6: Behavioural Observation
-    if (yPos > 250) { doc.addPage(); yPos = 20; }
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Section 6: Behavioural Observation', 14, yPos);
-    yPos += 8;
-    
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Eye contact: ${formData.eyeContact || 'N/A'}`, 14, yPos);
+    doc.text(`Floppiness/stiffness: ${formData.floppinessOrStiffness || 'N/A'}`, 14, yPos);
     yPos += 5;
-    doc.text(`Social interaction: ${formData.socialInteraction || 'N/A'}`, 14, yPos);
+    doc.text(`Sleep pattern: ${formData.sleepPattern || 'N/A'}`, 14, yPos);
     yPos += 5;
-    doc.text(`Repetitive behaviors: ${formData.repetitiveBehaviors || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    doc.text(`Sensory issues: ${formData.sensoryIssues || 'N/A'}`, 14, yPos);
-    yPos += 5;
-    doc.text(`Attention span: ${formData.attentionSpan || 'N/A'}`, 14, yPos);
+    doc.text(`Screen time: ${formData.screenTimeHours || 'N/A'} hours/day`, 14, yPos);
     yPos += 8;
     
     // Section 7: Auto-filled
