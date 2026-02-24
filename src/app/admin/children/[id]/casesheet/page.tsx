@@ -1133,9 +1133,6 @@ export default function CaseSheetPage() {
               <RadioGroup label="Who first doubted the delay" value={formData.whoIdentifiedFirst} onChange={(v: string) => handleInputChange('whoIdentifiedFirst', v)} options={['Mother', 'Father', 'Grandparent', 'Pediatrician', 'Teacher']} />
               <TextInput label="Who suggested therapy" value={formData.whoSuggestedTherapy} onChange={(v: string) => handleInputChange('whoSuggestedTherapy', v)} />
               <RadioGroup label="Residence type" value={formData.residenceType} onChange={(v: string) => handleInputChange('residenceType', v)} options={['Individual', 'Apartment']} />
-              <TextInput label="Substance use / drugs" value={formData.substanceUse} onChange={(v: string) => handleInputChange('substanceUse', v)} />
-              <TextInput label="Sleep pattern" value={formData.sleepPattern} onChange={(v: string) => handleInputChange('sleepPattern', v)} />
-              <TextInput label="Screen time (hours/day)" value={formData.screenTimeHours} onChange={(v: string) => handleInputChange('screenTimeHours', v)} type="number" />
             </div>
           </div>
           
@@ -1158,9 +1155,9 @@ export default function CaseSheetPage() {
           </div>
         </div>
 
-        {/* Section 3: Perinatal & Birth History */}
+        {/* Section 3: Personal History */}
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 3: Perinatal & Birth History</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 3: Personal History</h2>
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <RadioGroup label="Conception type" value={formData.conceptionType} onChange={(v: string) => handleInputChange('conceptionType', v)} options={['Natural', 'Assisted fertilization']} />
@@ -1171,8 +1168,6 @@ export default function CaseSheetPage() {
               <TextInput label="APGAR score" value={formData.apgarScore} onChange={(v: string) => handleInputChange('apgarScore', v)} />
               <TextInput label="Birth weight (kg)" value={formData.birthWeight} onChange={(v: string) => handleInputChange('birthWeight', v)} type="number" />
             </div>
-            <TextArea label="Pregnancy complications" value={formData.pregnancyComplications} onChange={(v: string) => handleInputChange('pregnancyComplications', v)} />
-            <TextArea label="Birth history details" value={formData.birthHistory} onChange={(v: string) => handleInputChange('birthHistory', v)} />
           </div>
         </div>
 
@@ -1182,9 +1177,9 @@ export default function CaseSheetPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <RadioGroup label="Cried immediately after birth" value={formData.criedImmediately} onChange={(v: string) => handleInputChange('criedImmediately', v)} options={['Yes', 'No']} />
             <RadioGroup label="NICU admission" value={formData.nicuAdmission} onChange={(v: string) => handleInputChange('nicuAdmission', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Phototherapy" value={formData.phototherapy} onChange={(v: string) => handleInputChange('phototherapy', v)} options={['Yes', 'No']} />
-            <RadioGroup label="ET tube" value={formData.etTube} onChange={(v: string) => handleInputChange('etTube', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Development course" value={formData.developmentCourse} onChange={(v: string) => handleInputChange('developmentCourse', v)} options={['Normal', 'Abnormal']} />
+            <TextInput label="Phototherapy (days)" value={formData.phototherapyDays} onChange={(v: string) => handleInputChange('phototherapyDays', v)} type="number" />
+            <TextInput label="ET (days)" value={formData.etTubeDays} onChange={(v: string) => handleInputChange('etTubeDays', v)} type="number" />
+            <RadioGroup label="Seizures" value={formData.seizuresAtBirth} onChange={(v: string) => handleInputChange('seizuresAtBirth', v)} options={['Yes', 'No']} />
           </div>
         </div>
 
@@ -1193,63 +1188,36 @@ export default function CaseSheetPage() {
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 5: Developmental History</h2>
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <RadioGroup label="Milestones delay noticed" value={formData.milestonesDelay} onChange={(v: string) => handleInputChange('milestonesDelay', v)} options={['Yes', 'No']} />
-              <RadioGroup label="Speech delay" value={formData.speechDelay} onChange={(v: string) => handleInputChange('speechDelay', v)} options={['Yes', 'No']} />
-              <RadioGroup label="Motor delay" value={formData.motorDelay} onChange={(v: string) => handleInputChange('motorDelay', v)} options={['Yes', 'No']} />
-              <RadioGroup label="Regression of skills" value={formData.regressionOfSkills} onChange={(v: string) => handleInputChange('regressionOfSkills', v)} options={['Yes', 'No']} />
-              <TextInput label="Social smile age (months)" value={formData.socialSmileAge} onChange={(v: string) => handleInputChange('socialSmileAge', v)} type="number" />
-              <TextInput label="Stranger anxiety age (months)" value={formData.strangerAnxietyAge} onChange={(v: string) => handleInputChange('strangerAnxietyAge', v)} type="number" />
-              <RadioGroup label="Response to name" value={formData.responseToName} onChange={(v: string) => handleInputChange('responseToName', v)} options={['Good', 'Poor', 'Absent']} />
-              <RadioGroup label="Reduced name call frequency" value={formData.reducedNameCallFrequency} onChange={(v: string) => handleInputChange('reducedNameCallFrequency', v)} options={['Yes', 'No']} />
-              <TextInput label="Language milestone delay" value={formData.languageMilestoneDelay} onChange={(v: string) => handleInputChange('languageMilestoneDelay', v)} />
+              <TextInput label="Social smile (months)" value={formData.socialSmileAge} onChange={(v: string) => handleInputChange('socialSmileAge', v)} type="number" />
+              <TextInput label="Stranger anxiety (months)" value={formData.strangerAnxietyAge} onChange={(v: string) => handleInputChange('strangerAnxietyAge', v)} type="number" />
+              <TextInput label="Name call response (months)" value={formData.nameCallResponseMonths} onChange={(v: string) => handleInputChange('nameCallResponseMonths', v)} type="number" />
+              <RadioGroup label="Name call adequacy" value={formData.nameCallAdequacy} onChange={(v: string) => handleInputChange('nameCallAdequacy', v)} options={['Adequate', 'Inadequate', 'Absent']} />
+              <RadioGroup label="Language milestones delayed against expected for age" value={formData.languageMilestoneDelay} onChange={(v: string) => handleInputChange('languageMilestoneDelay', v)} options={['Yes', 'No']} />
             </div>
           </div>
         </div>
 
-        {/* Section 6: Functional/Cognitive Assessment */}
+        {/* Section 6: Medical History */}
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 6: Functional/Cognitive Assessment</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <RadioGroup label="Understands household objects" value={formData.understandsHouseholdObjects} onChange={(v: string) => handleInputChange('understandsHouseholdObjects', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Operates mobile phone" value={formData.operatesMobilePhone} onChange={(v: string) => handleInputChange('operatesMobilePhone', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Labels objects" value={formData.labelsObjects} onChange={(v: string) => handleInputChange('labelsObjects', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Identifies family members" value={formData.identifiesFamilyMembers} onChange={(v: string) => handleInputChange('identifiesFamilyMembers', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Identifies self in mirror" value={formData.identifiesSelfInMirror} onChange={(v: string) => handleInputChange('identifiesSelfInMirror', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Understands simple commands" value={formData.understandsSimpleCommands} onChange={(v: string) => handleInputChange('understandsSimpleCommands', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Understands double commands" value={formData.understandsDoubleCommands} onChange={(v: string) => handleInputChange('understandsDoubleCommands', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Understands 3-step commands" value={formData.understands3StepCommands} onChange={(v: string) => handleInputChange('understands3StepCommands', v)} options={['Yes', 'No']} />
-          </div>
-        </div>
-
-        {/* Section 7: Medical History */}
-        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 7: Medical History</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 6: Medical History</h2>
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <RadioGroup label="Seizures" value={formData.seizures} onChange={(v: string) => handleInputChange('seizures', v)} options={['Yes', 'No']} />
-              <RadioGroup label="Hearing problems" value={formData.hearingProblems} onChange={(v: string) => handleInputChange('hearingProblems', v)} options={['Yes', 'No']} />
-              <RadioGroup label="Vision problems" value={formData.visionProblems} onChange={(v: string) => handleInputChange('visionProblems', v)} options={['Yes', 'No']} />
+              {formData.seizures === 'Yes' && (
+                <TextInput label="Seizure medication" value={formData.seizureMedication} onChange={(v: string) => handleInputChange('seizureMedication', v)} />
+              )}
+              <RadioGroup label="Febrile seizure" value={formData.febrileSeizure} onChange={(v: string) => handleInputChange('febrileSeizure', v)} options={['Yes', 'No']} />
+              <RadioGroup label="Mother never felt any floppiness or stiffness in early childhood" value={formData.floppinessOrStiffness} onChange={(v: string) => handleInputChange('floppinessOrStiffness', v)} options={['Yes', 'No']} />
+              <TextInput label="Sleep pattern" value={formData.sleepPattern} onChange={(v: string) => handleInputChange('sleepPattern', v)} />
+              <TextInput label="Screen time (hours/day)" value={formData.screenTimeHours} onChange={(v: string) => handleInputChange('screenTimeHours', v)} type="number" />
             </div>
-            <TextArea label="Current medication" value={formData.currentMedication} onChange={(v: string) => handleInputChange('currentMedication', v)} />
-          </div>
-        </div>
-
-        {/* Section 8: Behavioural Observation */}
-        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 8: Behavioural Observation</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <RadioGroup label="Eye contact" value={formData.eyeContact} onChange={(v: string) => handleInputChange('eyeContact', v)} options={['Good', 'Poor']} />
-            <RadioGroup label="Social interaction" value={formData.socialInteraction} onChange={(v: string) => handleInputChange('socialInteraction', v)} options={['Normal', 'Reduced']} />
-            <RadioGroup label="Repetitive behaviors" value={formData.repetitiveBehaviors} onChange={(v: string) => handleInputChange('repetitiveBehaviors', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Sensory issues" value={formData.sensoryIssues} onChange={(v: string) => handleInputChange('sensoryIssues', v)} options={['Yes', 'No']} />
-            <RadioGroup label="Attention span" value={formData.attentionSpan} onChange={(v: string) => handleInputChange('attentionSpan', v)} options={['Good', 'Poor']} />
           </div>
         </div>
 
 
-        {/* Section 9: Auto-filled Section (READ ONLY) */}
+        {/* Section 7: Auto-filled Section (READ ONLY) */}
         <div className="bg-gray-50 rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6 border-2 border-blue-200">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Section 9: Screening Results (Auto-filled)</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Section 7: Screening Results (Auto-filled)</h2>
           <p className="text-sm text-gray-900 mb-4 italic">This section is automatically populated from M-CHAT and DSM assessments</p>
           
           {autoSection?.mchat ? (
@@ -1315,9 +1283,9 @@ export default function CaseSheetPage() {
           )}
         </div>
 
-        {/* Section 10: Final Clinical Impression */}
+        {/* Section 8: Final Clinical Impression */}
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 10: Final Clinical Impression</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 8: Final Clinical Impression</h2>
           <div className="space-y-4">
             <TextArea label="Provisional Diagnosis" value={formData.provisionalDiagnosis} onChange={(v: string) => handleInputChange('provisionalDiagnosis', v)} rows={4} />
             
@@ -1343,6 +1311,18 @@ export default function CaseSheetPage() {
               <TextInput label="Doctor Signature Name" value={formData.doctorSignatureName} onChange={(v: string) => handleInputChange('doctorSignatureName', v)} />
             </div>
           </div>
+        </div>
+
+        {/* Bottom Save Button */}
+        <div className="flex justify-center pb-6">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 text-base font-semibold shadow-lg"
+          >
+            <Save className="w-5 h-5" />
+            {saving ? 'Saving...' : 'Save Case Sheet'}
+          </button>
         </div>
       </div>
     </div>

@@ -462,6 +462,18 @@ export default function DSMPage() {
             ))}
           </div>
         </div>
+
+        {/* Bottom Save Button */}
+        <div className="flex justify-center pb-6">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 text-base font-semibold shadow-lg"
+          >
+            <Save className="w-5 h-5" />
+            {saving ? 'Saving...' : 'Save DSM Checklist'}
+          </button>
+        </div>
       </div>
     </div>
   );
