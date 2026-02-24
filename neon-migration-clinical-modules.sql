@@ -43,7 +43,11 @@ CREATE INDEX IF NOT EXISTS idx_mchat_child ON mchat_screenings(child_id);
 CREATE INDEX IF NOT EXISTS idx_dsm_child ON dsm_checklists(child_id);
 CREATE INDEX IF NOT EXISTS idx_case_sheets_uhid ON case_sheets(uhid);
 
--- Create triggers for updated_at
+-- Create triggers for updated_at (drop if exists first)
+DROP TRIGGER IF EXISTS update_case_sheets_updated_at ON case_sheets;
+DROP TRIGGER IF EXISTS update_mchat_updated_at ON mchat_screenings;
+DROP TRIGGER IF EXISTS update_dsm_updated_at ON dsm_checklists;
+
 CREATE TRIGGER update_case_sheets_updated_at BEFORE UPDATE ON case_sheets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_mchat_updated_at BEFORE UPDATE ON mchat_screenings FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_dsm_updated_at BEFORE UPDATE ON dsm_checklists FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
