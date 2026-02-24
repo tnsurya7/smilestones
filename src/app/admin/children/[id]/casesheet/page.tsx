@@ -437,6 +437,113 @@ export default function CaseSheetPage() {
     doc.text(`Duration of problem: ${formData.durationOfProblem || 'N/A'}`, 14, yPos);
     yPos += 8;
     
+    // Section 2: Family History
+    if (yPos > 250) { doc.addPage(); yPos = 20; }
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Section 2: Family History', 14, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Father:', 14, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Name: ${formData.fatherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Age: ${formData.fatherAge || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Education: ${formData.fatherEducation || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Occupation: ${formData.fatherOccupation || 'N/A'}`, 20, yPos);
+    yPos += 8;
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Mother:', 14, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Name: ${formData.motherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Age: ${formData.motherAge || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Education: ${formData.motherEducation || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Occupation: ${formData.motherOccupation || 'N/A'}`, 20, yPos);
+    yPos += 8;
+    
+    if (yPos > 250) { doc.addPage(); yPos = 20; }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Siblings:', 14, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    if (formData.sibling1Name || formData.sibling2Name) {
+      if (formData.sibling1Name) {
+        doc.text(`Sibling 1: ${formData.sibling1Name}, Age: ${formData.sibling1Age || 'N/A'}`, 20, yPos);
+        yPos += 5;
+      }
+      if (formData.sibling2Name) {
+        doc.text(`Sibling 2: ${formData.sibling2Name}, Age: ${formData.sibling2Age || 'N/A'}`, 20, yPos);
+        yPos += 5;
+      }
+    } else {
+      doc.text('None', 20, yPos);
+      yPos += 5;
+    }
+    yPos += 5;
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Grandparents:', 14, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Paternal Grandfather: ${formData.paternalGrandfatherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Paternal Grandmother: ${formData.paternalGrandmotherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Maternal Grandfather: ${formData.maternalGrandfatherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Maternal Grandmother: ${formData.maternalGrandmotherName || 'N/A'}`, 20, yPos);
+    yPos += 8;
+    
+    if (yPos > 220) { doc.addPage(); yPos = 20; }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Family Medical History:', 14, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Speech delay: ${formData.familySpeechDelayHistory || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Intellectual disability: ${formData.intellectualDisabilityInFamily || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Developmental delay: ${formData.developmentalDelayInFamily || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Autism: ${formData.autismInFamily || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Who first doubted delay: ${formData.whoIdentifiedFirst || 'N/A'}`, 20, yPos);
+    yPos += 8;
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Parental Concerns:', 14, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    if (formData.parentalConcerns && formData.parentalConcerns.length > 0) {
+      formData.parentalConcerns.forEach((concern: string) => {
+        doc.text(`• ${concern}`, 20, yPos);
+        yPos += 5;
+      });
+    } else {
+      doc.text('None', 20, yPos);
+      yPos += 5;
+    }
+    yPos += 8;
+    
+    // Family Tree Space
+    if (yPos > 220) { doc.addPage(); yPos = 20; }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Family Tree:', 14, yPos);
+    yPos += 10;
+    doc.setFont('helvetica', 'normal');
+    // Add blank space for family tree (40mm height)
+    yPos += 40;
+    
     // Section 3: Personal History
     if (yPos > 220) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
