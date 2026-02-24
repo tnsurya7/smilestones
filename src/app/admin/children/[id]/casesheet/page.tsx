@@ -139,71 +139,39 @@ interface CaseSheetData {
   whoSuggestedTherapy: string;
   parentalConcerns: string[]; // Speech delay, Hyperactivity, Behavior problem, Eye contact, Not responding to name
   residenceType: string;
-  substanceUse: string;
-  sleepPattern: string;
-  screenTimeHours: string;
   
-  // Section 4: Perinatal History
+  // Section 3: Personal History (Perinatal)
   conceptionType: string;
   antenatalComplications: string[]; // Thyroid, Diabetic, Hypertension, Seizure, Stress, Trauma, Bleeding issues
   termType: string;
   weeksOfGestation: string;
-  pregnancyComplications: string;
   deliveryType: string;
   assistanceRequiredAtBirth: string;
   apgarScore: string;
-  birthHistory: string;
   birthWeight: string;
   
-  // Section 4B: After Birth History
+  // Section 4: After Birth History
   criedImmediately: string;
   nicuAdmission: string;
   jaundice: string; // Yes/No
-  phototherapy: string;
   phototherapyDays: string;
-  etTube: string;
   etTubeDays: string;
   seizuresAtBirth: string; // Yes/No
   febrileSeizure: string; // Yes/No
   floppinessOrStiffness: string; // Yes/No
-  developmentCourse: string;
   
   // Section 5: Developmental History
-  milestonesDelay: string;
-  speechDelay: string;
-  motorDelay: string;
-  regressionOfSkills: string;
   socialSmileAge: string;
   strangerAnxietyAge: string;
-  responseToName: string;
   nameCallResponseMonths: string;
   nameCallAdequacy: string; // adequate / inadequate / absent
-  reducedNameCallFrequency: string;
   languageMilestoneDelay: string;
-  
-  // Section 5B: Functional/Cognitive Assessment
-  understandsHouseholdObjects: string;
-  operatesMobilePhone: string;
-  labelsObjects: string;
-  identifiesFamilyMembers: string;
-  identifiesSelfInMirror: string;
-  understandsSimpleCommands: string;
-  understandsDoubleCommands: string;
-  understands3StepCommands: string;
   
   // Section 6: Medical History
   seizures: string;
   seizureMedication: string;
-  hearingProblems: string;
-  visionProblems: string;
-  currentMedication: string;
-  
-  // Section 7: Behavioral Observations
-  eyeContact: string;
-  socialInteraction: string;
-  repetitiveBehaviors: string;
-  sensoryIssues: string;
-  attentionSpan: string;
+  sleepPattern: string;
+  screenTimeHours: string;
   
   // Section 8: Assessment & Recommendations
   provisionalDiagnosis: string;
@@ -235,25 +203,17 @@ export default function CaseSheetPage() {
     // Family History
     familySpeechDelayHistory: '', intellectualDisabilityInFamily: '', developmentalDelayInFamily: '',
     autismInFamily: '', whoIdentifiedFirst: '', whoSuggestedTherapy: '', parentalConcerns: [], residenceType: '',
-    substanceUse: '', sleepPattern: '', screenTimeHours: '',
-    // Section 4: Perinatal
-    conceptionType: '', antenatalComplications: [], termType: '', weeksOfGestation: '', pregnancyComplications: '',
-    deliveryType: '', assistanceRequiredAtBirth: '', apgarScore: '', birthHistory: '', birthWeight: '',
-    // Section 4B: After Birth
-    criedImmediately: '', nicuAdmission: '', jaundice: '', phototherapy: '', phototherapyDays: '', 
-    etTube: '', etTubeDays: '', seizuresAtBirth: '', febrileSeizure: '', floppinessOrStiffness: '', developmentCourse: '',
+    // Section 3: Personal History
+    conceptionType: '', antenatalComplications: [], termType: '', weeksOfGestation: '',
+    deliveryType: '', assistanceRequiredAtBirth: '', apgarScore: '', birthWeight: '',
+    // Section 4: After Birth
+    criedImmediately: '', nicuAdmission: '', jaundice: '', phototherapyDays: '', 
+    etTubeDays: '', seizuresAtBirth: '', febrileSeizure: '', floppinessOrStiffness: '',
     // Section 5: Developmental
-    milestonesDelay: '', speechDelay: '', motorDelay: '', regressionOfSkills: '',
-    socialSmileAge: '', strangerAnxietyAge: '', responseToName: '', nameCallResponseMonths: '', nameCallAdequacy: '',
-    reducedNameCallFrequency: '', languageMilestoneDelay: '',
-    // Section 5B: Functional/Cognitive
-    understandsHouseholdObjects: '', operatesMobilePhone: '', labelsObjects: '',
-    identifiesFamilyMembers: '', identifiesSelfInMirror: '', understandsSimpleCommands: '',
-    understandsDoubleCommands: '', understands3StepCommands: '',
+    socialSmileAge: '', strangerAnxietyAge: '', nameCallResponseMonths: '', nameCallAdequacy: '',
+    languageMilestoneDelay: '',
     // Section 6: Medical
-    seizures: '', seizureMedication: '', hearingProblems: '', visionProblems: '', currentMedication: '',
-    // Section 7: Behavioral
-    eyeContact: '', socialInteraction: '', repetitiveBehaviors: '', sensoryIssues: '', attentionSpan: '',
+    seizures: '', seizureMedication: '', sleepPattern: '', screenTimeHours: '',
     // Section 8: Assessment
     provisionalDiagnosis: '', recommendedTherapies: [], frequencyPerWeek: '', doctorSignatureName: ''
   });
@@ -409,8 +369,6 @@ export default function CaseSheetPage() {
       ['UHID:', formData.uhid || 'N/A'],
       ['Date of Assessment:', formData.dateOfAssessment || 'N/A'],
       ['Referred By:', formData.referredBy || 'N/A'],
-      ['Informant Name:', formData.informantName || 'N/A'],
-      ['Relationship to Child:', formData.relationshipToChild || 'N/A'],
       ['Contact Number:', formData.contactNumber || 'N/A']
     ];
     
