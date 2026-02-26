@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
-import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand, Footprints } from 'lucide-react';
+import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand, Footprints, MessageSquare } from 'lucide-react';
 
 export default function ChildProfilePage() {
   const { user, loading } = useAuth();
@@ -87,6 +87,13 @@ export default function ChildProfilePage() {
       icon: Footprints,
       color: 'from-indigo-500 to-indigo-600',
       route: `/admin/children/${childId}/gross-motor`
+    },
+    {
+      title: 'Language Development',
+      description: 'Age-based language and communication skills assessment tracking speech and comprehension',
+      icon: MessageSquare,
+      color: 'from-violet-500 to-violet-600',
+      route: `/admin/children/${childId}/language`
     },
     {
       title: 'Sessions',

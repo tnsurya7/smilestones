@@ -1,5 +1,5 @@
--- Create gross_motor_skills table
-CREATE TABLE IF NOT EXISTS gross_motor_skills (
+-- Create language_development table
+CREATE TABLE IF NOT EXISTS language_development (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   child_id UUID NOT NULL REFERENCES children(id) ON DELETE CASCADE,
   age TEXT NOT NULL, -- Age in months (e.g., "24", "36")
@@ -9,10 +9,10 @@ CREATE TABLE IF NOT EXISTS gross_motor_skills (
 );
 
 -- Create index for faster lookups
-CREATE INDEX IF NOT EXISTS idx_gross_motor_skills_child ON gross_motor_skills(child_id);
+CREATE INDEX IF NOT EXISTS idx_language_development_child ON language_development(child_id);
 
 -- Create trigger to update updated_at timestamp
-CREATE OR REPLACE FUNCTION update_gross_motor_skills_updated_at()
+CREATE OR REPLACE FUNCTION update_language_development_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
   NEW.updated_at = NOW();
@@ -20,15 +20,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_gross_motor_skills_updated_at
-  BEFORE UPDATE ON gross_motor_skills
+CREATE TRIGGER update_language_development_updated_at
+  BEFORE UPDATE ON language_development
   FOR EACH ROW
-  EXECUTE FUNCTION update_gross_motor_skills_updated_at();
+  EXECUTE FUNCTION update_language_development_updated_at();
 
 -- Verify table structure
 SELECT column_name, data_type 
 FROM information_schema.columns 
-WHERE table_name = 'gross_motor_skills'
+WHERE table_name = 'language_development'
 ORDER BY ordinal_position;
-
-
