@@ -95,7 +95,7 @@ export default function ParentAppointmentsPage() {
                       Service
                     </th>
                     <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                      Booked On
+                      Appointment Date
                     </th>
                   </tr>
                 </thead>
@@ -109,7 +109,11 @@ export default function ParentAppointmentsPage() {
                         </div>
                       </td>
                       <td className="hidden sm:table-cell px-6 py-4 text-sm text-gray-600">
-                        {new Date(apt.date).toLocaleDateString()}
+                        {new Date(apt.date).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
                       </td>
                       <td className="hidden md:table-cell px-6 py-4 text-sm text-gray-600">
                         <div className="flex items-center gap-2">
@@ -121,7 +125,13 @@ export default function ParentAppointmentsPage() {
                         {apt.service}
                       </td>
                       <td className="hidden lg:table-cell px-6 py-4 text-sm text-gray-500">
-                        {new Date(apt.createdAt).toLocaleString()}
+                        {new Date(apt.created_at).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'short', 
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
                       </td>
                     </tr>
                   ))}

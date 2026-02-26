@@ -55,6 +55,26 @@ const RadioGroup = ({ label, value, onChange, options }: any) => (
   </div>
 );
 
+const SelectInput = ({ label, value, onChange, options, required = false }: any) => (
+  <div>
+    <label className="block text-sm font-semibold text-gray-900 mb-1">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <select
+      value={value || ''}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+    >
+      <option value="">Select {label}</option>
+      {options.map((option: string | number) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
 const CheckboxGroup = ({ label, values, onChange, options }: any) => {
   const handleToggle = (option: string) => {
     const newValues = values.includes(option)
@@ -1115,7 +1135,7 @@ export default function CaseSheetPage() {
             <TextInput label="Date of Birth" value={formData.dob} onChange={handleDOBChange} type="date" required />
             <TextInput label="Age (years)" value={formData.age} onChange={(v: string) => handleInputChange('age', v)} type="number" />
             <RadioGroup label="Gender" value={formData.gender} onChange={(v: string) => handleInputChange('gender', v)} options={['Male', 'Female', 'Other']} />
-            <TextInput label="Birth Order" value={formData.birthOrder} onChange={(v: string) => handleInputChange('birthOrder', v)} />
+            <SelectInput label="Birth Order" value={formData.birthOrder} onChange={(v: string) => handleInputChange('birthOrder', v)} options={[0, 1, 2, 3, 4]} />
             <TextInput label="UHID (Auto-generated)" value={formData.uhid} onChange={(v: string) => handleInputChange('uhid', v)} />
             <TextInput label="Date of Assessment" value={formData.dateOfAssessment} onChange={(v: string) => handleInputChange('dateOfAssessment', v)} type="date" />
             <TextInput label="Referred By" value={formData.referredBy} onChange={(v: string) => handleInputChange('referredBy', v)} />
