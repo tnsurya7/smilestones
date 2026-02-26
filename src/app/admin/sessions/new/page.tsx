@@ -84,12 +84,18 @@ export default function NewSessionPage() {
       alert('Please select a child');
       return;
     }
+
+    if (!user?.id) {
+      alert('User session expired. Please log in again.');
+      router.push('/admin/login');
+      return;
+    }
     
     try {
       // Add session with current user as doctor
       await addSession({
         child_id: formData.child_id,
-        doctor_id: user?.id || '1',
+        doctor_id: user.id,
         date: formData.date,
         attendance: formData.attendance,
         eye_contact: formData.eye_contact,
