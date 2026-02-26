@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
-import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand } from 'lucide-react';
+import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand, Footprints } from 'lucide-react';
 
 export default function ChildProfilePage() {
   const { user, loading } = useAuth();
@@ -80,6 +80,13 @@ export default function ChildProfilePage() {
       icon: Hand,
       color: 'from-cyan-500 to-cyan-600',
       route: `/admin/children/${childId}/fine-motor`
+    },
+    {
+      title: 'Gross Motor Skills',
+      description: 'Age-based gross motor skills assessment tracking movement, balance, and physical coordination',
+      icon: Footprints,
+      color: 'from-indigo-500 to-indigo-600',
+      route: `/admin/children/${childId}/gross-motor`
     },
     {
       title: 'Sessions',
