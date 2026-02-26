@@ -151,7 +151,7 @@ export default function AdminDashboard() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                Welcome back, {user.name}!
+                Welcome back, Dr. P. Sudhakar!
               </h1>
               <p className="text-sm sm:text-base text-gray-900 font-semibold mt-1">
                 Here's what's happening with your clinic today
