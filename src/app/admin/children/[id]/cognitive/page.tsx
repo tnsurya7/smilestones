@@ -160,8 +160,11 @@ export default function CognitiveMilestonesPage() {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     
-    const milestones = COGNITIVE_MILESTONES[parseInt(selectedAge)];
-    milestones.forEach((milestone, index) => {
+    const milestones = COGNITIVE_MILESTONES[parseInt(selectedAge)] || [];
+    if (milestones.length === 0) {
+      doc.text('No milestones found for this age.', 14, yPos);
+    } else {
+      milestones.forEach((milestone, index) => {
       if (yPos > 270) {
         doc.addPage();
         yPos = 20;
@@ -195,6 +198,7 @@ export default function CognitiveMilestonesPage() {
       doc.setFont('helvetica', 'normal');
       yPos += 7;
     });
+    }
     
     // Footer
     const pageCount = doc.getNumberOfPages();
@@ -220,7 +224,7 @@ export default function CognitiveMilestonesPage() {
 
   if (!user) return null;
 
-  const currentMilestones = selectedAge ? COGNITIVE_MILESTONES[parseInt(selectedAge)] : [];
+  const currentMilestones = selectedAge ? (COGNITIVE_MILESTONES[parseInt(selectedAge)] || []) : [];
 
   return (
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
