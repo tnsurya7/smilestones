@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
-import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart } from 'lucide-react';
+import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain } from 'lucide-react';
 
 export default function ChildProfilePage() {
   const { user, loading } = useAuth();
@@ -66,6 +66,13 @@ export default function ChildProfilePage() {
       icon: ListChecks,
       color: 'from-pink-500 to-pink-600',
       route: `/admin/children/${childId}/dsm`
+    },
+    {
+      title: 'Cognitive Milestones',
+      description: 'Age-based cognitive and developmental milestones assessment for tracking child progress',
+      icon: Brain,
+      color: 'from-teal-500 to-teal-600',
+      route: `/admin/children/${childId}/cognitive`
     },
     {
       title: 'Sessions',

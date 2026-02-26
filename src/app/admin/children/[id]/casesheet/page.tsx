@@ -7,7 +7,6 @@ import { getChildById } from '@/lib/api-client';
 import { ArrowLeft, Save, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import Toast from '@/components/Toast';
-import { COGNITIVE_MILESTONES, AVAILABLE_AGES } from '@/data/cognitiveMilestones';
 
 // Input Components (defined outside to prevent re-rendering issues)
 const TextInput = ({ label, value, onChange, type = 'text', required = false }: any) => (
@@ -168,10 +167,6 @@ interface CaseSheetData {
   nameCallAdequacy: string; // adequate / inadequate / absent
   languageMilestoneDelay: string;
   
-  // Section 5B: Cognitive Milestones
-  cognitiveMilestoneAge: string; // Selected age in months
-  cognitiveMilestoneAnswers: { [key: string]: string }; // Answers for cognitive milestone questions
-  
   // Section 6: Medical History
   seizures: string;
   seizureMedication: string;
@@ -217,8 +212,6 @@ export default function CaseSheetPage() {
     // Section 5: Developmental
     socialSmileAge: '', strangerAnxietyAge: '', nameCallResponseMonths: '', nameCallAdequacy: '',
     languageMilestoneDelay: '',
-    // Section 5B: Cognitive Milestones
-    cognitiveMilestoneAge: '', cognitiveMilestoneAnswers: {},
     // Section 6: Medical
     seizures: '', seizureMedication: '', sleepPattern: '', screenTimeHours: '',
     // Section 8: Assessment
@@ -612,54 +605,6 @@ export default function CaseSheetPage() {
     yPos += 5;
     doc.text(`Language milestones delayed: ${formData.languageMilestoneDelay || 'N/A'}`, 14, yPos);
     yPos += 8;
-    
-    // Section 5B: Cognitive Milestones
-    if (formData.cognitiveMilestoneAge && COGNITIVE_MILESTONES[parseInt(formData.cognitiveMilestoneAge)]) {
-      if (yPos > 240) { doc.addPage(); yPos = 20; }
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Section 5B: Cognitive Milestones Assessment', 14, yPos);
-      yPos += 8;
-      
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Age assessed: ${formData.cognitiveMilestoneAge} months`, 14, yPos);
-      yPos += 8;
-      
-      const milestones = COGNITIVE_MILESTONES[parseInt(formData.cognitiveMilestoneAge)];
-      milestones.forEach((milestone, idx) => {
-        if (yPos > 270) { doc.addPage(); yPos = 20; }
-        
-        const questionLines = doc.splitTextToSize(`${idx + 1}. ${milestone.text}`, 165);
-        questionLines.forEach((line: string) => {
-          if (yPos > 280) { doc.addPage(); yPos = 20; }
-          doc.text(line, 14, yPos);
-          yPos += 5;
-        });
-        
-        const answer = formData.cognitiveMilestoneAnswers[milestone.id] || 'Not answered';
-        doc.setFont('helvetica', 'normal');
-        doc.text('Answer: ', 18, yPos);
-        doc.setFont('helvetica', 'bold');
-        
-        // Set color based on answer
-        if (answer === 'Yes') {
-          doc.setTextColor(34, 197, 94); // Green
-        } else if (answer === 'No') {
-          doc.setTextColor(239, 68, 68); // Red
-        } else if (answer === 'Not answered') {
-          doc.setTextColor(156, 163, 175); // Gray
-        } else {
-          doc.setTextColor(0, 0, 0); // Black for text input
-        }
-        
-        doc.text(answer, 36, yPos);
-        doc.setTextColor(0, 0, 0); // Reset to black
-        doc.setFont('helvetica', 'normal');
-        yPos += 7;
-      });
-      yPos += 3;
-    }
     
     // Section 6: Medical History
     if (yPos > 250) { doc.addPage(); yPos = 20; }
@@ -1320,82 +1265,6 @@ export default function CaseSheetPage() {
               <RadioGroup label="Language milestones delayed against expected for age" value={formData.languageMilestoneDelay} onChange={(v: string) => handleInputChange('languageMilestoneDelay', v)} options={['Yes', 'No']} />
             </div>
           </div>
-        </div>
-
-        {/* Section 5B: Cognitive Milestones Assessment */}
-        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 5B: Cognitive Milestones Assessment</h2>
-          
-          {/* Age Selector */}
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-900 mb-2">Select Child's Age (months)</label>
-            <select
-              value={formData.cognitiveMilestoneAge}
-              onChange={(e) => {
-                handleInputChange('cognitiveMilestoneAge', e.target.value);
-                // Reset answers when age changes
-                handleInputChange('cognitiveMilestoneAnswers', {});
-              }}
-              className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-            >
-              <option value="">-- Select Age --</option>
-              {AVAILABLE_AGES.map(age => (
-                <option key={age} value={age}>{age} months</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Questions based on selected age */}
-          {formData.cognitiveMilestoneAge && COGNITIVE_MILESTONES[parseInt(formData.cognitiveMilestoneAge)] && (
-            <div className="space-y-4 border-t border-gray-200 pt-4">
-              <h3 className="text-md font-bold text-gray-900 mb-3">
-                Milestones for {formData.cognitiveMilestoneAge} months
-              </h3>
-              {COGNITIVE_MILESTONES[parseInt(formData.cognitiveMilestoneAge)].map((milestone, idx) => (
-                <div key={milestone.id} className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm font-semibold text-gray-900 mb-2">
-                    {idx + 1}. {milestone.text}
-                  </p>
-                  {milestone.type === 'yesno' ? (
-                    <div className="flex flex-wrap gap-3">
-                      {['Yes', 'No'].map(option => (
-                        <label key={option} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            value={option}
-                            checked={formData.cognitiveMilestoneAnswers[milestone.id] === option}
-                            onChange={() => {
-                              const newAnswers = { ...formData.cognitiveMilestoneAnswers, [milestone.id]: option };
-                              handleInputChange('cognitiveMilestoneAnswers', newAnswers);
-                            }}
-                            className="w-4 h-4 text-blue-600"
-                          />
-                          <span className="text-gray-900 font-semibold text-sm">{option}</span>
-                        </label>
-                      ))}
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      value={formData.cognitiveMilestoneAnswers[milestone.id] || ''}
-                      onChange={(e) => {
-                        const newAnswers = { ...formData.cognitiveMilestoneAnswers, [milestone.id]: e.target.value };
-                        handleInputChange('cognitiveMilestoneAnswers', newAnswers);
-                      }}
-                      placeholder="Enter response"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {!formData.cognitiveMilestoneAge && (
-            <div className="text-center py-8 text-gray-500 italic">
-              Please select child's age to view relevant cognitive milestones
-            </div>
-          )}
         </div>
 
         {/* Section 6: Medical History */}
