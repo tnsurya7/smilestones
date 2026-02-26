@@ -73,15 +73,12 @@ export default function ChildProfilePage() {
 
       // Function to add watermark to current page
       const addWatermark = () => {
-        doc.saveGraphicsState();
-        doc.setGState({ opacity: 0.1 } as any);
         doc.setFontSize(50);
-        doc.setTextColor(150, 150, 150);
+        doc.setTextColor(230, 230, 230);
         doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
           align: 'center',
           angle: 45
         });
-        doc.restoreGraphicsState();
       };
 
       // Function to add header with logo

@@ -463,40 +463,14 @@ export default function CaseSheetPage() {
     doc.text(`Duration of problem: ${formData.durationOfProblem || 'N/A'}`, 14, yPos);
     yPos += 8;
     
-    // Section 2: Family History
+    // Section 4: Family History
     if (yPos > 250) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 2: Family History', 14, yPos);
+    doc.text('Section 4: Family History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Father:', 14, yPos);
-    yPos += 6;
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Name: ${formData.fatherName || 'N/A'}`, 20, yPos);
-    yPos += 5;
-    doc.text(`Age: ${formData.fatherAge || 'N/A'}`, 20, yPos);
-    yPos += 5;
-    doc.text(`Education: ${formData.fatherEducation || 'N/A'}`, 20, yPos);
-    yPos += 5;
-    doc.text(`Occupation: ${formData.fatherOccupation || 'N/A'}`, 20, yPos);
-    yPos += 8;
-    
-    doc.setFont('helvetica', 'bold');
-    doc.text('Mother:', 14, yPos);
-    yPos += 6;
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Name: ${formData.motherName || 'N/A'}`, 20, yPos);
-    yPos += 5;
-    doc.text(`Age: ${formData.motherAge || 'N/A'}`, 20, yPos);
-    yPos += 5;
-    doc.text(`Education: ${formData.motherEducation || 'N/A'}`, 20, yPos);
-    yPos += 5;
-    doc.text(`Occupation: ${formData.motherOccupation || 'N/A'}`, 20, yPos);
-    yPos += 8;
-    
     if (yPos > 250) { doc.addPage(); yPos = 20; }
     doc.setFont('helvetica', 'bold');
     doc.text('Siblings:', 14, yPos);
@@ -570,11 +544,11 @@ export default function CaseSheetPage() {
     // Add blank space for family tree (40mm height)
     yPos += 40;
     
-    // Section 3: Personal History
+    // Section 5: Personal History
     if (yPos > 220) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 3: Personal History', 14, yPos);
+    doc.text('Section 5: Personal History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -592,11 +566,11 @@ export default function CaseSheetPage() {
     doc.text(`APGAR score: ${formData.apgarScore || 'N/A'}`, 14, yPos);
     yPos += 8;
     
-    // Section 4: After Birth History
+    // Section 6: After Birth History
     if (yPos > 250) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 4: After Birth History', 14, yPos);
+    doc.text('Section 6: After Birth History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -612,11 +586,11 @@ export default function CaseSheetPage() {
     doc.text(`Seizures at birth: ${formData.seizuresAtBirth || 'N/A'}`, 14, yPos);
     yPos += 8;
     
-    // Section 5: Developmental History
+    // Section 7: Developmental History
     if (yPos > 250) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 5: Developmental History', 14, yPos);
+    doc.text('Section 7: Developmental History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -632,11 +606,11 @@ export default function CaseSheetPage() {
     doc.text(`Language milestones delayed: ${formData.languageMilestoneDelay || 'N/A'}`, 14, yPos);
     yPos += 8;
     
-    // Section 6: Medical History
+    // Section 8: Medical History
     if (yPos > 250) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 6: Medical History', 14, yPos);
+    doc.text('Section 8: Medical History', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -656,11 +630,11 @@ export default function CaseSheetPage() {
     doc.text(`Screen time: ${formData.screenTimeHours || 'N/A'} hours/day`, 14, yPos);
     yPos += 8;
     
-    // Section 7: Auto-filled
+    // Section 9: Auto-filled
     if (yPos > 200) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 7: Screening Results (Auto-filled)', 14, yPos);
+    doc.text('Section 9: Screening Results (Auto-filled)', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -700,11 +674,11 @@ export default function CaseSheetPage() {
       yPos += 8;
     }
     
-    // Section 8: Final Clinical Impression
+    // Section 10: Final Clinical Impression
     if (yPos > 200) { doc.addPage(); yPos = 20; }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 8: Final Clinical Impression', 14, yPos);
+    doc.text('Section 10: Final Clinical Impression', 14, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -742,10 +716,8 @@ export default function CaseSheetPage() {
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       
-      // Add watermark
-      doc.saveGraphicsState();
-      doc.setGState({ opacity: 0.1 } as any);
-      doc.setTextColor(0, 0, 0);
+      // Add watermark (using light gray color instead of opacity)
+      doc.setTextColor(230, 230, 230);
       doc.setFontSize(60);
       doc.setFont('helvetica', 'bold');
       
@@ -756,8 +728,6 @@ export default function CaseSheetPage() {
         align: 'center',
         angle: 45
       });
-      
-      doc.restoreGraphicsState();
       
       // Footer
       doc.setFontSize(8);

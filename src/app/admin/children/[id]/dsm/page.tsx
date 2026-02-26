@@ -286,10 +286,8 @@ export default function DSMPage() {
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       
-      // Add watermark
-      doc.saveGraphicsState();
-      doc.setGState({ opacity: 0.1 } as any);
-      doc.setTextColor(0, 0, 0);
+      // Add watermark (using light gray color instead of opacity)
+      doc.setTextColor(230, 230, 230);
       doc.setFontSize(60);
       doc.setFont('helvetica', 'bold');
       
@@ -300,8 +298,6 @@ export default function DSMPage() {
         align: 'center',
         angle: 45
       });
-      
-      doc.restoreGraphicsState();
       
       // Footer
       doc.setFontSize(8);
