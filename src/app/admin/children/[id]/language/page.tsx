@@ -160,7 +160,7 @@ export default function LanguageDevelopmentPage() {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     
-    const skills = GROSS_MOTOR_SKILLS[parseInt(selectedAge)];
+    const skills = LANGUAGE_DEVELOPMENT[parseInt(selectedAge)];
     skills.forEach((skill, index) => {
       if (yPos > 270) {
         doc.addPage();
@@ -207,7 +207,7 @@ export default function LanguageDevelopmentPage() {
       doc.text(`Generated: ${new Date().toLocaleDateString()}`, 160, 290);
     }
     
-    doc.save(`Gross-Motor-Skills-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);
+    doc.save(`Language-Development-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   if (loading || !child) {
@@ -220,7 +220,7 @@ export default function LanguageDevelopmentPage() {
 
   if (!user) return null;
 
-  const currentSkills = selectedAge ? GROSS_MOTOR_SKILLS[parseInt(selectedAge)] : [];
+  const currentSkills = selectedAge ? LANGUAGE_DEVELOPMENT[parseInt(selectedAge)] : [];
 
   return (
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
@@ -292,7 +292,7 @@ export default function LanguageDevelopmentPage() {
             className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-semibold"
           >
             <option value="">-- Select Age --</option>
-            {GROSS_MOTOR_AVAILABLE_AGES.map(age => (
+            {LANGUAGE_AVAILABLE_AGES.map(age => (
               <option key={age} value={age}>{age} months</option>
             ))}
           </select>
