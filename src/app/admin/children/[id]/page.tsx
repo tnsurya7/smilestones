@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
-import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand, Footprints, MessageSquare } from 'lucide-react';
+import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand, Footprints, MessageSquare, Heart } from 'lucide-react';
 
 export default function ChildProfilePage() {
   const { user, loading } = useAuth();
@@ -94,6 +94,13 @@ export default function ChildProfilePage() {
       icon: MessageSquare,
       color: 'from-violet-500 to-violet-600',
       route: `/admin/children/${childId}/language`
+    },
+    {
+      title: 'Social-Emotional',
+      description: 'Age-based social-emotional development assessment tracking interactions and emotional responses',
+      icon: Heart,
+      color: 'from-rose-500 to-rose-600',
+      route: `/admin/children/${childId}/social-emotional`
     },
     {
       title: 'Sessions',
