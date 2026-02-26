@@ -223,25 +223,6 @@ export default function AdminDashboard() {
             })}
           </div>
         </div>
-
-        {/* Recent Activity */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 border border-gray-100">
-          <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-              Recent Activity
-            </h2>
-            <button className="text-blue-600 hover:text-blue-700 font-semibold text-xs sm:text-sm">
-              View All
-            </button>
-          </div>
-          <div className="text-center py-8 sm:py-12">
-            <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-            <p className="text-gray-900 text-base sm:text-lg font-semibold">No recent activity</p>
-            <p className="text-gray-800 text-xs sm:text-sm mt-2 font-semibold">
-              Activity will appear here once you start managing children and sessions
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
