@@ -737,10 +737,29 @@ export default function CaseSheetPage() {
     yPos += 5;
     doc.text(`Doctor Signature: ${formData.doctorSignatureName || 'N/A'}`, 14, yPos);
     
-    // Footer
+    // Add watermark and footer to all pages
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
+      
+      // Add watermark
+      doc.saveGraphicsState();
+      doc.setGState(new doc.GState({ opacity: 0.1 }));
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(60);
+      doc.setFont('helvetica', 'bold');
+      
+      // Center watermark at 45-degree angle
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
+        align: 'center',
+        angle: 45
+      });
+      
+      doc.restoreGraphicsState();
+      
+      // Footer
       doc.setFontSize(8);
       doc.setTextColor(128, 128, 128);
       doc.text('Confidential Medical Document', 14, 290);
@@ -1106,16 +1125,8 @@ export default function CaseSheetPage() {
                 className="flex-1 sm:flex-none px-2 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm"
               >
                 <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Case Sheet</span>
-                <span className="sm:hidden">Case</span>
-              </button>
-              <button
-                onClick={handleDownloadFullClinicalPDF}
-                className="flex-1 sm:flex-none px-2 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm"
-              >
-                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Full Clinical</span>
-                <span className="sm:hidden">Full</span>
+                <span className="hidden sm:inline">Case Sheet PDF</span>
+                <span className="sm:hidden">PDF</span>
               </button>
               <button
                 onClick={handleSave}

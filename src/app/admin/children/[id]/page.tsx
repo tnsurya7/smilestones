@@ -41,7 +41,7 @@ export default function ChildProfilePage() {
 
   const downloadFullClinicalData = async () => {
     setDownloading(true);
-    setToast({ message: 'Generating comprehensive clinical report...', type: 'info' });
+    setToast({ message: 'Generating comprehensive clinical report with all questions...', type: 'info' });
 
     try {
       // Fetch all clinical data
@@ -65,20 +65,65 @@ export default function ChildProfilePage() {
       const language = await languageRes.json();
       const social = await socialRes.json();
 
-      // Create PDF
+      // Create PDF with watermark
       const doc = new jsPDF();
       let yPos = 20;
+      const pageWidth = doc.internal.pageSize.width;
+      const pageHeight = doc.internal.pageSize.height;
+
+      // Function to add watermark to current page
+      const addWatermark = () => {
+        doc.saveGraphicsState();
+        doc.setGState({ opacity: 0.1 } as any);
+        doc.setFontSize(50);
+        doc.setTextColor(150, 150, 150);
+        doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
+          align: 'center',
+          angle: 45
+        });
+        doc.restoreGraphicsState();
+      };
+
+      // Function to add header with logo
+      const addHeader = () => {
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(0, 0, 0);
+        doc.text('SMILESTONES', 20, 15);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Child Development Centre', 20, 20);
+        doc.line(20, 22, pageWidth - 20, 22);
+      };
+
+      // Function to check if new page is needed
+      const checkNewPage = (spaceNeeded = 20) => {
+        if (yPos > pageHeight - 30) {
+          doc.addPage();
+          addWatermark();
+          addHeader();
+          yPos = 30;
+          return true;
+        }
+        return false;
+      };
+
+      // Add watermark and header to first page
+      addWatermark();
+      addHeader();
+      yPos = 30;
 
       // Title
-      doc.setFontSize(20);
+      doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
-      doc.text('COMPREHENSIVE CLINICAL REPORT', 105, yPos, { align: 'center' });
+      doc.text('COMPREHENSIVE CLINICAL REPORT', pageWidth / 2, yPos, { align: 'center' });
       yPos += 15;
 
       // Child Information
-      doc.setFontSize(14);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
       doc.text('Child Information', 20, yPos);
-      yPos += 8;
+      yPos += 7;
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.text(`Name: ${child.name}`, 20, yPos);
@@ -94,90 +139,257 @@ export default function ChildProfilePage() {
       doc.text(`Registered: ${new Date(child.created_at).toLocaleDateString()}`, 20, yPos);
       yPos += 12;
 
-      // Case Sheet Summary
+      // Case Sheet - Full Details
       if (caseSheet && caseSheet.length > 0) {
-        doc.setFontSize(12);
+        checkNewPage();
+        const cs = caseSheet[0];
+        doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('Case Sheet', 20, yPos);
-        yPos += 6;
-        doc.setFontSize(9);
+        doc.text('CASE SHEET', 20, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.text('Status: Completed', 20, yPos);
-        yPos += 10;
+        
+        // Add all case sheet fields
+        const fields = Object.keys(cs);
+        fields.forEach(field => {
+          if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at') {
+            checkNewPage();
+            const label = field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const value = cs[field] || 'N/A';
+            doc.text(`${label}: ${value}`, 20, yPos);
+            yPos += 5;
+          }
+        });
+        yPos += 5;
       }
 
-      // M-CHAT Summary
+      // M-CHAT - All Questions
       if (mchat && mchat.length > 0) {
+        checkNewPage();
         const mchatData = mchat[0];
-        doc.setFontSize(12);
+        doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('M-CHAT Screening', 20, yPos);
-        yPos += 6;
-        doc.setFontSize(9);
+        doc.text('M-CHAT SCREENING', 20, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         doc.text(`Risk Score: ${mchatData.risk_score || 'N/A'}`, 20, yPos);
-        yPos += 5;
+        yPos += 6;
         doc.text(`Risk Level: ${mchatData.risk_level || 'N/A'}`, 20, yPos);
-        yPos += 10;
+        yPos += 8;
+        
+        // Add all M-CHAT answers
+        if (mchatData.answers) {
+          const answers = typeof mchatData.answers === 'string' ? JSON.parse(mchatData.answers) : mchatData.answers;
+          Object.keys(answers).forEach((q, idx) => {
+            checkNewPage();
+            doc.text(`Q${idx + 1}: ${answers[q]}`, 20, yPos);
+            yPos += 5;
+          });
+        }
+        yPos += 5;
       }
 
-      // DSM Summary
+      // DSM - All Criteria
       if (dsm && dsm.length > 0) {
+        checkNewPage();
         const dsmData = dsm[0];
-        doc.setFontSize(12);
+        doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('DSM-5 Checklist', 20, yPos);
-        yPos += 6;
-        doc.setFontSize(9);
+        doc.text('DSM-5 CHECKLIST', 20, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         doc.text(`Criteria Met: ${dsmData.criteria_met || 'N/A'}`, 20, yPos);
-        yPos += 5;
+        yPos += 6;
         doc.text(`Diagnosis: ${dsmData.diagnosis || 'N/A'}`, 20, yPos);
-        yPos += 10;
+        yPos += 8;
+        
+        // Add all DSM criteria
+        if (dsmData.criteria) {
+          const criteria = typeof dsmData.criteria === 'string' ? JSON.parse(dsmData.criteria) : dsmData.criteria;
+          Object.keys(criteria).forEach((c) => {
+            checkNewPage();
+            doc.text(`${c}: ${criteria[c] ? 'Yes' : 'No'}`, 20, yPos);
+            yPos += 5;
+          });
+        }
+        yPos += 5;
       }
 
-      // Assessment Summaries
-      const assessments = [
-        { name: 'Cognitive Milestones', data: cognitive },
-        { name: 'Fine Motor Skills', data: fineMotor },
-        { name: 'Gross Motor Skills', data: grossMotor },
-        { name: 'Language Development', data: language },
-        { name: 'Social-Emotional', data: social }
-      ];
-
-      assessments.forEach(assessment => {
-        if (yPos > 250) {
-          doc.addPage();
-          yPos = 20;
-        }
-        
-        if (assessment.data && assessment.data.length > 0) {
-          doc.setFontSize(12);
+      // Cognitive Milestones - All Questions
+      if (cognitive && cognitive.length > 0) {
+        cognitive.forEach((assessment: any) => {
+          checkNewPage();
+          doc.setFontSize(14);
           doc.setFont('helvetica', 'bold');
-          doc.text(assessment.name, 20, yPos);
-          yPos += 6;
-          doc.setFontSize(9);
+          doc.text('COGNITIVE MILESTONES', 20, yPos);
+          yPos += 8;
+          
+          doc.setFontSize(10);
           doc.setFont('helvetica', 'normal');
-          doc.text(`Assessments Completed: ${assessment.data.length}`, 20, yPos);
+          doc.text(`Age: ${assessment.age} months`, 20, yPos);
+          yPos += 6;
+          doc.text(`Date: ${new Date(assessment.created_at).toLocaleDateString()}`, 20, yPos);
+          yPos += 8;
+          
+          if (assessment.answers) {
+            const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
+            Object.keys(answers).forEach((q) => {
+              checkNewPage();
+              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              lines.forEach((line: string) => {
+                doc.text(line, 20, yPos);
+                yPos += 5;
+              });
+            });
+          }
           yPos += 5;
-          doc.text(`Last Updated: ${new Date(assessment.data[0].created_at).toLocaleDateString()}`, 20, yPos);
-          yPos += 10;
-        }
-      });
+        });
+      }
 
-      // Footer
+      // Fine Motor Skills - All Questions
+      if (fineMotor && fineMotor.length > 0) {
+        fineMotor.forEach((assessment: any) => {
+          checkNewPage();
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.text('FINE MOTOR SKILLS', 20, yPos);
+          yPos += 8;
+          
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Age: ${assessment.age} months`, 20, yPos);
+          yPos += 6;
+          doc.text(`Date: ${new Date(assessment.created_at).toLocaleDateString()}`, 20, yPos);
+          yPos += 8;
+          
+          if (assessment.answers) {
+            const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
+            Object.keys(answers).forEach((q) => {
+              checkNewPage();
+              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              lines.forEach((line: string) => {
+                doc.text(line, 20, yPos);
+                yPos += 5;
+              });
+            });
+          }
+          yPos += 5;
+        });
+      }
+
+      // Gross Motor Skills - All Questions
+      if (grossMotor && grossMotor.length > 0) {
+        grossMotor.forEach((assessment: any) => {
+          checkNewPage();
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.text('GROSS MOTOR SKILLS', 20, yPos);
+          yPos += 8;
+          
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Age: ${assessment.age} months`, 20, yPos);
+          yPos += 6;
+          doc.text(`Date: ${new Date(assessment.created_at).toLocaleDateString()}`, 20, yPos);
+          yPos += 8;
+          
+          if (assessment.answers) {
+            const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
+            Object.keys(answers).forEach((q) => {
+              checkNewPage();
+              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              lines.forEach((line: string) => {
+                doc.text(line, 20, yPos);
+                yPos += 5;
+              });
+            });
+          }
+          yPos += 5;
+        });
+      }
+
+      // Language Development - All Questions
+      if (language && language.length > 0) {
+        language.forEach((assessment: any) => {
+          checkNewPage();
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.text('LANGUAGE DEVELOPMENT', 20, yPos);
+          yPos += 8;
+          
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Age: ${assessment.age} months`, 20, yPos);
+          yPos += 6;
+          doc.text(`Date: ${new Date(assessment.created_at).toLocaleDateString()}`, 20, yPos);
+          yPos += 8;
+          
+          if (assessment.answers) {
+            const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
+            Object.keys(answers).forEach((q) => {
+              checkNewPage();
+              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              lines.forEach((line: string) => {
+                doc.text(line, 20, yPos);
+                yPos += 5;
+              });
+            });
+          }
+          yPos += 5;
+        });
+      }
+
+      // Social-Emotional - All Questions
+      if (social && social.length > 0) {
+        social.forEach((assessment: any) => {
+          checkNewPage();
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.text('SOCIAL-EMOTIONAL DEVELOPMENT', 20, yPos);
+          yPos += 8;
+          
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Age: ${assessment.age} months`, 20, yPos);
+          yPos += 6;
+          doc.text(`Date: ${new Date(assessment.created_at).toLocaleDateString()}`, 20, yPos);
+          yPos += 8;
+          
+          if (assessment.answers) {
+            const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
+            Object.keys(answers).forEach((q) => {
+              checkNewPage();
+              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              lines.forEach((line: string) => {
+                doc.text(line, 20, yPos);
+                yPos += 5;
+              });
+            });
+          }
+          yPos += 5;
+        });
+      }
+
+      // Footer on all pages
       const pageCount = doc.getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Page ${i} of ${pageCount}`, 105, 285, { align: 'center' });
-        doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 290, { align: 'center' });
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Page ${i} of ${pageCount}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+        doc.text(`Generated: ${new Date().toLocaleString()}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
       }
 
       // Save PDF
       doc.save(`${child.name}_Full_Clinical_Report_${new Date().toISOString().split('T')[0]}.pdf`);
-      setToast({ message: 'Clinical report downloaded successfully!', type: 'success' });
+      setToast({ message: 'Comprehensive clinical report downloaded successfully!', type: 'success' });
     } catch (error) {
       console.error('Error generating PDF:', error);
       setToast({ message: 'Failed to generate clinical report', type: 'error' });
@@ -294,7 +506,7 @@ export default function ChildProfilePage() {
           
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Child Profile</h1>
           
-          {/* Download Button */}
+          {/* Download Full Clinical Data Button */}
           <button
             onClick={downloadFullClinicalData}
             disabled={downloading}

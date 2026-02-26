@@ -108,20 +108,33 @@ export default function CognitiveMilestonesPage() {
     }
 
     const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
+    
+    // Function to add watermark
+    const addWatermark = () => {
+      doc.saveGraphicsState();
+      doc.setGState({ opacity: 0.1 } as any);
+      doc.setFontSize(50);
+      doc.setTextColor(150, 150, 150);
+      doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
+        align: 'center',
+        angle: 45
+      });
+      doc.restoreGraphicsState();
+    };
+    
+    // Add watermark to first page
+    addWatermark();
     
     // Header with logo
     doc.setFillColor(102, 126, 234);
     doc.rect(0, 0, 210, 40, 'F');
     
-    // Add logo
-    const logo = new Image();
-    logo.src = '/smilestones-logo.jpeg';
-    doc.addImage(logo, 'JPEG', 14, 8, 24, 24);
-    
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
-    doc.text('Smilestones', 105, 15, { align: 'center' });
+    doc.text('SMILESTONES', 105, 15, { align: 'center' });
     
     doc.setFontSize(14);
     doc.setFont('helvetica', 'normal');
@@ -167,6 +180,7 @@ export default function CognitiveMilestonesPage() {
       milestones.forEach((milestone, index) => {
       if (yPos > 270) {
         doc.addPage();
+        addWatermark(); // Add watermark to new page
         yPos = 20;
       }
       
