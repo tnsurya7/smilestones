@@ -143,12 +143,15 @@ interface CaseSheetData {
   sibling2Name: string;
   sibling2Age: string;
   siblingMilestonesAppropriate: string; // Yes/No
+  timeSpentWithSiblings: string;
   
   // Grandparents Details
   paternalGrandfatherName: string;
   paternalGrandmotherName: string;
   maternalGrandfatherName: string;
   maternalGrandmotherName: string;
+  timeWithPaternalGrandparents: string; // Yes/No
+  timeWithMaternalGrandparents: string; // Yes/No
   
   // Section 2: Family History
   familySpeechDelayHistory: string;
@@ -162,7 +165,7 @@ interface CaseSheetData {
   
   // Section 3: Personal History (Perinatal)
   conceptionType: string;
-  antenatalComplications: string[]; // Thyroid, Diabetic, Hypertension, Seizure, Stress, Trauma, Bleeding issues
+  pregnancyIssues: string[]; // Thyroid, Diabetic, Hypertension, Seizure, Stress, Trauma, Bleeding issues
   termType: string;
   weeksOfGestation: string;
   deliveryType: string;
@@ -217,14 +220,15 @@ export default function CaseSheetPage() {
     fatherName: '', fatherAge: '', fatherEducation: '', fatherOccupation: '', fatherContactNumber: '', fatherTimeSpends: '',
     motherName: '', motherAge: '', motherEducation: '', motherOccupation: '', motherContactNumber: '', motherTimeSpends: '',
     // Siblings
-    sibling1Name: '', sibling1Age: '', sibling2Name: '', sibling2Age: '', siblingMilestonesAppropriate: '',
+    sibling1Name: '', sibling1Age: '', sibling2Name: '', sibling2Age: '', siblingMilestonesAppropriate: '', timeSpentWithSiblings: '',
     // Grandparents
     paternalGrandfatherName: '', paternalGrandmotherName: '', maternalGrandfatherName: '', maternalGrandmotherName: '',
+    timeWithPaternalGrandparents: '', timeWithMaternalGrandparents: '',
     // Family History
     familySpeechDelayHistory: '', intellectualDisabilityInFamily: '', developmentalDelayInFamily: '',
     autismInFamily: '', whoIdentifiedFirst: '', whoSuggestedTherapy: '', parentalConcerns: [], residenceType: '',
     // Section 3: Personal History
-    conceptionType: '', antenatalComplications: [], termType: '', weeksOfGestation: '',
+    conceptionType: '', pregnancyIssues: [], termType: '', weeksOfGestation: '',
     deliveryType: '', assistanceRequiredAtBirth: '', apgarScore: '', birthWeight: '',
     // Section 4: After Birth
     criedImmediately: '', nicuAdmission: '', jaundice: '', phototherapyDays: '', 
@@ -1198,6 +1202,7 @@ export default function CaseSheetPage() {
               <TextInput label="Sibling 2 Name" value={formData.sibling2Name} onChange={(v: string) => handleInputChange('sibling2Name', v)} />
               <TextInput label="Sibling 2 Age" value={formData.sibling2Age} onChange={(v: string) => handleInputChange('sibling2Age', v)} type="number" />
               <RadioGroup label="Sibling attained milestones appropriately" value={formData.siblingMilestonesAppropriate} onChange={(v: string) => handleInputChange('siblingMilestonesAppropriate', v)} options={['Yes', 'No']} />
+              <TextInput label="Time spent with siblings (hours/day)" value={formData.timeSpentWithSiblings} onChange={(v: string) => handleInputChange('timeSpentWithSiblings', v)} type="number" />
             </div>
           </div>
           
@@ -1209,6 +1214,8 @@ export default function CaseSheetPage() {
               <TextInput label="Paternal Grandmother Name" value={formData.paternalGrandmotherName} onChange={(v: string) => handleInputChange('paternalGrandmotherName', v)} />
               <TextInput label="Maternal Grandfather Name" value={formData.maternalGrandfatherName} onChange={(v: string) => handleInputChange('maternalGrandfatherName', v)} />
               <TextInput label="Maternal Grandmother Name" value={formData.maternalGrandmotherName} onChange={(v: string) => handleInputChange('maternalGrandmotherName', v)} />
+              <RadioGroup label="Time spent with paternal grandparents" value={formData.timeWithPaternalGrandparents} onChange={(v: string) => handleInputChange('timeWithPaternalGrandparents', v)} options={['Yes', 'No']} />
+              <RadioGroup label="Time spent with maternal grandparents" value={formData.timeWithMaternalGrandparents} onChange={(v: string) => handleInputChange('timeWithMaternalGrandparents', v)} options={['Yes', 'No']} />
             </div>
           </div>
           
@@ -1216,7 +1223,7 @@ export default function CaseSheetPage() {
           <div className="mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-3">Family Medical History</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <RadioGroup label="Family speech delay history" value={formData.familySpeechDelayHistory} onChange={(v: string) => handleInputChange('familySpeechDelayHistory', v)} options={['Yes', 'No']} />
+              <RadioGroup label="Family member has speech delay" value={formData.familySpeechDelayHistory} onChange={(v: string) => handleInputChange('familySpeechDelayHistory', v)} options={['Yes', 'No']} />
               <RadioGroup label="Intellectual disability in family" value={formData.intellectualDisabilityInFamily} onChange={(v: string) => handleInputChange('intellectualDisabilityInFamily', v)} options={['Yes', 'No']} />
               <RadioGroup label="Developmental delay in family" value={formData.developmentalDelayInFamily} onChange={(v: string) => handleInputChange('developmentalDelayInFamily', v)} options={['Yes', 'No']} />
               <RadioGroup label="Autism in family" value={formData.autismInFamily} onChange={(v: string) => handleInputChange('autismInFamily', v)} options={['Yes', 'No']} />
@@ -1248,15 +1255,31 @@ export default function CaseSheetPage() {
         {/* Section 3: Personal History */}
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Section 3: Personal History</h2>
-          <div className="space-y-4">
+          
+          {/* Antenatal History */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-3">Antenatal History</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <RadioGroup label="Conception type" value={formData.conceptionType} onChange={(v: string) => handleInputChange('conceptionType', v)} options={['Natural', 'Assisted fertilization']} />
+              <CheckboxGroup 
+                label="Any issues during pregnancy" 
+                values={formData.pregnancyIssues} 
+                onChange={(v: string[]) => handleInputChange('pregnancyIssues', v)} 
+                options={['Thyroid', 'Diabetic', 'Hypertension', 'Seizure', 'Stress', 'Trauma', 'Bleeding issues']} 
+              />
+            </div>
+          </div>
+
+          {/* Natal History */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-3">Natal History</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <RadioGroup label="Delivery type" value={formData.deliveryType} onChange={(v: string) => handleInputChange('deliveryType', v)} options={['Natural', 'LSCS', 'Assisted delivery']} />
+              <RadioGroup label="Assistance required at birth" value={formData.assistanceRequiredAtBirth} onChange={(v: string) => handleInputChange('assistanceRequiredAtBirth', v)} options={['Yes', 'No']} />
               <RadioGroup label="Term type" value={formData.termType} onChange={(v: string) => handleInputChange('termType', v)} options={['Term', 'Preterm']} />
               <TextInput label="Weeks of gestation" value={formData.weeksOfGestation} onChange={(v: string) => handleInputChange('weeksOfGestation', v)} type="number" />
-              <RadioGroup label="Delivery type" value={formData.deliveryType} onChange={(v: string) => handleInputChange('deliveryType', v)} options={['Normal', 'LSCS', 'Assisted']} />
-              <RadioGroup label="Assistance required at birth" value={formData.assistanceRequiredAtBirth} onChange={(v: string) => handleInputChange('assistanceRequiredAtBirth', v)} options={['Yes', 'No']} />
-              <TextInput label="APGAR score" value={formData.apgarScore} onChange={(v: string) => handleInputChange('apgarScore', v)} />
               <TextInput label="Birth weight (kg)" value={formData.birthWeight} onChange={(v: string) => handleInputChange('birthWeight', v)} type="number" />
+              <TextInput label="APGAR score" value={formData.apgarScore} onChange={(v: string) => handleInputChange('apgarScore', v)} />
             </div>
           </div>
         </div>

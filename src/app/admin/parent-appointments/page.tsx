@@ -86,7 +86,7 @@ export default function ParentAppointmentsPage() {
                       Phone
                     </th>
                     <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                      Date
+                      Appointment Date
                     </th>
                     <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Time
@@ -95,7 +95,7 @@ export default function ParentAppointmentsPage() {
                       Service
                     </th>
                     <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                      Appointment Date
+                      Date
                     </th>
                   </tr>
                 </thead>

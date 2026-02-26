@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { getParentPayments } from '@/lib/api-client';
+import { getTherapyRegistrations } from '@/lib/api-client';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { UserPlus, Search, CheckCircle, CreditCard } from 'lucide-react';
+import { UserPlus, Search, CheckCircle, Phone, Mail, User, Baby } from 'lucide-react';
 
 export default function ParentRegistrationsPage() {
   const { user, loading } = useAuth();
@@ -27,7 +27,7 @@ export default function ParentRegistrationsPage() {
 
   const loadRegistrations = async () => {
     try {
-      const data = await getParentPayments();
+      const data = await getTherapyRegistrations();
       setRegistrations(data);
     } catch (error) {
       console.error('Error loading registrations:', error);
@@ -35,8 +35,10 @@ export default function ParentRegistrationsPage() {
   };
 
   const filteredRegistrations = registrations.filter(reg =>
-    reg.uniqueCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    reg.paymentMode.toLowerCase().includes(searchQuery.toLowerCase())
+    reg.referral_code?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    reg.phone?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    reg.parent_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    reg.child_name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) {
@@ -60,7 +62,7 @@ export default function ParentRegistrationsPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search by unique code or payment mode..."
+              placeholder="Search by name, phone, or referral code..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
@@ -81,41 +83,68 @@ export default function ParentRegistrationsPage() {
           ) : (
             filteredRegistrations.map((reg) => (
               <div key={reg.id} className="bg-white rounded-xl shadow-lg p-5 sm:p-6 border border-gray-100 hover:shadow-xl transition-all">
-                {/* Unique Code Badge */}
+                {/* Referral Code Badge */}
                 <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-3 mb-4">
-                  <p className="text-xs opacity-90 mb-1">Unique Code</p>
-                  <p className="text-lg font-bold tracking-wider">{reg.uniqueCode}</p>
+                  <p className="text-xs opacity-90 mb-1">Referral Code</p>
+                  <p className="text-base sm:text-lg font-bold tracking-wider">{reg.referral_code}</p>
+                </div>
+
+                {/* Child & Parent Info */}
+                <div className="mb-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Baby className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs text-gray-500">Child Name</p>
+                      <p className="text-sm font-semibold text-gray-900">{reg.child_name}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-purple-500 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs text-gray-500">Parent Name</p>
+                      <p className="text-sm font-semibold text-gray-900">{reg.parent_name}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs text-gray-500">Phone</p>
+                      <p className="text-sm font-semibold text-gray-900">{reg.phone}</p>
+                    </div>
+                  </div>
+                  {reg.email && (
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Email</p>
+                        <p className="text-sm font-semibold text-gray-900 truncate">{reg.email}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Therapies */}
                 <div className="mb-4">
                   <p className="text-sm font-semibold text-gray-700 mb-2">Selected Therapies:</p>
                   <div className="space-y-1">
-                    {reg.therapies.map((therapy: any, idx: number) => (
+                    {reg.therapy_types && reg.therapy_types.map((therapy: string, idx: number) => (
                       <div key={idx} className="flex items-center gap-2 text-xs sm:text-sm">
                         <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-600">{therapy.name}</span>
+                        <span className="text-gray-600">{therapy}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Payment Info */}
+                {/* Payment & Registration Info */}
                 <div className="border-t border-gray-200 pt-4 space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-600">Payment Mode</span>
-                    <div className="flex items-center gap-1">
-                      <CreditCard className="w-4 h-4 text-gray-400" />
-                      <span className="font-semibold text-gray-900">{reg.paymentMode.toUpperCase()}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Amount</span>
-                    <span className="font-bold text-green-600">₹{reg.amount.toFixed(2)}</span>
+                    <span className="font-semibold text-gray-900">{reg.payment_mode}</span>
                   </div>
                   <div className="flex items-center justify-between text-xs text-gray-500">
                     <span>Registered</span>
-                    <span>{new Date(reg.createdAt).toLocaleDateString()}</span>
+                    <span>{new Date(reg.created_at).toLocaleDateString()}</span>
                   </div>
                 </div>
               </div>
