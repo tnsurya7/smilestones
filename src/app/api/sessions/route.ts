@@ -32,11 +32,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    console.log('Session data received:', JSON.stringify(body, null, 2));
     const session = await addSession(body);
     return NextResponse.json(session);
   } catch (error) {
     console.error('Error adding session:', error);
-    return NextResponse.json({ error: 'Failed to add session' }, { status: 500 });
+    console.error('Error details:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    return NextResponse.json({ 
+      error: 'Failed to add session',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }
 
