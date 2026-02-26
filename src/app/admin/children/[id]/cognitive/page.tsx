@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
-import { COGNITIVE_MILESTONES, AVAILABLE_AGES } from '@/data/cognitiveMilestones';
+import { COGNITIVE_MILESTONES, COGNITIVE_AVAILABLE_AGES } from '@/data/cognitiveMilestones';
 import { ArrowLeft, Save, RotateCcw, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import Toast, { ConfirmDialog } from '@/components/Toast';
@@ -292,7 +292,7 @@ export default function CognitiveMilestonesPage() {
             className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 font-semibold"
           >
             <option value="">-- Select Age --</option>
-            {AVAILABLE_AGES.map(age => (
+            {COGNITIVE_AVAILABLE_AGES.map(age => (
               <option key={age} value={age}>{age} months</option>
             ))}
           </select>
@@ -310,7 +310,7 @@ export default function CognitiveMilestonesPage() {
                   <p className="text-sm sm:text-base text-gray-900 font-semibold mb-2 sm:mb-3">
                     {index + 1}. {milestone.text}
                   </p>
-                  {milestone.type === 'yesno' ? (
+                  {milestone.type === 'yes_no' ? (
                     <div className="flex gap-3 sm:gap-4">
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input
