@@ -288,7 +288,7 @@ export default function DSMPage() {
       
       // Add watermark
       doc.saveGraphicsState();
-      doc.setGState(new doc.GState({ opacity: 0.1 }));
+      doc.setGState({ opacity: 0.1 } as any);
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(60);
       doc.setFont('helvetica', 'bold');
