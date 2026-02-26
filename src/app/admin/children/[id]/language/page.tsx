@@ -160,8 +160,11 @@ export default function LanguageDevelopmentPage() {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     
-    const skills = LANGUAGE_DEVELOPMENT[parseInt(selectedAge)];
-    skills.forEach((skill, index) => {
+    const skills = LANGUAGE_DEVELOPMENT[parseInt(selectedAge)] || [];
+    if (skills.length === 0) {
+      doc.text('No language development skills found for this age.', 14, yPos);
+    } else {
+      skills.forEach((skill, index) => {
       if (yPos > 270) {
         doc.addPage();
         yPos = 20;
@@ -195,6 +198,7 @@ export default function LanguageDevelopmentPage() {
       doc.setFont('helvetica', 'normal');
       yPos += 7;
     });
+    }
     
     // Footer
     const pageCount = doc.getNumberOfPages();
@@ -220,7 +224,7 @@ export default function LanguageDevelopmentPage() {
 
   if (!user) return null;
 
-  const currentSkills = selectedAge ? LANGUAGE_DEVELOPMENT[parseInt(selectedAge)] : [];
+  const currentSkills = selectedAge ? (LANGUAGE_DEVELOPMENT[parseInt(selectedAge)] || []) : [];
 
   return (
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
