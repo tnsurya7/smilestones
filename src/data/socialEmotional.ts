@@ -1,7 +1,8 @@
 export interface SocialEmotionalSkill {
   id: string;
   text: string;
-  type: 'yes_no' | 'input';
+  type: 'yes_no' | 'input' | 'checklist';
+  options?: string[]; // For checklist type
 }
 
 export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
@@ -194,7 +195,7 @@ export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
     { id: 'se_48_6', text: "Often can't tell what's real and what's make-believe", type: 'yes_no' },
     { id: 'se_48_7', text: 'Changes behavior based on where she is (place of worship, library, playground)', type: 'yes_no' },
     { id: 'se_48_8', text: 'Does your child serve herself, taking food from one container to another using utensils? For example, does your child use a large spoon to scoop applesauce from a jar into a bowl?', type: 'yes_no' },
-    { id: 'se_48_9', text: 'Does your child tell you at least four of the following? Please mark the items your child knows. a) First name b) Age c) City she lives in d) Last name e) Boy or girl f) Telephone number', type: 'yes_no' },
+    { id: 'se_48_9', text: 'Does your child tell you at least four of the following? Please mark the items your child knows.', type: 'checklist', options: ['First name', 'Age', 'City she lives in', 'Last name', 'Boy or girl', 'Telephone number'] },
     { id: 'se_48_10', text: 'Does your child wash his hands using soap and water and dry off with a towel without help?', type: 'yes_no' },
     { id: 'se_48_11', text: 'Does your child tell you the names of two or more playmates, not including brothers and sisters? (Ask this question without providing help by suggesting names of playmates or friends.)', type: 'yes_no' },
     { id: 'se_48_12', text: 'Does your child brush her teeth by putting toothpaste on the tooth brush and brushing all of her teeth without help? (You may still need to check and rebrush your child\'s teeth.)', type: 'yes_no' },
@@ -205,7 +206,7 @@ export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
     { id: 'se_54_2', text: 'Does your child tell you the names of two or more playmates, not including brothers and sisters? (Ask this question without providing help by suggesting names of playmates or friends.)', type: 'yes_no' },
     { id: 'se_54_3', text: 'Does your child brush his teeth by putting toothpaste on the tooth brush and brushing all of his teeth without help? (You may still need to check and rebrush your child\'s teeth.)', type: 'yes_no' },
     { id: 'se_54_4', text: 'Does your child serve herself, taking food from one container to another, using utensils? (For example, does your child use a large spoon to scoop apple sauce from a jar into a bowl?)', type: 'yes_no' },
-    { id: 'se_54_5', text: 'Does your child tell you at least four of the following? Please mark the items your child knows. a) First name b) Age c) City he lives in d) Last name e) Boy or girl f) Telephone number', type: 'yes_no' },
+    { id: 'se_54_5', text: 'Does your child tell you at least four of the following? Please mark the items your child knows.', type: 'checklist', options: ['First name', 'Age', 'City he lives in', 'Last name', 'Boy or girl', 'Telephone number'] },
     { id: 'se_54_6', text: 'Does your child dress and undress herself, including buttoning medium-size buttons and zipping front zippers?', type: 'yes_no' }
   ],
   60: [
@@ -214,7 +215,7 @@ export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
     { id: 'se_60_3', text: 'Does simple chores at home, like matching socks or clearing the table after eating', type: 'yes_no' },
     { id: 'se_60_4', text: 'Can your child serve himself, taking food from one container to another, using utensils? For example, does your child use a large spoon to scoop applesauce from a jar into a bowl?', type: 'yes_no' },
     { id: 'se_60_5', text: 'Does your child wash her hands and face using soap and water and dry off with a towel without help?', type: 'yes_no' },
-    { id: 'se_60_6', text: 'Does your child tell you at least four of the following? Please mark the items your child knows. a) First name b) Age c) City he lives in d) Last name e) Boy or girl f) Telephone number', type: 'yes_no' },
+    { id: 'se_60_6', text: 'Does your child tell you at least four of the following? Please mark the items your child knows.', type: 'checklist', options: ['First name', 'Age', 'City he lives in', 'Last name', 'Boy or girl', 'Telephone number'] },
     { id: 'se_60_7', text: 'Does your child dress and undress himself, including buttoning medium-size buttons and zipping front zippers?', type: 'yes_no' },
     { id: 'se_60_8', text: 'Does your child use the toilet by herself? (She goes to the bathroom, sits on the toilet, wipes, and flushes.) Mark "yes" even if she does this after you remind her.', type: 'yes_no' },
     { id: 'se_60_9', text: 'Does your child usually take turns and share with other children?', type: 'yes_no' }

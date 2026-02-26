@@ -310,30 +310,55 @@ export default function SocialEmotionalPage() {
                   <p className="text-sm sm:text-base text-gray-900 font-semibold mb-2 sm:mb-3">
                     {index + 1}. {skill.text}
                   </p>
-                  <div className="flex gap-3 sm:gap-4">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name={skill.id}
-                        value="Yes"
-                        checked={answers[skill.id] === 'Yes'}
-                        onChange={() => handleAnswerChange(skill.id, 'Yes')}
-                        className="w-4 h-4 text-blue-600"
-                      />
-                      <span className="text-sm sm:text-base text-gray-900 font-semibold">Yes</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name={skill.id}
-                        value="No"
-                        checked={answers[skill.id] === 'No'}
-                        onChange={() => handleAnswerChange(skill.id, 'No')}
-                        className="w-4 h-4 text-blue-600"
-                      />
-                      <span className="text-sm sm:text-base text-gray-900 font-semibold">No</span>
-                    </label>
-                  </div>
+                  {skill.type === 'checklist' && skill.options ? (
+                    <div className="space-y-2">
+                      {skill.options.map((option, optIndex) => (
+                        <label key={`${skill.id}_${optIndex}`} className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={answers[skill.id]?.includes(option) || false}
+                            onChange={(e) => {
+                              const currentAnswers = answers[skill.id] ? answers[skill.id].split(',') : [];
+                              if (e.target.checked) {
+                                handleAnswerChange(skill.id, [...currentAnswers, option].join(','));
+                              } else {
+                                handleAnswerChange(skill.id, currentAnswers.filter(a => a !== option).join(','));
+                              }
+                            }}
+                            className="w-4 h-4 text-blue-600 rounded"
+                          />
+                          <span className="text-sm sm:text-base text-gray-900 font-semibold">
+                            {String.fromCharCode(97 + optIndex)}) {option}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex gap-3 sm:gap-4">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name={skill.id}
+                          value="Yes"
+                          checked={answers[skill.id] === 'Yes'}
+                          onChange={() => handleAnswerChange(skill.id, 'Yes')}
+                          className="w-4 h-4 text-blue-600"
+                        />
+                        <span className="text-sm sm:text-base text-gray-900 font-semibold">Yes</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name={skill.id}
+                          value="No"
+                          checked={answers[skill.id] === 'No'}
+                          onChange={() => handleAnswerChange(skill.id, 'No')}
+                          className="w-4 h-4 text-blue-600"
+                        />
+                        <span className="text-sm sm:text-base text-gray-900 font-semibold">No</span>
+                      </label>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
