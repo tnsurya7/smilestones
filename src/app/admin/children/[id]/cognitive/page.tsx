@@ -314,7 +314,30 @@ export default function CognitiveMilestonesPage() {
                   <p className="text-sm sm:text-base text-gray-900 font-semibold mb-2 sm:mb-3">
                     {index + 1}. {milestone.text}
                   </p>
-                  {milestone.type === 'yes_no' ? (
+                  {milestone.type === 'checklist' && milestone.options ? (
+                    <div className="space-y-2">
+                      {milestone.options.map((option, optIndex) => (
+                        <label key={`${milestone.id}_${optIndex}`} className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={answers[milestone.id]?.includes(option) || false}
+                            onChange={(e) => {
+                              const currentAnswers = answers[milestone.id] ? answers[milestone.id].split(',') : [];
+                              if (e.target.checked) {
+                                handleAnswerChange(milestone.id, [...currentAnswers, option].join(','));
+                              } else {
+                                handleAnswerChange(milestone.id, currentAnswers.filter(a => a !== option).join(','));
+                              }
+                            }}
+                            className="w-4 h-4 text-blue-600 rounded"
+                          />
+                          <span className="text-sm sm:text-base text-gray-900 font-semibold">
+                            {String.fromCharCode(97 + optIndex)}) {option}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : milestone.type === 'yes_no' ? (
                     <div className="flex gap-3 sm:gap-4">
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input

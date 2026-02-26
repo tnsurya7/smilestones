@@ -1,7 +1,8 @@
 export interface CognitiveMilestone {
   id: string;
   text: string;
-  type: 'yes_no' | 'input';
+  type: 'yes_no' | 'input' | 'checklist';
+  options?: string[];
 }
 
 export const COGNITIVE_MILESTONES: Record<number, CognitiveMilestone[]> = {
@@ -97,7 +98,7 @@ export const COGNITIVE_MILESTONES: Record<number, CognitiveMilestone[]> = {
   20: [
     { id: 'cm_20_1', text: 'Without your showing him how, does your child scribble back and forth when you give him a crayon (or pencil or pen)?', type: 'yes_no' },
     { id: 'cm_20_2', text: 'After watching you draw a line from the top of the paper to the bottom with a crayon (or pencil or pen), does your child copy you by drawing a single line on the paper in any direction?', type: 'yes_no' },
-    { id: 'cm_20_3', text: 'If you do any of the following gestures, does your child copy at least one of them? a) Open and close your mouth. b) Blink your eyes. c) Pull on your earlobe. d) Pat your cheek.', type: 'yes_no' },
+    { id: 'cm_20_3', text: 'If you do any of the following gestures, does your child copy at least one of them?', type: 'checklist', options: ['Open and close your mouth', 'Blink your eyes', 'Pull on your earlobe', 'Pat your cheek'] },
     { id: 'cm_20_4', text: 'If you give your child a bottle, spoon, or pencil upside down, does she turn it right side up so that she can use it properly?', type: 'yes_no' },
     { id: 'cm_20_5', text: 'While your child watches, line up four objects like blocks or cars in a row. Does your child copy or imitate you and line up at least two blocks side by side?', type: 'yes_no' },
     { id: 'cm_20_6', text: 'If your child wants something he cannot reach, does he find a chair or box to stand on to reach it?', type: 'yes_no' }

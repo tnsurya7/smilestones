@@ -125,7 +125,7 @@ export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
   ],
   22: [
     { id: 'se_22_1', text: 'Does your child copy the activities you do, such as wipe up a spill, sweep, shave, or comb hair?', type: 'yes_no' },
-    { id: 'se_22_2', text: 'If you do any of the following gestures, does your child copy at least one of them? a) Open and close your mouth b) Blink your eyes c) Pull on your earlobe d) Pat your cheek', type: 'yes_no' },
+    { id: 'se_22_2', text: 'If you do any of the following gestures, does your child copy at least one of them?', type: 'checklist', options: ['Open and close your mouth', 'Blink your eyes', 'Pull on your earlobe', 'Pat your cheek'] },
     { id: 'se_22_3', text: 'Does your child eat with a fork?', type: 'yes_no' },
     { id: 'se_22_4', text: 'Does your child drink from a cup or glass, putting it down again with little spilling?', type: 'yes_no' },
     { id: 'se_22_5', text: 'When playing with either a stuffed animal or a doll, does your child pretend to rock it, feed it, change its diapers, put it to bed, and so forth?', type: 'yes_no' },
@@ -142,7 +142,7 @@ export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
     { id: 'se_24_8', text: 'Does your child call herself "I" or "me" more often than her own name? For example, "I do it," more often than "Juanita do it."', type: 'yes_no' }
   ],
   27: [
-    { id: 'se_27_1', text: 'If you do any of the following gestures, does your child copy at least one of them? a) Open and close your mouth b) Blink your eyes c) Pull on your earlobe d) Pat your cheek', type: 'yes_no' },
+    { id: 'se_27_1', text: 'If you do any of the following gestures, does your child copy at least one of them?', type: 'checklist', options: ['Open and close your mouth', 'Blink your eyes', 'Pull on your earlobe', 'Pat your cheek'] },
     { id: 'se_27_2', text: 'Does your child eat with a fork?', type: 'yes_no' },
     { id: 'se_27_3', text: 'When playing with either a stuffed animal or a doll, does your child pretend to rock it, feed it, change its diapers, put it to bed, and so forth?', type: 'yes_no' },
     { id: 'se_27_4', text: 'Does your child push a little wagon, stroller, or other toy on wheels, steering it around objects and backing out of corners if he cannot turn?', type: 'yes_no' },
@@ -153,7 +153,7 @@ export const SOCIAL_EMOTIONAL: Record<number, SocialEmotionalSkill[]> = {
     { id: 'se_30_1', text: 'Plays next to other children and sometimes plays with them', type: 'yes_no' },
     { id: 'se_30_2', text: 'Shows you what she can do by saying, "Look at me!"', type: 'yes_no' },
     { id: 'se_30_3', text: 'Follows simple routines when told, like helping to pick up toys when you say, "It\'s clean-up time."', type: 'yes_no' },
-    { id: 'se_30_4', text: 'If you do any of the following gestures, does your child copy at least one of them? a) Open and close your mouth b) Blink your eyes c) Pull on your earlobe d) Pat your cheek', type: 'yes_no' },
+    { id: 'se_30_4', text: 'If you do any of the following gestures, does your child copy at least one of them?', type: 'checklist', options: ['Open and close your mouth', 'Blink your eyes', 'Pull on your earlobe', 'Pat your cheek'] },
     { id: 'se_30_5', text: 'Does your child use a spoon to feed himself with little spilling?', type: 'yes_no' },
     { id: 'se_30_6', text: 'Does your child push a little wagon, stroller, or other toy on wheels, steering it around objects and backing out of corners if she cannot turn?', type: 'yes_no' },
     { id: 'se_30_7', text: 'Does your child put on a coat, jacket, or shirt by himself?', type: 'yes_no' },
