@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
-import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain } from 'lucide-react';
+import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand } from 'lucide-react';
 
 export default function ChildProfilePage() {
   const { user, loading } = useAuth();
@@ -73,6 +73,13 @@ export default function ChildProfilePage() {
       icon: Brain,
       color: 'from-teal-500 to-teal-600',
       route: `/admin/children/${childId}/cognitive`
+    },
+    {
+      title: 'Fine Motor Skills',
+      description: 'Age-based fine motor skills assessment tracking hand-eye coordination and dexterity development',
+      icon: Hand,
+      color: 'from-cyan-500 to-cyan-600',
+      route: `/admin/children/${childId}/fine-motor`
     },
     {
       title: 'Sessions',
