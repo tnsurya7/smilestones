@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Brain, Hand, BookOpen, Activity, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import Toast from '@/components/Toast';
 
 const therapies = [
   {
@@ -64,6 +65,7 @@ const therapies = [
 export default function TherapyPage() {
   const router = useRouter();
   const [selectedTherapies, setSelectedTherapies] = useState<string[]>([]);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' | 'warning' } | null>(null);
 
   const toggleTherapy = (therapyId: string) => {
     if (selectedTherapies.includes(therapyId)) {
@@ -75,7 +77,7 @@ export default function TherapyPage() {
 
   const handleContinue = async () => {
     if (selectedTherapies.length === 0) {
-      alert('Please select at least one therapy');
+      setToast({ message: 'Please select at least one therapy', type: 'warning' });
       return;
     }
 
@@ -118,17 +120,29 @@ export default function TherapyPage() {
         throw new Error(responseData.details || responseData.error || 'Failed to save registration');
       }
 
-      // Show success message and redirect
-      alert('Therapy registration submitted successfully! Our team will contact you shortly.');
-      router.push('/');
+      // Show success toast and redirect
+      setToast({ message: 'Therapy registration submitted successfully! Our team will contact you shortly.', type: 'success' });
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
     } catch (error: any) {
       console.error('Error saving registration:', error);
-      alert(`Failed to submit registration: ${error.message}`);
+      setToast({ message: `Failed to submit registration: ${error.message}`, type: 'error' });
     }
   };
 
   return (
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+          duration={5000}
+        />
+      )}
+
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6">
