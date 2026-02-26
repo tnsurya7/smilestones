@@ -150,10 +150,11 @@ interface CaseSheetData {
   paternalGrandmotherName: string;
   maternalGrandfatherName: string;
   maternalGrandmotherName: string;
-  timeWithPaternalGrandparents: string; // Yes/No
-  timeWithMaternalGrandparents: string; // Yes/No
+  timeSpentWithGrandparents: string;
   
   // Section 2: Family History
+  paternalFamilyHistory: string; // Yes/No
+  maternalFamilyHistory: string; // Yes/No
   familySpeechDelayHistory: string;
   intellectualDisabilityInFamily: string;
   developmentalDelayInFamily: string;
@@ -223,8 +224,9 @@ export default function CaseSheetPage() {
     sibling1Name: '', sibling1Age: '', sibling2Name: '', sibling2Age: '', siblingMilestonesAppropriate: '', timeSpentWithSiblings: '',
     // Grandparents
     paternalGrandfatherName: '', paternalGrandmotherName: '', maternalGrandfatherName: '', maternalGrandmotherName: '',
-    timeWithPaternalGrandparents: '', timeWithMaternalGrandparents: '',
+    timeSpentWithGrandparents: '',
     // Family History
+    paternalFamilyHistory: '', maternalFamilyHistory: '',
     familySpeechDelayHistory: '', intellectualDisabilityInFamily: '', developmentalDelayInFamily: '',
     autismInFamily: '', whoIdentifiedFirst: '', whoSuggestedTherapy: '', parentalConcerns: [], residenceType: '',
     // Section 3: Personal History
@@ -1214,8 +1216,7 @@ export default function CaseSheetPage() {
               <TextInput label="Paternal Grandmother Name" value={formData.paternalGrandmotherName} onChange={(v: string) => handleInputChange('paternalGrandmotherName', v)} />
               <TextInput label="Maternal Grandfather Name" value={formData.maternalGrandfatherName} onChange={(v: string) => handleInputChange('maternalGrandfatherName', v)} />
               <TextInput label="Maternal Grandmother Name" value={formData.maternalGrandmotherName} onChange={(v: string) => handleInputChange('maternalGrandmotherName', v)} />
-              <RadioGroup label="Time spent with paternal grandparents" value={formData.timeWithPaternalGrandparents} onChange={(v: string) => handleInputChange('timeWithPaternalGrandparents', v)} options={['Yes', 'No']} />
-              <RadioGroup label="Time spent with maternal grandparents" value={formData.timeWithMaternalGrandparents} onChange={(v: string) => handleInputChange('timeWithMaternalGrandparents', v)} options={['Yes', 'No']} />
+              <TextInput label="Time spent with Grandparents (hours/day)" value={formData.timeSpentWithGrandparents} onChange={(v: string) => handleInputChange('timeSpentWithGrandparents', v)} type="number" />
             </div>
           </div>
           
@@ -1223,6 +1224,8 @@ export default function CaseSheetPage() {
           <div className="mb-6">
             <h3 className="text-lg font-bold text-gray-900 mb-3">Family Medical History</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <RadioGroup label="Paternal family history" value={formData.paternalFamilyHistory} onChange={(v: string) => handleInputChange('paternalFamilyHistory', v)} options={['Yes', 'No']} />
+              <RadioGroup label="Maternal family history" value={formData.maternalFamilyHistory} onChange={(v: string) => handleInputChange('maternalFamilyHistory', v)} options={['Yes', 'No']} />
               <RadioGroup label="Family member has speech delay" value={formData.familySpeechDelayHistory} onChange={(v: string) => handleInputChange('familySpeechDelayHistory', v)} options={['Yes', 'No']} />
               <RadioGroup label="Intellectual disability in family" value={formData.intellectualDisabilityInFamily} onChange={(v: string) => handleInputChange('intellectualDisabilityInFamily', v)} options={['Yes', 'No']} />
               <RadioGroup label="Developmental delay in family" value={formData.developmentalDelayInFamily} onChange={(v: string) => handleInputChange('developmentalDelayInFamily', v)} options={['Yes', 'No']} />
