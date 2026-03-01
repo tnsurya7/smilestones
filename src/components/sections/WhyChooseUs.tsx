@@ -86,27 +86,6 @@ const WhyChooseUs = () => {
             );
           })}
         </div>
-
-        {/* Philosophy section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
-          <div className="universal-card p-12 text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Our Philosophy
-            </h3>
-            <p className="text-2xl text-blue-600 mb-6 italic font-semibold">
-              "Mothers are the best therapists – We believe it, We practice it."
-            </p>
-            <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              At Smilestones, we understand that parents know their children best. That's why we actively involve families in the therapeutic process, providing training and support to ensure continued progress at home. Our collaborative approach ensures that every child receives consistent, loving care both at our center and in their daily environment.
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
