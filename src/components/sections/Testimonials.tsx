@@ -147,7 +147,7 @@ const Testimonials = () => {
               transition={{ duration: 0.5 }}
               className="text-4xl font-bold mb-2"
             >
-              500+
+              1500+
             </motion.div>
             <div className="text-white/90">Children Helped</div>
           </motion.div>
