@@ -93,7 +93,7 @@ export default function OnlineTherapyPage() {
               Smilestones offers compassionate, expert-led therapy for anxiety, tantrums, attention issues, and emotional shutdowns.
             </p>
             
-            <div className="universal-card p-6 md:p-8 mb-8 md:mb-10 max-w-2xl mx-auto hover-card-effect hover-card-blue">
+            <div className="universal-card p-6 md:p-8 mb-8 md:mb-10 max-w-2xl mx-auto hover-card-effect bg-white">
               <p className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
                 Online sessions from the comfort of your home.
               </p>
