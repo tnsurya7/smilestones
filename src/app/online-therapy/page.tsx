@@ -155,11 +155,9 @@ export default function OnlineTherapyPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => {
               const IconComponent = service.icon;
-              const gradientClasses = ['hover-card-blue', 'hover-card-green', 'hover-card-purple'];
-              const gradientClass = gradientClasses[index % gradientClasses.length];
               
               return (
-                <div key={service.title} className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8 flex flex-col`}>
+                <div key={service.title} className="universal-card hover-card-effect p-6 md:p-8 flex flex-col bg-white">
                   <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 md:mb-6 mx-auto">
                     <IconComponent className="w-7 h-7 md:w-8 md:h-8 text-blue-600" />
                   </div>
@@ -208,16 +206,8 @@ export default function OnlineTherapyPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {helpCategories.map((category, index) => {
-                const colorClasses = {
-                  blue: 'hover-card-blue',
-                  purple: 'hover-card-purple',
-                  red: 'hover-card-red',
-                  green: 'hover-card-green',
-                };
-                const gradientClass = colorClasses[category.color as keyof typeof colorClasses];
-                
                 return (
-                  <div key={category.title} className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8`}>
+                  <div key={category.title} className="universal-card hover-card-effect p-6 md:p-8 bg-white">
                     <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">
                       {category.title}
                     </h3>
@@ -246,7 +236,7 @@ export default function OnlineTherapyPage() {
               Why Choose <span className="text-blue-600">Online Therapy</span> at Smilestones?
             </h2>
             
-            <div className="universal-card hover-card-effect hover-card-indigo p-8 md:p-12">
+            <div className="universal-card hover-card-effect p-8 md:p-12 bg-white">
               <ul className="space-y-4 md:space-y-6">
                 {whyOnline.map((point, index) => (
                   <li key={index} className="flex items-start">
