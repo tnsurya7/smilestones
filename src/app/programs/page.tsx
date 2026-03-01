@@ -5,12 +5,12 @@ import FloatingButtons from '@/components/ui/FloatingButtons';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Programs - Smilestones Child Development Centre',
-  description: 'Specialized programs including Smile CAMP, Parent Training, and School Support programs designed to help children and families succeed.',
+  title: 'Courses - Smilestones Child Development Centre',
+  description: 'Specialized courses including Smile CAMP, Parent Training, and School Support courses designed to help children and families succeed.',
 };
 
-export default function ProgramsPage() {
-  const programs = [
+export default function CoursesPage() {
+  const courses = [
     {
       title: 'Smile CAMP',
       subtitle: 'School Readiness Program',
@@ -81,20 +81,20 @@ export default function ProgramsPage() {
       <div className="pt-6 pb-4 bg-gray-50">
         <div className="container mx-auto px-4">
           <nav className="text-sm text-gray-600">
-            <span>Home</span> → <span className="text-blue-600 font-medium">Programs</span>
+            <span>Home</span> → <span className="text-blue-600 font-medium">Courses</span>
           </nav>
         </div>
       </div>
 
-      {/* Programs Hero */}
+      {/* Courses Hero */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
-              Our <span className="text-blue-600">Programs</span>
+              Our <span className="text-blue-600">Courses</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed px-4">
-              Specialized programs designed to support children and families at every stage of development, from early intervention to school integration.
+              Specialized courses designed to support children and families at every stage of development, from early intervention to school integration.
             </p>
           </div>
           
@@ -118,30 +118,30 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Programs Details */}
+      {/* Courses Details */}
       <section className="py-12 md:py-20 section-gradient">
         <div className="container mx-auto px-4">
           <div className="space-y-12 md:space-y-16">
-            {programs.map((program, index) => {
+            {courses.map((course, index) => {
               const gradientClasses = ['hover-card-blue', 'hover-card-green', 'hover-card-purple'];
               const gradientClass = gradientClasses[index % gradientClasses.length];
               
               return (
-                <div key={program.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+                <div key={course.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                     <div className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8`}>
                       <div className="flex items-center mb-3 md:mb-4">
                         <div className="w-2 h-2 md:w-3 md:h-3 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
-                        <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{program.subtitle}</span>
+                        <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{course.subtitle}</span>
                       </div>
                       
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{program.title}</h2>
-                      <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{program.description}</p>
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{course.title}</h2>
+                      <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{course.description}</p>
                       
                       <div className="grid grid-cols-1 gap-3 md:gap-4 mb-4 md:mb-6">
                         <div className="bg-blue-50 p-3 md:p-4 rounded-lg">
                           <div className="text-xs md:text-sm text-blue-600 font-semibold">Duration</div>
-                          <div className="text-gray-900 font-medium text-sm md:text-base">{program.duration}</div>
+                          <div className="text-gray-900 font-medium text-sm md:text-base">{course.duration}</div>
                         </div>
                       </div>
                       
@@ -154,9 +154,9 @@ export default function ProgramsPage() {
                   <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
                     <div className="space-y-6 md:space-y-8">
                       <div className={`universal-card hover-card-effect ${gradientClass} p-4 md:p-6`}>
-                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Program Features</h3>
+                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Course Features</h3>
                         <ul className="space-y-2 md:space-y-3">
-                          {program.features.map((feature, idx) => (
+                          {course.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start">
                               <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
                               <span className="text-gray-600 text-sm md:text-base">{feature}</span>
@@ -168,7 +168,7 @@ export default function ProgramsPage() {
                       <div className={`universal-card hover-card-effect ${gradientClass} p-4 md:p-6`}>
                         <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Expected Outcomes</h3>
                         <ul className="space-y-2 md:space-y-3">
-                          {program.outcomes.map((outcome, idx) => (
+                          {course.outcomes.map((outcome, idx) => (
                             <li key={idx} className="flex items-start">
                               <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
                               <span className="text-gray-600 text-sm md:text-base">{outcome}</span>
@@ -190,10 +190,10 @@ export default function ProgramsPage() {
         <div className="container mx-auto px-4">
           <div className="universal-card hover-card-effect p-8 md:p-12 text-center max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
-              Ready to Join Our Programs?
+              Ready to Join Our Courses?
             </h2>
             <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 px-4">
-              Contact us to learn more about our programs and find the right fit for your child's needs.
+              Contact us to learn more about our courses and find the right fit for your child's needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="btn-primary text-center">
