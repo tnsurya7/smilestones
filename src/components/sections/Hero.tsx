@@ -166,9 +166,9 @@ const Hero = () => {
                 whileTap={{ scale: 0.95 }}
                 className="premium-btn-wrapper w-full"
               >
-                <Link href="/therapy" className="premium-gradient-btn primary text-xs md:text-sm py-2 md:py-3 w-full justify-center">
+                <Link href="/programs" className="premium-gradient-btn primary text-xs md:text-sm py-2 md:py-3 w-full justify-center">
                   <Calendar size={16} className="btn-icon md:w-5 md:h-5" />
-                  <span className="btn-text">Register for Therapy</span>
+                  <span className="btn-text">View Courses</span>
                   <div className="btn-gradient-overlay"></div>
                   <div className="btn-glow-effect"></div>
                 </Link>
