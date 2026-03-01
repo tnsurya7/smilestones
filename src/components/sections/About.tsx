@@ -32,41 +32,8 @@ const About = () => {
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-12 md:py-20 section-gradient">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="universal-card p-8 md:p-12 mb-6 md:mb-8 hover-card-effect hover-card-blue"
-            >
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Our Mission</h3>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                To provide comprehensive, evidence-based developmental services that empower children and families to achieve their highest potential through personalized care, professional expertise, and compassionate support.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="universal-card p-8 md:p-12 hover-card-effect hover-card-green"
-            >
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Our Vision</h3>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                To be the leading child development centre in India, recognized for excellence in autism therapy, developmental pediatrics, and family-centered care that transforms lives and builds stronger communities.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Our Philosophy */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className="py-12 md:py-20 section-gradient">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h2 
@@ -97,7 +64,7 @@ const About = () => {
       </section>
 
       {/* Our Approach */}
-      <section className="py-12 md:py-20 section-gradient">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 md:mb-16">
             <motion.h2 
