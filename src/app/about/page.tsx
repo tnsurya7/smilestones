@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/ui/FloatingButtons';
+import Services from '@/components/sections/Services';
 import { Microscope, Users, Target } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -73,6 +74,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Services Section */}
+      <Services />
 
       {/* Leadership */}
       <section className="py-12 md:py-20 section-gradient">

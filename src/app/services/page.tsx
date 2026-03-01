@@ -28,13 +28,13 @@ export default function ServicesPage() {
       icon: Brain,
       title: 'Autism Assessment & Therapy',
       description: 'Comprehensive autism spectrum disorder assessment and evidence-based interventions using the latest diagnostic tools and therapeutic approaches.',
-      features: ['ADOS-2 Assessment', 'Early Intervention', 'Social Skills Training', 'Sensory Integration'],
+      features: ['Screening', 'Diagnosis Tools'],
     },
     {
       icon: Users,
       title: 'ABA Therapy',
       description: 'Applied Behavior Analysis including Discrete Trial Training (DTT), Natural Environment Teaching (NET), Pivotal Response Treatment (PRT), and Social Skills Training.',
-      features: ['DTT Programs', 'NET Strategies', 'PRT Techniques', 'Behavior Management'],
+      features: ['Autism', 'ADHD', 'Behavioral Issue'],
     },
     {
       icon: MessageSquare,

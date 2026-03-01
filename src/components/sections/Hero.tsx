@@ -254,9 +254,9 @@ const Hero = () => {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={720} suffix="+" />
+                    <AnimatedCounter value={1000} suffix="+" />
                   </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Teachers Trained</div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Newborn Followup</div>
                 </motion.div>
                 <motion.div 
                   className="universal-card text-center p-2 md:p-3"
@@ -315,11 +315,14 @@ const Hero = () => {
               <h3 className="text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-1 md:mb-2">
                 Dr. P. Sudhakar
               </h3>
-              <p className="text-sm md:text-base lg:text-lg font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2 md:mb-3 lg:mb-4">
-                Developmental Pediatrician & Applied Behavior Analyst
+              <p className="text-xs md:text-sm lg:text-base font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2 md:mb-3 lg:mb-4">
+                MD (Ped), Dip. Developmental Neurology, QBA, IBA
+              </p>
+              <p className="text-xs md:text-sm lg:text-base text-gray-600 leading-relaxed relative z-10 mb-2">
+                Since 2010 in the field of Developmental Pediatric
               </p>
               <p className="text-xs md:text-sm lg:text-base text-gray-600 leading-relaxed relative z-10">
-                First developmental pediatrician in India licensed to practice Applied Behavior Analysis from QABA Board USA
+                Former Professor of Pediatric, Madras Medical College
               </p>
 
               {/* Premium badge */}
@@ -375,9 +378,9 @@ const Hero = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent mb-1">
-                  <AnimatedCounter value={720} suffix="+" />
+                  <AnimatedCounter value={1000} suffix="+" />
                 </div>
-                <div className="text-xs text-gray-600 leading-tight">Teachers Trained</div>
+                <div className="text-xs text-gray-600 leading-tight">Newborn Followup</div>
               </motion.div>
               <motion.div 
                 className="universal-card text-center p-3"
