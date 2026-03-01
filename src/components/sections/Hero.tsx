@@ -25,8 +25,43 @@ const AnimatedCounter = ({ value, suffix = '' }: { value: number; suffix?: strin
 };
 
 const Hero = () => {
+  const [showClosedMessage, setShowClosedMessage] = useState(false);
+
+  // Check if current time is within business hours (9 AM to 6 PM)
+  const isWithinBusinessHours = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    return hours >= 9 && hours < 18; // 9 AM to 6 PM
+  };
+
+  const handleCallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isWithinBusinessHours()) {
+      e.preventDefault();
+      setShowClosedMessage(true);
+      setTimeout(() => setShowClosedMessage(false), 4000);
+    }
+  };
+
   return (
     <section className="relative min-h-fit md:min-h-screen flex items-center justify-center premium-gradient-bg overflow-hidden py-8 md:py-12 lg:py-20">
+      {/* Closed Message Toast */}
+      {showClosedMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-4 rounded-lg shadow-2xl z-50 max-w-sm"
+        >
+          <div className="flex items-start gap-3">
+            <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-bold text-sm mb-1">We're Currently Closed</p>
+              <p className="text-xs">Our calling hours are 9:00 AM to 6:00 PM. We'll be happy to call you back during business hours!</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Animated gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -144,9 +179,13 @@ const Hero = () => {
                 whileTap={{ scale: 0.95 }}
                 className="premium-btn-wrapper w-full"
               >
-                <a href="tel:+919445051166" className="premium-gradient-btn secondary blue text-xs md:text-sm py-2 md:py-3 w-full justify-center">
+                <a 
+                  href="tel:+919445051166" 
+                  onClick={handleCallClick}
+                  className={`premium-gradient-btn secondary blue text-xs md:text-sm py-2 md:py-3 w-full justify-center ${!isWithinBusinessHours() ? 'opacity-75' : ''}`}
+                >
                   <Phone size={16} className="btn-icon md:w-5 md:h-5" />
-                  <span className="btn-text">Call Now</span>
+                  <span className="btn-text">{isWithinBusinessHours() ? 'Call Now' : 'Call (Closed)'}</span>
                   <div className="btn-gradient-overlay"></div>
                   <div className="btn-glow-effect"></div>
                 </a>
