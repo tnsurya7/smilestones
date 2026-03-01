@@ -234,7 +234,7 @@ const Hero = () => {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={600} suffix="+" />
+                    <AnimatedCounter value={1500} suffix="+" />
                   </div>
                   <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Autism Managed</div>
                 </motion.div>
@@ -355,7 +355,7 @@ const Hero = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-1">
-                  <AnimatedCounter value={600} suffix="+" />
+                  <AnimatedCounter value={1500} suffix="+" />
                 </div>
                 <div className="text-xs text-gray-600 leading-tight">Autism Managed</div>
               </motion.div>
