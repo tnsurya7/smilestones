@@ -128,12 +128,13 @@ export default function CoursesPage() {
               
               return (
                 <div key={course.title} className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8`}>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{course.title}</h2>
+                  
                   <div className="flex items-center mb-3 md:mb-4">
                     <div className="w-2 h-2 md:w-3 md:h-3 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
                     <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{course.subtitle}</span>
                   </div>
                   
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{course.title}</h2>
                   <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{course.description}</p>
                   
                   <div className="grid grid-cols-1 gap-3 md:gap-4 mb-6 md:mb-8">
