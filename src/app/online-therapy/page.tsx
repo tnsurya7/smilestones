@@ -72,6 +72,15 @@ export default function OnlineTherapyPage() {
     <main>
       <Header />
       
+      {/* Breadcrumbs */}
+      <div className="pt-6 pb-4 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <nav className="text-sm text-gray-600">
+            <span>Home</span> → <span className="text-blue-600 font-medium">Online Therapy</span>
+          </nav>
+        </div>
+      </div>
+      
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
         <div className="absolute inset-0 opacity-5">
