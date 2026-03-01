@@ -12,8 +12,8 @@ export default function Home() {
     <main>
       <Header />
       <Hero />
-      <MissionVision />
       <About />
+      <MissionVision />
       <WhyChooseUs />
       <Testimonials />
       <FloatingButtons />
