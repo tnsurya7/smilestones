@@ -121,61 +121,55 @@ export default function CoursesPage() {
       {/* Courses Details */}
       <section className="py-12 md:py-20 section-gradient">
         <div className="container mx-auto px-4">
-          <div className="space-y-12 md:space-y-16">
+          <div className="max-w-4xl mx-auto space-y-12 md:space-y-16">
             {courses.map((course, index) => {
               const gradientClasses = ['hover-card-blue', 'hover-card-green', 'hover-card-purple'];
               const gradientClass = gradientClasses[index % gradientClasses.length];
               
               return (
-                <div key={course.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
-                  <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                    <div className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8`}>
-                      <div className="flex items-center mb-3 md:mb-4">
-                        <div className="w-2 h-2 md:w-3 md:h-3 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
-                        <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{course.subtitle}</span>
-                      </div>
-                      
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{course.title}</h2>
-                      <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{course.description}</p>
-                      
-                      <div className="grid grid-cols-1 gap-3 md:gap-4 mb-4 md:mb-6">
-                        <div className="bg-blue-50 p-3 md:p-4 rounded-lg">
-                          <div className="text-xs md:text-sm text-blue-600 font-semibold">Duration</div>
-                          <div className="text-gray-900 font-medium text-sm md:text-base">{course.duration}</div>
-                        </div>
-                      </div>
-                      
-                      <Link href="/contact" className="btn-primary text-center block sm:inline-block">
-                        <span>Enroll Now</span>
-                      </Link>
+                <div key={course.title} className={`universal-card hover-card-effect ${gradientClass} p-6 md:p-8`}>
+                  <div className="flex items-center mb-3 md:mb-4">
+                    <div className="w-2 h-2 md:w-3 md:h-3 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
+                    <span className="text-blue-600 font-semibold text-xs md:text-sm uppercase tracking-wide">{course.subtitle}</span>
+                  </div>
+                  
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{course.title}</h2>
+                  <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-4 md:mb-6">{course.description}</p>
+                  
+                  <div className="grid grid-cols-1 gap-3 md:gap-4 mb-6 md:mb-8">
+                    <div className="bg-blue-50 p-3 md:p-4 rounded-lg">
+                      <div className="text-xs md:text-sm text-blue-600 font-semibold">Duration</div>
+                      <div className="text-gray-900 font-medium text-sm md:text-base">{course.duration}</div>
                     </div>
                   </div>
                   
-                  <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                    <div className="space-y-6 md:space-y-8">
-                      <div className={`universal-card hover-card-effect ${gradientClass} p-4 md:p-6`}>
-                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Course Features</h3>
-                        <ul className="space-y-2 md:space-y-3">
-                          {course.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-start">
-                              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
-                              <span className="text-gray-600 text-sm md:text-base">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className={`universal-card hover-card-effect ${gradientClass} p-4 md:p-6`}>
-                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Expected Outcomes</h3>
-                        <ul className="space-y-2 md:space-y-3">
-                          {course.outcomes.map((outcome, idx) => (
-                            <li key={idx} className="flex items-start">
-                              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
-                              <span className="text-gray-600 text-sm md:text-base">{outcome}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  <Link href="/contact" className="btn-primary text-center block sm:inline-block mb-6 md:mb-8">
+                    <span>Enroll Now</span>
+                  </Link>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Course Features</h3>
+                      <ul className="space-y-2 md:space-y-3">
+                        {course.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
+                            <span className="text-gray-600 text-sm md:text-base">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Expected Outcomes</h3>
+                      <ul className="space-y-2 md:space-y-3">
+                        {course.outcomes.map((outcome, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
+                            <span className="text-gray-600 text-sm md:text-base">{outcome}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>
