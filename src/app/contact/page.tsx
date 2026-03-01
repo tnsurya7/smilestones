@@ -14,6 +14,16 @@ export default function ContactPage() {
   return (
     <main>
       <Header />
+      
+      {/* Breadcrumbs */}
+      <div className="pt-6 pb-4 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <nav className="text-sm text-gray-600">
+            <span>Home</span> → <span className="text-blue-600 font-medium">Contact</span>
+          </nav>
+        </div>
+      </div>
+      
       <ContactForm />
       <FloatingButtons />
       <Footer />
