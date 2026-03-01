@@ -185,6 +185,36 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Smile CAMP Images Section */}
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-12 text-center">
+              Smile <span className="text-blue-600">CAMP</span> Program
+            </h2>
+            <div className="space-y-8 md:space-y-12">
+              {/* First Image */}
+              <div className="universal-card hover-card-effect hover-card-blue p-4 md:p-6">
+                <img 
+                  src="/Smile camp first page .jpg" 
+                  alt="Smile CAMP Program - Page 1" 
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </div>
+              
+              {/* Second Image */}
+              <div className="universal-card hover-card-effect hover-card-green p-4 md:p-6">
+                <img 
+                  src="/Smile camp second page.jpg" 
+                  alt="Smile CAMP Program - Page 2" 
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
