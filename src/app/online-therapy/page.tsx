@@ -82,11 +82,8 @@ export default function OnlineTherapyPage() {
       </div>
       
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-blue-400 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-400 rounded-full blur-3xl"></div>
-        </div>
+      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 opacity-50"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -94,19 +91,19 @@ export default function OnlineTherapyPage() {
               Online Therapy for Kids – Talk to a <span className="text-blue-600">Child Counselor</span> Today
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-700 mb-3 md:mb-4 font-semibold">
+            <p className="text-lg md:text-xl text-gray-900 mb-3 md:mb-4 font-semibold">
               Worried about your child's behavior, emotions, or school struggles?
             </p>
             
-            <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8 leading-relaxed px-4">
+            <p className="text-base md:text-lg text-gray-800 mb-6 md:mb-8 leading-relaxed px-4">
               Smilestones offers compassionate, expert-led therapy for anxiety, tantrums, attention issues, and emotional shutdowns.
             </p>
             
-            <div className="universal-card p-6 md:p-8 mb-8 md:mb-10 max-w-2xl mx-auto hover-card-effect bg-white">
+            <div className="universal-card p-6 md:p-8 mb-8 md:mb-10 max-w-2xl mx-auto hover-card-effect bg-white shadow-lg border border-gray-100">
               <p className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
                 Online sessions from the comfort of your home.
               </p>
-              <p className="text-base md:text-lg text-gray-600">
+              <p className="text-base md:text-lg text-gray-700">
                 No travel. No stress. Just real help that works.
               </p>
             </div>
