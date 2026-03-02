@@ -192,9 +192,9 @@ const Testimonials = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="text-4xl font-bold mb-2 text-white"
             >
-              700+
+              8+
             </motion.div>
-            <div className="text-white font-medium">Teacher Trained</div>
+            <div className="text-white font-medium">Parental Workshops</div>
           </motion.div>
         </motion.div>
       </div>
