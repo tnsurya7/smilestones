@@ -63,7 +63,7 @@ export default function PediatriciansPage() {
                     return (
                       <Link
                         key={event.id}
-                        href={`/events/${event.category}/${event.id}`}
+                        href={`/events/pediatricians/${event.id}`}
                         className="group block"
                       >
                         <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-8 items-center`}>
