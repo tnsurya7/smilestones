@@ -155,40 +155,40 @@ export default function ServicesPage() {
             {services.map((service, index) => {
               const IconComponent = service.icon;
               const gradientClasses = [
-                'hover-card-blue',
-                'hover-card-green', 
-                'hover-card-red',
-                'hover-card-purple',
-                'hover-card-yellow',
-                'hover-card-indigo',
-                'hover-card-blue',
-                'hover-card-green',
-                'hover-card-red',
-                'hover-card-purple',
-                'hover-card-yellow',
-                'hover-card-indigo'
+                'gradient-card-blue',
+                'gradient-card-green', 
+                'gradient-card-red',
+                'gradient-card-purple',
+                'gradient-card-orange',
+                'gradient-card-indigo',
+                'gradient-card-pink',
+                'gradient-card-teal',
+                'gradient-card-cyan',
+                'gradient-card-blue',
+                'gradient-card-green',
+                'gradient-card-purple'
               ];
               const gradientClass = gradientClasses[index % gradientClasses.length];
               
               return (
-                <div key={service.title} className={`universal-card hover-card-effect ${gradientClass} p-6`}>
+                <div key={service.title} className={`gradient-card ${gradientClass} hover-card-effect p-6`}>
                   <div className="flex items-center mb-4 md:mb-6">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3 md:mr-4">
-                      <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center mr-3 md:mr-4 shadow-lg">
+                      <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900">{service.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold text-white">{service.title}</h3>
                   </div>
                   
-                  <p className="text-gray-600 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
+                  <p className="text-white/90 leading-relaxed mb-4 md:mb-6 text-sm md:text-base">
                     {service.description}
                   </p>
                   
                   <div className="mb-4 md:mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">Key Features:</h4>
+                    <h4 className="font-semibold text-white mb-2 md:mb-3 text-sm md:text-base">Key Features:</h4>
                     <ul className="space-y-1 md:space-y-2">
                       {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center text-xs md:text-sm text-gray-600">
-                          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mr-2 md:mr-3"></div>
+                        <li key={idx} className="flex items-center text-xs md:text-sm text-white/90">
+                          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full mr-2 md:mr-3"></div>
                           {feature}
                         </li>
                       ))}
@@ -197,7 +197,7 @@ export default function ServicesPage() {
                   
                   <Link 
                     href="/contact"
-                    className="text-blue-600 hover:text-blue-800 font-semibold inline-flex items-center text-sm md:text-base transition-colors"
+                    className="text-white hover:text-white/80 font-semibold inline-flex items-center text-sm md:text-base transition-colors underline"
                   >
                     Learn More →
                   </Link>
