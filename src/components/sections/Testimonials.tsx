@@ -145,11 +145,11 @@ const Testimonials = () => {
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="text-4xl font-bold mb-2"
+              className="text-4xl font-bold mb-2 text-white"
             >
               1500+
             </motion.div>
-            <div className="text-white/90">Children Helped</div>
+            <div className="text-white font-medium">Children Helped</div>
           </motion.div>
           
           <motion.div 
@@ -160,11 +160,11 @@ const Testimonials = () => {
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl font-bold mb-2"
+              className="text-4xl font-bold mb-2 text-white"
             >
               10+
             </motion.div>
-            <div className="text-white/90">Years Experience</div>
+            <div className="text-white font-medium">Years Experience</div>
           </motion.div>
           
           <motion.div 
@@ -175,11 +175,11 @@ const Testimonials = () => {
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-4xl font-bold mb-2"
+              className="text-4xl font-bold mb-2 text-white"
             >
               4
             </motion.div>
-            <div className="text-white/90">Locations</div>
+            <div className="text-white font-medium">Locations</div>
           </motion.div>
           
           <motion.div 
@@ -190,11 +190,11 @@ const Testimonials = () => {
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-4xl font-bold mb-2"
+              className="text-4xl font-bold mb-2 text-white"
             >
-              8+
+              700+
             </motion.div>
-            <div className="text-white/90">Parental Workshops</div>
+            <div className="text-white font-medium">Teacher Trained</div>
           </motion.div>
         </motion.div>
       </div>
