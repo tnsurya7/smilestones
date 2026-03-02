@@ -18,7 +18,7 @@ export default function EventsPage() {
       icon: Users,
       href: '/events/parents-training',
       gradient: 'gradient-card-blue',
-      image: '/events/parents-training.jpg',
+      image: '/parents training header.jpg',
     },
     {
       title: 'Pediatricians',
@@ -26,7 +26,7 @@ export default function EventsPage() {
       icon: Stethoscope,
       href: '/events/pediatricians',
       gradient: 'gradient-card-green',
-      image: '/events/pediatricians.jpg',
+      image: '/pediariacians.jpg',
     },
     {
       title: 'Teaching Institutes',
@@ -34,7 +34,7 @@ export default function EventsPage() {
       icon: GraduationCap,
       href: '/events/teaching-institutes',
       gradient: 'gradient-card-purple',
-      image: '/events/teaching-institutes.jpg',
+      image: '/teaching institues.jpg',
     },
   ];
 
