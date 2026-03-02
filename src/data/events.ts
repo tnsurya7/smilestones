@@ -11,47 +11,22 @@ export interface Event {
 export const events: Event[] = [
   // PARENTS TRAINING
   {
-    id: 'gurgaon-2024',
-    title: 'MY India (MISSION INDIA PROJECT) - PARENTS TRAINING',
+    id: 'parents-training-gallery',
+    title: 'Parents Training Programs',
     date: '2024-02-14',
-    location: 'Gurgaon Program',
-    images: [
-      '/gurgaon-program5.jpg',
-      '/Gurgaon Program_sub1.jpg',
-    ],
-    category: 'parents-training',
-  },
-  {
-    id: 'cochin-2024',
-    title: 'Cochin Rotary Program for 2024',
-    date: '2024-02-13',
     subtitle: 'MY India (MISSION INDIA PROJECT)',
     images: [
       '/parents training header.jpg',
-    ],
-    category: 'parents-training',
-  },
-  {
-    id: 'kolkata-2023',
-    title: 'Kolkata Program February 2023',
-    date: '2023-02-13',
-    images: [
+      '/gurgaon-program5.jpg',
+      '/Gurgaon Program_sub1.jpg',
       '/kolkata1.jpg',
       '/Kolkata Program February 2023_sub2.jpg',
-    ],
-    category: 'parents-training',
-  },
-  {
-    id: 'rotary-madras-2022',
-    title: 'Rotary Club Madras September 2022',
-    date: '2022-09-15',
-    subtitle: 'MY India (MISSION INDIA PROJECT) - TEACHING INSTITUTES',
-    images: [
       '/rotary1.jpg',
       '/Rotary Club Madras September 2022_sub1.jpg',
       '/Rotary Club Madras September 2022_sub2.jpg',
       '/Rotary Club Madras September 2022_sub3.jpg',
       '/Rotary Club Madras September 2022_sub5.jpg',
+      '/pediariacians.jpg',
     ],
     category: 'parents-training',
   },
