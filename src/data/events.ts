@@ -17,7 +17,6 @@ export const events: Event[] = [
     subtitle: 'MY India (MISSION INDIA PROJECT)',
     images: [
       '/parents training header.jpg',
-      '/gurgaon-program5.jpg',
       '/Gurgaon Program_sub1.jpg',
       '/kolkata1.jpg',
       '/Kolkata Program February 2023_sub2.jpg',

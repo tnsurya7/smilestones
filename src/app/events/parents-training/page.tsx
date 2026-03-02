@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 export default function ParentsTrainingPage() {
   const images = [
     '/parents training header.jpg',
-    '/gurgaon-program5.jpg',
     '/Gurgaon Program_sub1.jpg',
     '/kolkata1.jpg',
     '/Kolkata Program February 2023_sub2.jpg',
