@@ -1677,6 +1677,12 @@ main > div:first-of-type {
   box-shadow: 0 8px 32px rgba(251, 188, 4, 0.3);
 }
 
+.gradient-card-purple {
+  background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(147, 51, 234, 0.3);
+}
+
 .gradient-card-multi {
   background: linear-gradient(135deg, #4285f4 0%, #34a853 25%, #fbbc04 50%, #ea4335 100%);
   background-size: 400% 400%;
