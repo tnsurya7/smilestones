@@ -17,8 +17,7 @@ export const events: Event[] = [
     location: 'Gurgaon Program',
     images: [
       '/gurgaon-program5.jpg',
-      '/7287a954-7940-49f6-9cca-4db37db0b942.jpg',
-      '/c6fcaf62-0f54-4b36-8a74-714eb98704ee.jpg',
+      '/Gurgaon Program_sub1.jpg',
     ],
     category: 'parents-training',
   },
@@ -28,8 +27,7 @@ export const events: Event[] = [
     date: '2024-02-13',
     subtitle: 'MY India (MISSION INDIA PROJECT)',
     images: [
-      '/cochin1.jpg',
-      '/c0b57792-304e-45b9-8cb9-a8feafadcf47.jpg',
+      '/parents training header.jpg',
     ],
     category: 'parents-training',
   },
@@ -39,7 +37,7 @@ export const events: Event[] = [
     date: '2023-02-13',
     images: [
       '/kolkata1.jpg',
-      '/98849268-a9bb-4589-b67b-a77a4a16c285.jpg',
+      '/Kolkata Program February 2023_sub2.jpg',
     ],
     category: 'parents-training',
   },
@@ -50,13 +48,10 @@ export const events: Event[] = [
     subtitle: 'MY India (MISSION INDIA PROJECT) - TEACHING INSTITUTES',
     images: [
       '/rotary1.jpg',
-      '/2abaa56d-f660-4925-8c58-23a869c508ce.jpg',
-      '/5655cbe4-6c3c-45aa-ac0f-77abb8c1a6e8.jpg',
-      '/68022e53-c10f-49f6-b899-9390a3f4ade7.jpg',
-      '/84a49640-e9e6-48aa-bfc0-2b0783ef6663.jpg',
-      '/91c3acb0-8c04-4e4c-a175-e119ec8627af.jpg',
-      '/925ec947-2d3b-4095-af29-acfe7f272bf8.jpg',
-      '/9d518e01-a679-4ea3-841a-768ea3ae5131.jpg',
+      '/Rotary Club Madras September 2022_sub1.jpg',
+      '/Rotary Club Madras September 2022_sub2.jpg',
+      '/Rotary Club Madras September 2022_sub3.jpg',
+      '/Rotary Club Madras September 2022_sub5.jpg',
     ],
     category: 'parents-training',
   },
@@ -68,8 +63,6 @@ export const events: Event[] = [
     date: '2024-11-20',
     images: [
       '/pediariacians.jpg',
-      '/1e0fa581-482e-43b4-a961-339307eb46ba.jpg',
-      '/50fa964e-e241-4e27-9918-94011d63f6bc.jpg',
     ],
     category: 'pediatricians',
   },
@@ -78,8 +71,7 @@ export const events: Event[] = [
     title: 'July 2024 East Cost Pedicon',
     date: '2024-07-19',
     images: [
-      '/d96572af-866c-48bb-91df-32d60c023b74.jpg',
-      '/dc128baf-c621-4898-bbd3-d500411913df.jpg',
+      '/pediariacians.jpg',
     ],
     category: 'pediatricians',
   },
@@ -87,7 +79,9 @@ export const events: Event[] = [
     id: 'abai-2024',
     title: 'Feb 2024 ABAI Conference',
     date: '2024-02-13',
-    images: ['/f5d2d153-542e-4b8c-bf9f-0d31e76d6b4c.jpg'],
+    images: [
+      '/pediariacians.jpg',
+    ],
     category: 'pediatricians',
   },
   {
@@ -95,8 +89,7 @@ export const events: Event[] = [
     title: 'GDBPCON 2023 at Srmch',
     date: '2023-10-17',
     images: [
-      '/834f2723-bfcd-4a3c-9012-3327185c48b4.jpg',
-      '/834f2723-bfcd-4a3c-9012-3327185c48b4 (1).jpg',
+      '/pediariacians.jpg',
     ],
     category: 'pediatricians',
   },
@@ -113,7 +106,9 @@ export const events: Event[] = [
     id: 'copp-module-2017',
     title: 'Oct 2017 Copp Module',
     date: '2017-10-21',
-    images: ['/pediariacians.jpg'],
+    images: [
+      '/pediariacians.jpg',
+    ],
     category: 'pediatricians',
   },
 
@@ -198,7 +193,6 @@ export const events: Event[] = [
       '/teaching institues.jpg',
       '/Smile camp second page.jpg',
       '/Smile camp first page .jpg',
-      '/teaching institues.jpg',
     ],
     category: 'teaching-institutes',
   },
@@ -206,7 +200,9 @@ export const events: Event[] = [
     id: 'dav-gopalapuram-2017',
     title: '17 Sep 2017 Dav Senior Secondary School Gopalapuram',
     date: '2017-09-13',
-    images: ['/teaching institues.jpg'],
+    images: [
+      '/teaching institues.jpg',
+    ],
     category: 'teaching-institutes',
   },
 ];
