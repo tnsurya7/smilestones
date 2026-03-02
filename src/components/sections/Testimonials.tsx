@@ -135,7 +135,7 @@ const Testimonials = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-6"
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           <motion.div 
             whileHover={{ scale: 1.05 }}
@@ -169,7 +169,7 @@ const Testimonials = () => {
           
           <motion.div 
             whileHover={{ scale: 1.05 }}
-            className="gradient-card gradient-card-red text-center col-span-2 md:col-span-1 hover-card-effect hover-card-red"
+            className="gradient-card gradient-card-red text-center hover-card-effect hover-card-red"
           >
             <motion.div 
               initial={{ scale: 0 }}
@@ -180,6 +180,21 @@ const Testimonials = () => {
               4
             </motion.div>
             <div className="text-white/90">Locations</div>
+          </motion.div>
+          
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="gradient-card gradient-card-purple text-center hover-card-effect hover-card-purple"
+          >
+            <motion.div 
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-4xl font-bold mb-2"
+            >
+              8+
+            </motion.div>
+            <div className="text-white/90">Parental Workshops</div>
           </motion.div>
         </motion.div>
       </div>

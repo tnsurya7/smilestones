@@ -274,9 +274,9 @@ const Hero = () => {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={8} suffix="+" />
+                    <AnimatedCounter value={700} suffix="+" />
                   </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Parental Workshops</div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Teacher Trained</div>
                 </motion.div>
               </div>
             </motion.div>
@@ -398,9 +398,9 @@ const Hero = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-1">
-                  <AnimatedCounter value={8} suffix="+" />
+                  <AnimatedCounter value={700} suffix="+" />
                 </div>
-                <div className="text-xs text-gray-600 leading-tight">Parental Workshops</div>
+                <div className="text-xs text-gray-600 leading-tight">Teachers Trained</div>
               </motion.div>
             </motion.div>
           </motion.div>
