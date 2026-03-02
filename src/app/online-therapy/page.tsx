@@ -161,18 +161,28 @@ export default function OnlineTherapyPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => {
               const IconComponent = service.icon;
+              const gradients = [
+                'bg-gradient-to-br from-blue-50 to-blue-100',
+                'bg-gradient-to-br from-green-50 to-green-100',
+                'bg-gradient-to-br from-purple-50 to-purple-100'
+              ];
+              const iconBgs = [
+                'bg-blue-500',
+                'bg-green-500',
+                'bg-purple-500'
+              ];
               
               return (
-                <div key={service.title} className="universal-card hover-card-effect p-6 md:p-8 flex flex-col bg-white">
-                  <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 md:mb-6 mx-auto">
-                    <IconComponent className="w-7 h-7 md:w-8 md:h-8 text-blue-600" />
+                <div key={service.title} className={`universal-card hover-card-effect p-6 md:p-8 flex flex-col ${gradients[index]}`}>
+                  <div className={`w-14 h-14 md:w-16 md:h-16 ${iconBgs[index]} rounded-full flex items-center justify-center mb-4 md:mb-6 mx-auto shadow-lg`}>
+                    <IconComponent className="w-7 h-7 md:w-8 md:h-8 text-white" />
                   </div>
                   
                   <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4 text-center">
                     {service.title}
                   </h3>
                   
-                  <p className="text-gray-600 leading-relaxed mb-4 text-sm md:text-base text-center flex-grow">
+                  <p className="text-gray-700 leading-relaxed mb-4 text-sm md:text-base text-center flex-grow">
                     {service.description}
                   </p>
                   
@@ -182,8 +192,8 @@ export default function OnlineTherapyPage() {
                       <ul className="space-y-2">
                         {service.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start">
-                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0"></div>
-                            <span className="text-gray-600 text-sm md:text-base">{feature}</span>
+                            <div className={`w-1.5 h-1.5 md:w-2 md:h-2 ${iconBgs[index]} rounded-full mt-1.5 md:mt-2 mr-2 md:mr-3 flex-shrink-0`}></div>
+                            <span className="text-gray-700 text-sm md:text-base">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -191,7 +201,7 @@ export default function OnlineTherapyPage() {
                   )}
                   
                   {service.highlight && (
-                    <p className="text-blue-600 font-semibold text-center text-sm md:text-base mt-auto">
+                    <p className={`${index === 0 ? 'text-blue-700' : index === 1 ? 'text-green-700' : 'text-purple-700'} font-semibold text-center text-sm md:text-base mt-auto`}>
                       {service.highlight}
                     </p>
                   )}
@@ -212,8 +222,15 @@ export default function OnlineTherapyPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {helpCategories.map((category, index) => {
+                const gradients = [
+                  'bg-gradient-to-br from-blue-50 to-blue-100',
+                  'bg-gradient-to-br from-purple-50 to-purple-100',
+                  'bg-gradient-to-br from-red-50 to-red-100',
+                  'bg-gradient-to-br from-green-50 to-green-100'
+                ];
+                
                 return (
-                  <div key={category.title} className="universal-card hover-card-effect p-6 md:p-8 bg-white">
+                  <div key={category.title} className={`universal-card hover-card-effect p-6 md:p-8 ${gradients[index]}`}>
                     <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">
                       {category.title}
                     </h3>
@@ -222,7 +239,7 @@ export default function OnlineTherapyPage() {
                       {category.items.map((item, idx) => (
                         <li key={idx} className="flex items-start">
                           <CheckCircle className="w-5 h-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-700 text-sm md:text-base">{item}</span>
+                          <span className="text-gray-800 text-sm md:text-base font-medium">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -242,14 +259,14 @@ export default function OnlineTherapyPage() {
               Why Choose <span className="text-blue-600">Online Therapy</span> at Smilestones?
             </h2>
             
-            <div className="universal-card hover-card-effect p-8 md:p-12 bg-white">
+            <div className="universal-card hover-card-effect p-8 md:p-12 bg-gradient-to-br from-indigo-50 to-blue-100">
               <ul className="space-y-4 md:space-y-6">
                 {whyOnline.map((point, index) => (
                   <li key={index} className="flex items-start">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-lg">
+                      <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </div>
-                    <span className="text-gray-700 text-base md:text-lg pt-1">{point}</span>
+                    <span className="text-gray-800 text-base md:text-lg pt-1 font-medium">{point}</span>
                   </li>
                 ))}
               </ul>
@@ -261,12 +278,12 @@ export default function OnlineTherapyPage() {
       {/* Final CTA */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="universal-card hover-card-effect p-8 md:p-12 text-center max-w-4xl mx-auto">
+          <div className="universal-card hover-card-effect p-8 md:p-12 text-center max-w-4xl mx-auto bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
               Your Child Deserves Support That <span className="text-blue-600">Truly Understands Them</span>
             </h2>
             
-            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 leading-relaxed px-4">
+            <p className="text-lg md:text-xl text-gray-800 mb-6 md:mb-8 leading-relaxed px-4 font-medium">
               Early support makes a lifelong difference. Let's help your child build confidence, resilience, and emotional strength.
             </p>
             
