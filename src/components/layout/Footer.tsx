@@ -5,18 +5,18 @@ const Footer = () => {
   const branches = [
     {
       name: 'Chennai - Anna Nagar',
-      address: '123 Anna Nagar, Chennai - 600040',
+      address: 'W-629, West Gate Road, Opp SBOA JC West Gate, D-Sector, Syndicate Bank colony, Anna nagar West extension, Chennai, Tamil Nadu 600101',
       phone: '+91 9445051166',
     },
     {
       name: 'Chennai - Trustpuram',
-      address: '456 Trustpuram, Chennai - 600024',
-      phone: '+91 98765 43211',
+      address: 'No 35, Puliyur 2nd main road, Trustpuram, Chennai, Tamil Nadu 600024',
+      phone: '+91 8300230491',
     },
     {
       name: 'Puducherry',
-      address: '789 Main Road, Puducherry - 605001',
-      phone: '+91 98765 43212',
+      address: 'AG Padmavati\'s Hospital, Villanur Main Road, Arumathapuram, Puducherry 605110',
+      phone: '+91 9445051166',
     },
   ];
 
@@ -152,8 +152,8 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-gray-300">Email</p>
-                  <a href="mailto:info@smilestones.com" className="text-white hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
-                    info@smilestones.com
+                  <a href="mailto:smilestoneschennai@gmail.com" className="text-white hover:text-transparent hover:bg-gradient-to-r hover:from-yellow-400 hover:to-yellow-300 hover:bg-clip-text transition-all duration-300">
+                    smilestoneschennai@gmail.com
                   </a>
                 </div>
               </div>

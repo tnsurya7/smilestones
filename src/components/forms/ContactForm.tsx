@@ -114,8 +114,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="font-bold mb-1 text-sm md:text-base" style={{ color: '#ffffff' }}>Email</h3>
-                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>info@smilestones.com</p>
-                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>appointments@smilestones.com</p>
+                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>smilestoneschennai@gmail.com</p>
                 </div>
               </div>
 
@@ -128,8 +127,9 @@ const ContactForm = () => {
                   <MapPin className="w-5 h-5 md:w-6 md:h-6" style={{ color: '#ffffff', opacity: 0.9 }} />
                 </div>
                 <div>
-                  <h3 className="font-bold mb-1 text-sm md:text-base" style={{ color: '#ffffff' }}>Main Office</h3>
-                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>123 Anna Nagar, Chennai - 600040</p>
+                  <h3 className="font-bold mb-1 text-sm md:text-base" style={{ color: '#ffffff' }}>Main Hospital</h3>
+                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>No 35, Puliyur 2nd main road</p>
+                  <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>Trustpuram, Chennai - 600024</p>
                   <p className="text-xs md:text-sm font-medium" style={{ color: '#ffffff' }}>Tamil Nadu, India</p>
                 </div>
               </div>

@@ -7,20 +7,20 @@ export default function StructuredData() {
     "url": "https://smilestones.com",
     "logo": "https://smilestones.com/smilestones-logo.jpeg",
     "image": "https://smilestones.com/smilestones-logo.jpeg",
-    "telephone": "+919876543210",
-    "email": "info@smilestones.com",
+    "telephone": "+919445051166",
+    "email": "smilestoneschennai@gmail.com",
     "address": [
       {
         "@type": "PostalAddress",
-        "streetAddress": "123 Anna Nagar",
+        "streetAddress": "W-629, West Gate Road, Opp SBOA JC West Gate, D-Sector, Syndicate Bank colony, Anna nagar West extension",
         "addressLocality": "Chennai",
         "addressRegion": "Tamil Nadu",
-        "postalCode": "600040",
+        "postalCode": "600101",
         "addressCountry": "IN"
       },
       {
         "@type": "PostalAddress",
-        "streetAddress": "456 Trustpuram",
+        "streetAddress": "No 35, Puliyur 2nd main road, Trustpuram",
         "addressLocality": "Chennai",
         "addressRegion": "Tamil Nadu",
         "postalCode": "600024",
@@ -28,10 +28,10 @@ export default function StructuredData() {
       },
       {
         "@type": "PostalAddress",
-        "streetAddress": "789 Main Road",
+        "streetAddress": "AG Padmavati's Hospital, Villanur Main Road, Arumathapuram",
         "addressLocality": "Puducherry",
         "addressRegion": "Puducherry",
-        "postalCode": "605001",
+        "postalCode": "605110",
         "addressCountry": "IN"
       }
     ],
@@ -84,14 +84,14 @@ export default function StructuredData() {
     "@type": "LocalBusiness",
     "name": "Smilestones Child Development Centre",
     "image": "https://smilestones.com/smilestones-logo.jpeg",
-    "telephone": "+919876543210",
-    "email": "info@smilestones.com",
+    "telephone": "+919445051166",
+    "email": "smilestoneschennai@gmail.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "123 Anna Nagar",
+      "streetAddress": "No 35, Puliyur 2nd main road, Trustpuram",
       "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
-      "postalCode": "600040",
+      "postalCode": "600024",
       "addressCountry": "IN"
     },
     "geo": {
