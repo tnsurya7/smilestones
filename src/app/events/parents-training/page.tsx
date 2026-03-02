@@ -47,61 +47,69 @@ export default function ParentsTrainingPage() {
       {/* Events Listing */}
       <section className="py-12 md:py-20 section-gradient">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto space-y-12">
+          <div className="max-w-6xl mx-auto space-y-12">
             {Object.entries(groupedEvents).map(([monthYear, monthEvents]) => (
               <div key={monthYear}>
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 md:mb-12">
                   {monthYear}
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="space-y-12 md:space-y-16">
                   {monthEvents.map((event, index) => {
                     const gradients = ['gradient-card-blue', 'gradient-card-green', 'gradient-card-purple', 'gradient-card-orange'];
                     const gradient = gradients[index % gradients.length];
+                    const isEven = index % 2 === 0;
                     
                     return (
                       <Link
                         key={event.id}
                         href={`/events/${event.category}/${event.id}`}
-                        className="group"
+                        className="group block"
                       >
-                        <div className={`gradient-card ${gradient} hover-card-effect p-6 h-full transition-transform duration-300 group-hover:scale-105`}>
+                        <div className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-8 items-center`}>
                           {/* Event Image */}
                           {event.images[0] && (
-                            <div className="mb-4 rounded-lg overflow-hidden">
+                            <div className="w-full md:w-1/2 rounded-2xl overflow-hidden shadow-lg">
                               <img
                                 src={event.images[0]}
                                 alt={event.title}
-                                className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                                className="w-full h-64 md:h-80 object-cover group-hover:scale-110 transition-transform duration-500"
                               />
                             </div>
                           )}
                           
-                          {/* Event Details */}
-                          <div className="flex items-center gap-2 mb-3 text-white/90 text-sm">
-                            <Calendar className="w-4 h-4" />
-                            <span>{formatEventDate(event.date)}</span>
-                          </div>
-                          
-                          {event.location && (
+                          {/* Event Details Card */}
+                          <div className={`w-full md:w-1/2 gradient-card ${gradient} hover-card-effect p-6 md:p-8 transition-transform duration-300 group-hover:scale-105`}>
                             <div className="flex items-center gap-2 mb-3 text-white/90 text-sm">
-                              <MapPin className="w-4 h-4" />
-                              <span>{event.location}</span>
+                              <Calendar className="w-4 h-4" />
+                              <span>{formatEventDate(event.date)}</span>
                             </div>
-                          )}
-                          
-                          <h3 className="text-xl font-bold text-white mb-2 group-hover:underline">
-                            {event.title}
-                          </h3>
-                          
-                          {event.subtitle && (
-                            <p className="text-white/80 text-sm mb-3">
-                              {event.subtitle}
-                            </p>
-                          )}
-                          
-                          <div className="text-white/90 text-sm">
-                            {event.images.length} {event.images.length === 1 ? 'photo' : 'photos'}
+                            
+                            {event.location && (
+                              <div className="flex items-center gap-2 mb-4 text-white/90 text-sm">
+                                <MapPin className="w-4 h-4" />
+                                <span>{event.location}</span>
+                              </div>
+                            )}
+                            
+                            <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:underline">
+                              {event.title}
+                            </h3>
+                            
+                            {event.subtitle && (
+                              <p className="text-white/90 text-base mb-4 leading-relaxed">
+                                {event.subtitle}
+                              </p>
+                            )}
+                            
+                            <div className="flex items-center justify-between mt-6">
+                              <div className="text-white/90 text-sm font-medium">
+                                {event.images.length} {event.images.length === 1 ? 'photo' : 'photos'}
+                              </div>
+                              <div className="text-white font-semibold text-sm">
+                                View Gallery →
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </Link>
