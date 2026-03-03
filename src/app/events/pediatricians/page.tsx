@@ -17,7 +17,6 @@ export default function PediatriciansPage() {
     '/pediatricians/GDBPCON 2023 at Srmch.jpg',
     '/pediatricians/July 2024 East Coast Pedicon.jpg',
     '/pediatricians/July 2024 East Coast Pedicon_sub1.jpg',
-    '/pediatricians/July 2024 East Cost Pedicon_sub2.jpg',
     '/pediatricians/Oct 2017 Copp Module_sub1.jpg',
     '/pediatricians/Oct 2019 Workshop for Practicing Pediatricians_sub1.jpg',
     '/pediatricians/Oct 2019 Workshop for Practicing Pediatricians_sub4.jpg',
