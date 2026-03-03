@@ -23,8 +23,8 @@ const Footer = () => {
   const quickLinks = [
     { name: 'Services', href: '/services' },
     { name: 'Courses', href: '/programs' },
-    { name: 'Events', href: '/events' },
     { name: 'Online Therapy', href: '/online-therapy' },
+    { name: 'Events', href: '/events' },
   ];
 
   const services = [
