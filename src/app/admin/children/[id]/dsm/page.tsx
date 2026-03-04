@@ -140,57 +140,31 @@ export default function DSMPage() {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
     
-    // Header with logo
-    doc.setFillColor(102, 126, 234);
-    doc.rect(0, 0, 210, 40, 'F');
-    
-    // Add logo
-    const logo = new Image();
-    logo.src = '/smilestones-logo.jpeg';
-    doc.addImage(logo, 'JPEG', 14, 8, 24, 24);
-    
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Smilestones', 105, 15, { align: 'center' });
-    
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Child Development Centre', 105, 25, { align: 'center' });
-    
-    doc.setFontSize(12);
-    doc.text('DSM Checklist Report', 105, 33, { align: 'center' });
-    
-    doc.setTextColor(0, 0, 0);
-    
-    let yPos = 50;
-    
-    // Child Info
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Child Information', 14, yPos);
-    yPos += 8;
-    
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Name: ${child?.name || 'N/A'}`, 14, yPos);
-    yPos += 6;
-    doc.text(`Age: ${child?.age || 'N/A'} years`, 14, yPos);
-    yPos += 6;
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, yPos);
-    yPos += 10;
+    // Add header to first page
+    let yPos = addPDFHeader({
+      doc,
+      title: 'DSM-5 CHECKLIST REPORT',
+      childName: child?.name,
+      childAge: `${child?.age} years`,
+      childDiagnosis: child?.diagnosis,
+      parentName: child?.parent_name,
+      phone: child?.phone,
+      registeredDate: child?.created_at ? new Date(child.created_at).toLocaleDateString() : undefined
+    });
     
     // Results
     if (results) {
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
-      doc.text('DSM Criteria Results', 14, yPos);
+      doc.text('DSM Criteria Results', 15, yPos);
       yPos += 8;
       
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
-      doc.text(`A Criteria: ${results.aCriteriaCount} / 3 groups (need ≥2)`, 14, yPos);
+      doc.text(`A Criteria: ${results.aCriteriaCount} / 3 groups (need ≥2)`, 15, yPos);
       yPos += 6;
       doc.text(`  A1: ${results.a1Count} symptoms`, 20, yPos);
       yPos += 5;
@@ -199,7 +173,7 @@ export default function DSMPage() {
       doc.text(`  A3: ${results.a3Count} symptoms`, 20, yPos);
       yPos += 8;
       
-      doc.text(`B Criteria: ${results.bCriteriaCount} / 4 groups (need ≥2)`, 14, yPos);
+      doc.text(`B Criteria: ${results.bCriteriaCount} / 4 groups (need ≥2)`, 15, yPos);
       yPos += 6;
       doc.text(`  B1: ${results.b1Count} symptoms`, 20, yPos);
       yPos += 5;
@@ -210,16 +184,16 @@ export default function DSMPage() {
       doc.text(`  B4: ${results.b4Count} symptoms`, 20, yPos);
       yPos += 8;
       
-      doc.text(`C Criteria (Early Onset): ${results.cCriteria ? 'Yes' : 'No'}`, 14, yPos);
+      doc.text(`C Criteria (Early Onset): ${results.cCriteria ? 'Yes' : 'No'}`, 15, yPos);
       yPos += 6;
-      doc.text(`D Criteria (Clinical Impairment): ${results.dCriteria ? 'Yes' : 'No'}`, 14, yPos);
+      doc.text(`D Criteria (Clinical Impairment): ${results.dCriteria ? 'Yes' : 'No'}`, 15, yPos);
       yPos += 10;
       
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       const color = results.meetsCriteria ? [220, 38, 38] : [34, 197, 94];
       doc.setTextColor(color[0], color[1], color[2]);
-      doc.text(`Final: ${results.interpretation}`, 14, yPos);
+      doc.text(`Final: ${results.interpretation}`, 15, yPos);
       doc.setTextColor(0, 0, 0);
       yPos += 12;
     }
@@ -227,27 +201,41 @@ export default function DSMPage() {
     // Questions and Answers
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.text('Detailed Responses', 14, yPos);
+    doc.text('Detailed Responses', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     
     Object.entries(DSM_QUESTIONS).forEach(([key, section]) => {
-      if (yPos > 270) {
+      if (yPos > pageHeight - 40) {
+        addPDFWatermark(doc);
+        addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
         doc.addPage();
-        yPos = 20;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('DSM-5 CHECKLIST REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+        yPos = 30;
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
       }
       
       doc.setFont('helvetica', 'bold');
-      doc.text(section.title, 14, yPos);
+      doc.text(section.title, 15, yPos);
       yPos += 6;
       doc.setFont('helvetica', 'normal');
       
       section.questions.forEach((q) => {
-        if (yPos > 275) {
+        if (yPos > pageHeight - 40) {
+          addPDFWatermark(doc);
+          addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
           doc.addPage();
-          yPos = 20;
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          doc.text('DSM-5 CHECKLIST REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+          yPos = 30;
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
         }
         
         // Check if this is a heading
@@ -286,26 +274,8 @@ export default function DSMPage() {
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
-      
-      // Add watermark (using light gray color instead of opacity)
-      doc.setTextColor(230, 230, 230);
-      doc.setFontSize(60);
-      doc.setFont('helvetica', 'bold');
-      
-      // Center watermark at 45-degree angle
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
-      doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
-        align: 'center',
-        angle: 45
-      });
-      
-      // Footer
-      doc.setFontSize(8);
-      doc.setTextColor(128, 128, 128);
-      doc.text('Confidential Medical Document', 14, 290);
-      doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-      doc.text(`Generated: ${new Date().toLocaleDateString()}`, 160, 290);
+      addPDFWatermark(doc);
+      addPDFFooter(doc, i, pageCount);
     }
     
     doc.save(`DSM-Checklist-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);

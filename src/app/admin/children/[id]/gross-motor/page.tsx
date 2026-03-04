@@ -127,53 +127,33 @@ export default function GrossMotorSkillsPage() {
     }
 
     const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
     
-    // Header with logo
-    doc.setFillColor(102, 126, 234);
-    doc.rect(0, 0, 210, 40, 'F');
+    // Add header to first page
+    let yPos = addPDFHeader({
+      doc,
+      title: 'GROSS MOTOR SKILLS ASSESSMENT',
+      childName: child?.name,
+      childAge: `${child?.age} years`,
+      childDiagnosis: child?.diagnosis,
+      parentName: child?.parent_name,
+      phone: child?.phone,
+      registeredDate: child?.created_at ? new Date(child.created_at).toLocaleDateString() : undefined
+    });
     
-    // Add logo
-    const logo = new Image();
-    logo.src = '/smilestones-logo.jpeg';
-    doc.addImage(logo, 'JPEG', 14, 8, 24, 24);
-    
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Smilestones', 105, 15, { align: 'center' });
-    
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Child Development Centre', 105, 25, { align: 'center' });
-    
-    doc.setFontSize(12);
-    doc.text('Gross Motor Skills Assessment', 105, 33, { align: 'center' });
-    
-    doc.setTextColor(0, 0, 0);
-    
-    let yPos = 50;
-    
-    // Child Info
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Child Information', 14, yPos);
-    yPos += 8;
-    
+    // Assessment details
     doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Name: ${child?.name || 'N/A'}`, 14, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Assessment Age: ${selectedAge} months`, 15, yPos);
     yPos += 6;
-    doc.text(`Age: ${child?.age || 'N/A'} years`, 14, yPos);
-    yPos += 6;
-    doc.text(`Assessment Age: ${selectedAge} months`, 14, yPos);
-    yPos += 6;
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, yPos);
+    doc.text(`Assessment Date: ${new Date().toLocaleDateString()}`, 15, yPos);
     yPos += 10;
     
     // Gross Motor Skills
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Gross Motor Skills for ${selectedAge} months`, 14, yPos);
+    doc.text(`Gross Motor Skills for ${selectedAge} months`, 15, yPos);
     yPos += 8;
     
     doc.setFontSize(9);
@@ -181,15 +161,22 @@ export default function GrossMotorSkillsPage() {
     
     const skills = GROSS_MOTOR_SKILLS[parseInt(selectedAge)];
     skills.forEach((skill, index) => {
-      if (yPos > 270) {
+      if (yPos > pageHeight - 40) {
+        addPDFWatermark(doc);
+        addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
         doc.addPage();
-        yPos = 20;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('GROSS MOTOR SKILLS ASSESSMENT (Continued)', pageWidth / 2, 20, { align: 'center' });
+        yPos = 30;
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
       }
       
       const answer = answers[skill.id] || 'Not Answered';
       const lines = doc.splitTextToSize(`${index + 1}. ${skill.text}`, 160);
       lines.forEach((line: string) => {
-        doc.text(line, 14, yPos);
+        doc.text(line, 15, yPos);
         yPos += 5;
       });
       
@@ -219,26 +206,8 @@ export default function GrossMotorSkillsPage() {
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
-      
-      // Add watermark (using light gray color instead of opacity)
-      doc.setTextColor(230, 230, 230);
-      doc.setFontSize(60);
-      doc.setFont('helvetica', 'bold');
-      
-      // Center watermark at 45-degree angle
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
-      doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
-        align: 'center',
-        angle: 45
-      });
-      
-      // Footer
-      doc.setFontSize(8);
-      doc.setTextColor(128, 128, 128);
-      doc.text('Confidential Medical Document', 14, 290);
-      doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-      doc.text(`Generated: ${new Date().toLocaleDateString()}`, 160, 290);
+      addPDFWatermark(doc);
+      addPDFFooter(doc, i, pageCount);
     }
     
     doc.save(`Gross-Motor-Skills-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);
