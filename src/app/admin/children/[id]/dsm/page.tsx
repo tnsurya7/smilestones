@@ -7,6 +7,7 @@ import { getChildById } from '@/lib/api-client';
 import { DSM_QUESTIONS } from '@/data/dsmQuestions';
 import { ArrowLeft, Save, RotateCcw, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast, { ConfirmDialog } from '@/components/Toast';
 
 export default function DSMPage() {

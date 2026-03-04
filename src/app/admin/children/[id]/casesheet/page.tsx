@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
 import { ArrowLeft, Save, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast from '@/components/Toast';
 
 // Input Components (defined outside to prevent re-rendering issues)

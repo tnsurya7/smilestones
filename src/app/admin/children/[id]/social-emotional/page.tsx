@@ -7,6 +7,7 @@ import { getChildById } from '@/lib/api-client';
 import { SOCIAL_EMOTIONAL, SOCIAL_EMOTIONAL_AVAILABLE_AGES } from '@/data/socialEmotional';
 import { ArrowLeft, Save, RotateCcw, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast, { ConfirmDialog } from '@/components/Toast';
 
 export default function SocialEmotionalPage() {

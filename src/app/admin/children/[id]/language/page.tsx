@@ -7,6 +7,7 @@ import { getChildById } from '@/lib/api-client';
 import { LANGUAGE_DEVELOPMENT, LANGUAGE_AVAILABLE_AGES } from '@/data/languageDevelopment';
 import { ArrowLeft, Save, RotateCcw, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast, { ConfirmDialog } from '@/components/Toast';
 
 export default function LanguageDevelopmentPage() {
