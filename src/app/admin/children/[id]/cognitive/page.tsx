@@ -7,6 +7,7 @@ import { getChildById } from '@/lib/api-client';
 import { COGNITIVE_MILESTONES, COGNITIVE_AVAILABLE_AGES } from '@/data/cognitiveMilestones';
 import { ArrowLeft, Save, RotateCcw, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast, { ConfirmDialog } from '@/components/Toast';
 
 export default function CognitiveMilestonesPage() {
@@ -129,63 +130,30 @@ export default function CognitiveMilestonesPage() {
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
     
-    // Function to add watermark
-    const addWatermark = () => {
-      doc.saveGraphicsState();
-      doc.setGState({ opacity: 0.1 } as any);
-      doc.setFontSize(50);
-      doc.setTextColor(150, 150, 150);
-      doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
-        align: 'center',
-        angle: 45
-      });
-      doc.restoreGraphicsState();
-    };
+    // Add header to first page
+    let yPos = addPDFHeader({
+      doc,
+      title: 'COGNITIVE MILESTONES ASSESSMENT',
+      childName: child?.name,
+      childAge: `${child?.age} years`,
+      childDiagnosis: child?.diagnosis,
+      parentName: child?.parent_name,
+      phone: child?.phone,
+      registeredDate: child?.created_at ? new Date(child.created_at).toLocaleDateString() : undefined
+    });
     
-    // Add watermark to first page
-    addWatermark();
-    
-    // Header with logo
-    doc.setFillColor(102, 126, 234);
-    doc.rect(0, 0, 210, 40, 'F');
-    
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
-    doc.setFont('helvetica', 'bold');
-    doc.text('SMILESTONES', 105, 15, { align: 'center' });
-    
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Child Development Centre', 105, 25, { align: 'center' });
-    
-    doc.setFontSize(12);
-    doc.text('Cognitive Milestones Assessment', 105, 33, { align: 'center' });
-    
-    doc.setTextColor(0, 0, 0);
-    
-    let yPos = 50;
-    
-    // Child Info
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Child Information', 14, yPos);
-    yPos += 8;
-    
+    // Assessment details
     doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Name: ${child?.name || 'N/A'}`, 14, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Assessment Age: ${selectedAge} months`, 15, yPos);
     yPos += 6;
-    doc.text(`Age: ${child?.age || 'N/A'} years`, 14, yPos);
-    yPos += 6;
-    doc.text(`Assessment Age: ${selectedAge} months`, 14, yPos);
-    yPos += 6;
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, yPos);
+    doc.text(`Assessment Date: ${new Date().toLocaleDateString()}`, 15, yPos);
     yPos += 10;
     
     // Milestones
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Milestones for ${selectedAge} months`, 14, yPos);
+    doc.text(`Milestones for ${selectedAge} months`, 15, yPos);
     yPos += 8;
     
     doc.setFontSize(9);
@@ -193,54 +161,57 @@ export default function CognitiveMilestonesPage() {
     
     const milestones = COGNITIVE_MILESTONES[parseInt(selectedAge)] || [];
     if (milestones.length === 0) {
-      doc.text('No milestones found for this age.', 14, yPos);
+      doc.text('No milestones found for this age.', 15, yPos);
     } else {
       milestones.forEach((milestone, index) => {
-      if (yPos > 270) {
-        doc.addPage();
-        addWatermark(); // Add watermark to new page
-        yPos = 20;
-      }
-      
-      const answer = answers[milestone.id] || 'Not Answered';
-      const lines = doc.splitTextToSize(`${index + 1}. ${milestone.text}`, 160);
-      lines.forEach((line: string) => {
-        doc.text(line, 14, yPos);
-        yPos += 5;
+        if (yPos > pageHeight - 40) {
+          addPDFWatermark(doc);
+          addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+          doc.addPage();
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          doc.text('COGNITIVE MILESTONES ASSESSMENT (Continued)', pageWidth / 2, 20, { align: 'center' });
+          yPos = 30;
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+        }
+        
+        const answer = answers[milestone.id] || 'Not Answered';
+        const lines = doc.splitTextToSize(`${index + 1}. ${milestone.text}`, 160);
+        lines.forEach((line: string) => {
+          doc.text(line, 15, yPos);
+          yPos += 5;
+        });
+        
+        // Make answer bold and colored
+        doc.setFont('helvetica', 'normal');
+        doc.text('Answer: ', 20, yPos);
+        doc.setFont('helvetica', 'bold');
+        
+        // Set color based on answer
+        if (answer === 'Yes') {
+          doc.setTextColor(34, 197, 94); // Green
+        } else if (answer === 'No') {
+          doc.setTextColor(239, 68, 68); // Red
+        } else if (answer === 'Not Answered') {
+          doc.setTextColor(156, 163, 175); // Gray
+        } else {
+          doc.setTextColor(0, 0, 0); // Black for text input
+        }
+        
+        doc.text(answer, 38, yPos);
+        doc.setTextColor(0, 0, 0); // Reset to black
+        doc.setFont('helvetica', 'normal');
+        yPos += 7;
       });
-      
-      // Make answer bold and colored
-      doc.setFont('helvetica', 'normal');
-      doc.text('Answer: ', 20, yPos);
-      doc.setFont('helvetica', 'bold');
-      
-      // Set color based on answer
-      if (answer === 'Yes') {
-        doc.setTextColor(34, 197, 94); // Green
-      } else if (answer === 'No') {
-        doc.setTextColor(239, 68, 68); // Red
-      } else if (answer === 'Not Answered') {
-        doc.setTextColor(156, 163, 175); // Gray
-      } else {
-        doc.setTextColor(0, 0, 0); // Black for text input
-      }
-      
-      doc.text(answer, 38, yPos);
-      doc.setTextColor(0, 0, 0); // Reset to black
-      doc.setFont('helvetica', 'normal');
-      yPos += 7;
-    });
     }
     
-    // Footer
+    // Add watermark and footer to all pages
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
-      doc.setFontSize(8);
-      doc.setTextColor(128, 128, 128);
-      doc.text('Confidential Medical Document', 14, 290);
-      doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-      doc.text(`Generated: ${new Date().toLocaleDateString()}`, 160, 290);
+      addPDFWatermark(doc);
+      addPDFFooter(doc, i, pageCount);
     }
     
     doc.save(`Cognitive-Milestones-${child?.name || 'Report'}-${new Date().toISOString().split('T')[0]}.pdf`);
