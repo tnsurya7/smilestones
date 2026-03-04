@@ -63,7 +63,11 @@ export default function ParentUpdatesPage() {
     if (!selectedChild) return;
 
     // Format the message for WhatsApp
-    const message = `*Parents Update - ${selectedChild.name}*
+    const message = `*SMILESTONES - Parents Updates*
+
+Hi ${selectedChild.parent_name},
+
+This is regarding your child *${selectedChild.name}*.
 
 *Child Details:*
 Name: ${selectedChild.name}
@@ -73,7 +77,8 @@ Parent: ${selectedChild.parent_name}
 Phone: ${selectedChild.phone}
 Doctor: Dr. P. Sudhakar
 
-${formData.achievementUpdates ? `*Achievement Updates:*\n${formData.achievementUpdates}\n\n` : ''}${formData.motivationalMessage ? `*Motivational Message:*\n${formData.motivationalMessage}\n\n` : ''}${formData.notes ? `*Notes:*\n${formData.notes}` : ''}`;
+${formData.achievementUpdates ? `*Achievement Updates:*\n${formData.achievementUpdates}\n\n` : ''}${formData.motivationalMessage ? `*Motivational Message:*\n${formData.motivationalMessage}\n\n` : ''}${formData.notes ? `*Notes:*\n${formData.notes}\n\n` : ''}Best regards,
+Smilestones Child Development Centre`;
 
     // Encode the message for URL
     const encodedMessage = encodeURIComponent(message);
