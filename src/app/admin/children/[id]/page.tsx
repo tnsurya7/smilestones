@@ -99,14 +99,15 @@ export default function ChildProfilePage() {
       });
 
       // Case Sheet - Full Details
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('CASE SHEET', 20, yPos);
+      yPos += 8;
+      
       if (caseSheet && caseSheet.length > 0) {
-        checkNewPage();
         const cs = caseSheet[0];
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('CASE SHEET', 20, yPos);
-        yPos += 8;
-        
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         
@@ -121,18 +122,26 @@ export default function ChildProfilePage() {
             yPos += 5;
           }
         });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No case sheet data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
+      yPos += 10;
 
       // M-CHAT - All Questions
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('M-CHAT SCREENING', 20, yPos);
+      yPos += 8;
+      
       if (mchat && mchat.length > 0) {
-        checkNewPage();
         const mchatData = mchat[0];
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('M-CHAT SCREENING', 20, yPos);
-        yPos += 8;
-        
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         doc.text(`Risk Score: ${mchatData.risk_score || 'N/A'}`, 20, yPos);
@@ -149,18 +158,26 @@ export default function ChildProfilePage() {
             yPos += 5;
           });
         }
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No M-CHAT data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
+      yPos += 10;
 
       // DSM - All Criteria
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('DSM-5 CHECKLIST', 20, yPos);
+      yPos += 8;
+
       if (dsm && dsm.length > 0) {
-        checkNewPage();
         const dsmData = dsm[0];
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('DSM-5 CHECKLIST', 20, yPos);
-        yPos += 8;
-        
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         doc.text(`Criteria Met: ${dsmData.criteria_met || 'N/A'}`, 20, yPos);
@@ -177,17 +194,33 @@ export default function ChildProfilePage() {
             yPos += 5;
           });
         }
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No DSM-5 data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
+      yPos += 10;
 
       // Cognitive Milestones - All Questions
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('COGNITIVE MILESTONES', 20, yPos);
+      yPos += 8;
+      
       if (cognitive && cognitive.length > 0) {
-        cognitive.forEach((assessment: any) => {
-          checkNewPage();
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.text('COGNITIVE MILESTONES', 20, yPos);
-          yPos += 8;
+        cognitive.forEach((assessment: any, index: number) => {
+          if (index > 0) {
+            checkNewPage(20);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('COGNITIVE MILESTONES (Additional Assessment)', 20, yPos);
+            yPos += 6;
+          }
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'normal');
@@ -209,16 +242,33 @@ export default function ChildProfilePage() {
           }
           yPos += 5;
         });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No cognitive milestones data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
+        yPos += 5;
       }
+      yPos += 10;
 
       // Fine Motor Skills - All Questions
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('FINE MOTOR SKILLS', 20, yPos);
+      yPos += 8;
+      
       if (fineMotor && fineMotor.length > 0) {
-        fineMotor.forEach((assessment: any) => {
-          checkNewPage();
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.text('FINE MOTOR SKILLS', 20, yPos);
-          yPos += 8;
+        fineMotor.forEach((assessment: any, index: number) => {
+          if (index > 0) {
+            checkNewPage(20);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('FINE MOTOR SKILLS (Additional Assessment)', 20, yPos);
+            yPos += 6;
+          }
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'normal');
@@ -240,16 +290,33 @@ export default function ChildProfilePage() {
           }
           yPos += 5;
         });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No fine motor skills data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
+        yPos += 5;
       }
+      yPos += 10;
 
       // Gross Motor Skills - All Questions
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('GROSS MOTOR SKILLS', 20, yPos);
+      yPos += 8;
+      
       if (grossMotor && grossMotor.length > 0) {
-        grossMotor.forEach((assessment: any) => {
-          checkNewPage();
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.text('GROSS MOTOR SKILLS', 20, yPos);
-          yPos += 8;
+        grossMotor.forEach((assessment: any, index: number) => {
+          if (index > 0) {
+            checkNewPage(20);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('GROSS MOTOR SKILLS (Additional Assessment)', 20, yPos);
+            yPos += 6;
+          }
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'normal');
@@ -271,16 +338,33 @@ export default function ChildProfilePage() {
           }
           yPos += 5;
         });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No gross motor skills data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
+        yPos += 5;
       }
+      yPos += 10;
 
       // Language Development - All Questions
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('LANGUAGE DEVELOPMENT', 20, yPos);
+      yPos += 8;
+      
       if (language && language.length > 0) {
-        language.forEach((assessment: any) => {
-          checkNewPage();
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.text('LANGUAGE DEVELOPMENT', 20, yPos);
-          yPos += 8;
+        language.forEach((assessment: any, index: number) => {
+          if (index > 0) {
+            checkNewPage(20);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('LANGUAGE DEVELOPMENT (Additional Assessment)', 20, yPos);
+            yPos += 6;
+          }
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'normal');
@@ -302,16 +386,33 @@ export default function ChildProfilePage() {
           }
           yPos += 5;
         });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No language development data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
+        yPos += 5;
       }
+      yPos += 10;
 
       // Social-Emotional - All Questions
+      checkNewPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text('SOCIAL-EMOTIONAL DEVELOPMENT', 20, yPos);
+      yPos += 8;
+      
       if (social && social.length > 0) {
-        social.forEach((assessment: any) => {
-          checkNewPage();
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          doc.text('SOCIAL-EMOTIONAL DEVELOPMENT', 20, yPos);
-          yPos += 8;
+        social.forEach((assessment: any, index: number) => {
+          if (index > 0) {
+            checkNewPage(20);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('SOCIAL-EMOTIONAL DEVELOPMENT (Additional Assessment)', 20, yPos);
+            yPos += 6;
+          }
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'normal');
@@ -333,6 +434,13 @@ export default function ChildProfilePage() {
           }
           yPos += 5;
         });
+      } else {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(150, 150, 150);
+        doc.text('No social-emotional development data available', 20, yPos);
+        doc.setTextColor(0, 0, 0);
+        yPos += 5;
       }
 
       // Footer and watermark on all pages
