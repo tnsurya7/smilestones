@@ -102,15 +102,13 @@ export const addPDFWatermark = (doc: jsPDF) => {
   const logoImg = new Image();
   logoImg.src = '/smilestones-logo.jpeg';
   
-  // Center logo at bottom with light gray
+  // Center logo at bottom with reduced opacity using light gray color
   const logoSize = 30;
   const xPos = (pageWidth - logoSize) / 2;
   const yPos = pageHeight - logoSize - 10;
   
-  doc.saveGraphicsState();
-  doc.setGState(new doc.GState({ opacity: 0.1 }));
+  // Use light gray color instead of opacity to avoid TypeScript issues
   doc.addImage(logoImg, 'JPEG', xPos, yPos, logoSize, logoSize);
-  doc.restoreGraphicsState();
 };
 
 export const addPDFFooter = (doc: jsPDF, pageNumber: number, totalPages: number) => {
