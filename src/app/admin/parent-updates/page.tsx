@@ -5,14 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { getChildren } from '@/lib/api-client';
-import { getDoctors } from '@/lib/api-client';
 import { MessageCircle, Search, User, Calendar, Phone, Stethoscope } from 'lucide-react';
 
 export default function ParentUpdatesPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [children, setChildren] = useState<any[]>([]);
-  const [doctors, setDoctors] = useState<any[]>([]);
   const [selectedChild, setSelectedChild] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [formData, setFormData] = useState({
@@ -35,21 +33,8 @@ export default function ParentUpdatesPage() {
 
   const loadChildren = async () => {
     try {
-      const [childrenData, doctorsData] = await Promise.all([
-        getChildren(),
-        getDoctors()
-      ]);
-      
-      // Add doctor names to children
-      const childrenWithDoctors = childrenData.map((child: any) => ({
-        ...child,
-        doctor_name: child.assigned_doctor_id 
-          ? doctorsData.find((d: any) => d.id === child.assigned_doctor_id)?.name || 'Not assigned'
-          : 'Not assigned'
-      }));
-      
-      setChildren(childrenWithDoctors);
-      setDoctors(doctorsData);
+      const data = await getChildren();
+      setChildren(data);
     } catch (error) {
       console.error('Error loading children:', error);
     }
@@ -90,7 +75,7 @@ Age: ${selectedChild.age} years
 Diagnosis: ${selectedChild.diagnosis}
 Parent: ${selectedChild.parent_name}
 Phone: ${selectedChild.phone}
-Doctor: ${selectedChild.doctor_name}
+Doctor: Dr. P. Sudhakar
 
 ${formData.achievementUpdates ? `*Achievement Updates:*\n${formData.achievementUpdates}\n\n` : ''}${formData.motivationalMessage ? `*Motivational Message:*\n${formData.motivationalMessage}\n\n` : ''}${formData.notes ? `*Notes:*\n${formData.notes}\n\n` : ''}Best regards,
 Smilestones Child Development Centre`;
@@ -217,13 +202,6 @@ Smilestones Child Development Centre`;
                         <p className="text-sm font-semibold text-gray-900">
                           {new Date(selectedChild.created_at).toLocaleDateString()}
                         </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Stethoscope className="w-5 h-5 text-indigo-500 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-600">Doctor</p>
-                        <p className="text-sm font-semibold text-gray-900">{selectedChild.doctor_name}</p>
                       </div>
                     </div>
                   </div>
