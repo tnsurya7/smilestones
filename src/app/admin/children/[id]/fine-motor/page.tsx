@@ -38,18 +38,37 @@ export default function FineMotorSkillsPage() {
     try {
       const childData = await getChildById(childId);
       setChild(childData);
-
-      // Load existing fine motor skills data
-      const response = await fetch(`/api/fine-motor-skills?child_id=${childId}`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data) {
-          setSelectedAge(data.age || '');
-          setAnswers(data.answers || {});
-        }
-      }
     } catch (error) {
       console.error('Error loading data:', error);
+    }
+  };
+
+  // Load data for selected age
+  useEffect(() => {
+    if (selectedAge && childId) {
+      loadAgeData(selectedAge);
+    }
+  }, [selectedAge, childId]);
+
+  const loadAgeData = async (age: string) => {
+    try {
+      // Load existing fine motor skills data for this specific age
+      const response = await fetch(`/api/fine-motor-skills?child_id=${childId}&age=${age}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.answers) {
+          setAnswers(typeof data.answers === 'string' ? JSON.parse(data.answers) : data.answers);
+        } else {
+          // No data for this age, reset answers
+          setAnswers({});
+        }
+      } else {
+        // No data for this age
+        setAnswers({});
+      }
+    } catch (error) {
+      console.error('Error loading age data:', error);
+      setAnswers({});
     }
   };
 
@@ -59,8 +78,7 @@ export default function FineMotorSkillsPage() {
 
   const handleAgeChange = (age: string) => {
     setSelectedAge(age);
-    // Reset answers when age changes
-    setAnswers({});
+    // Data will be loaded by useEffect
   };
 
   const handleSave = async () => {

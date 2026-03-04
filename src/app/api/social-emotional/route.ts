@@ -8,23 +8,36 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const childId = searchParams.get('child_id');
+    const age = searchParams.get('age');
 
     if (!childId) {
       return NextResponse.json({ error: 'child_id is required' }, { status: 400 });
     }
 
+    // If age is specified, get that specific assessment
+    if (age) {
+      const result = await sql`
+        SELECT * FROM social_emotional 
+        WHERE child_id = ${childId} AND age = ${age}
+        ORDER BY created_at DESC
+        LIMIT 1
+      `;
+
+      if (result.length === 0) {
+        return NextResponse.json(null);
+      }
+
+      return NextResponse.json(result[0]);
+    }
+
+    // Otherwise, get all assessments for this child
     const result = await sql`
       SELECT * FROM social_emotional 
       WHERE child_id = ${childId}
-      ORDER BY created_at DESC
-      LIMIT 1
+      ORDER BY age ASC, created_at DESC
     `;
 
-    if (result.length === 0) {
-      return NextResponse.json(null);
-    }
-
-    return NextResponse.json(result[0]);
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching social-emotional:', error);
     return NextResponse.json({ error: 'Failed to fetch social-emotional' }, { status: 500 });
@@ -37,24 +50,24 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { child_id, age, answers } = body;
 
-    // Check if social-emotional exists
+    // Check if social-emotional exists for this child AND age
     const existing = await sql`
-      SELECT id FROM social_emotional WHERE child_id = ${child_id}
+      SELECT id FROM social_emotional 
+      WHERE child_id = ${child_id} AND age = ${age}
     `;
 
     let result;
     if (existing.length > 0) {
-      // Update existing
+      // Update existing for this specific age
       result = await sql`
         UPDATE social_emotional
-        SET age = ${age},
-            answers = ${JSON.stringify(answers)},
+        SET answers = ${JSON.stringify(answers)},
             updated_at = NOW()
-        WHERE child_id = ${child_id}
+        WHERE child_id = ${child_id} AND age = ${age}
         RETURNING *
       `;
     } else {
-      // Create new
+      // Create new for this age
       result = await sql`
         INSERT INTO social_emotional (child_id, age, answers)
         VALUES (${child_id}, ${age}, ${JSON.stringify(answers)})
