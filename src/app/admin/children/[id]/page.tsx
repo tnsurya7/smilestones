@@ -121,46 +121,250 @@ export default function ChildProfilePage() {
       
       // Handle both array and single object responses
       const caseSheetData = Array.isArray(caseSheet) ? caseSheet[0] : caseSheet;
+      const mchatData = Array.isArray(mchat) ? mchat[0] : mchat;
+      const dsmData = Array.isArray(dsm) ? dsm[0] : dsm;
       
       if (caseSheetData && Object.keys(caseSheetData).length > 0) {
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
+        // Section 1: Child Identification
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 1: Child Identification Details', 20, yPos);
+        yPos += 6;
         
-        // Add all case sheet fields
-        const fields = Object.keys(caseSheetData);
-        fields.forEach(field => {
-          if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at' && field !== 'data' && field !== 'auto_section') {
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        const section1Fields = [
+          ['Child Full Name', caseSheetData.child_full_name],
+          ['Date of Birth', caseSheetData.dob],
+          ['Age', caseSheetData.age ? `${caseSheetData.age} years` : null],
+          ['Gender', caseSheetData.gender],
+          ['UHID', caseSheetData.uhid],
+          ['Date of Assessment', caseSheetData.date_of_assessment],
+          ['Referred By', caseSheetData.referred_by],
+          ['Contact Number', caseSheetData.contact_number]
+        ];
+        
+        section1Fields.forEach(([label, value]) => {
+          if (value) {
             checkNewPage();
-            const label = field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            const value = caseSheetData[field];
-            
-            // Skip if value is null or undefined
-            if (value === null || value === undefined) {
-              return;
-            }
-            
-            // Handle different value types
-            let displayValue;
-            if (Array.isArray(value)) {
-              displayValue = value.join(', ');
-            } else if (typeof value === 'object') {
-              displayValue = JSON.stringify(value);
-            } else {
-              displayValue = String(value);
-            }
-            
-            // Skip if empty
-            if (!displayValue || displayValue === '{}' || displayValue === '[]') {
-              return;
-            }
-            
-            const lines = doc.splitTextToSize(`${label}: ${displayValue}`, pageWidth - 40);
-            lines.forEach((line: string) => {
-              doc.text(line, 20, yPos);
-              yPos += 5;
-            });
+            doc.text(`${label}: ${value}`, 25, yPos);
+            yPos += 5;
           }
         });
+        yPos += 5;
+        
+        // Section 2: Parent Details
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 2: Parent Details', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Father:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.father_name) doc.text(`Name: ${caseSheetData.father_name}`, 30, yPos), yPos += 5;
+        if (caseSheetData.father_age) doc.text(`Age: ${caseSheetData.father_age}`, 30, yPos), yPos += 5;
+        if (caseSheetData.father_education) doc.text(`Education: ${caseSheetData.father_education}`, 30, yPos), yPos += 5;
+        if (caseSheetData.father_occupation) doc.text(`Occupation: ${caseSheetData.father_occupation}`, 30, yPos), yPos += 5;
+        yPos += 3;
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('Mother:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.mother_name) doc.text(`Name: ${caseSheetData.mother_name}`, 30, yPos), yPos += 5;
+        if (caseSheetData.mother_age) doc.text(`Age: ${caseSheetData.mother_age}`, 30, yPos), yPos += 5;
+        if (caseSheetData.mother_education) doc.text(`Education: ${caseSheetData.mother_education}`, 30, yPos), yPos += 5;
+        if (caseSheetData.mother_occupation) doc.text(`Occupation: ${caseSheetData.mother_occupation}`, 30, yPos), yPos += 5;
+        yPos += 5;
+        
+        // Section 3: Chief Complaints
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 3: Chief Complaints', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.chief_complaints) {
+          const complaints = doc.splitTextToSize(`Parent's main concerns: ${caseSheetData.chief_complaints}`, pageWidth - 50);
+          complaints.forEach((line: string) => {
+            checkNewPage();
+            doc.text(line, 25, yPos);
+            yPos += 5;
+          });
+        }
+        if (caseSheetData.age_when_noticed) doc.text(`Age when noticed: ${caseSheetData.age_when_noticed} years`, 25, yPos), yPos += 5;
+        if (caseSheetData.duration_of_problem) doc.text(`Duration of problem: ${caseSheetData.duration_of_problem}`, 25, yPos), yPos += 5;
+        yPos += 5;
+        
+        // Section 4: Family History
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 4: Family History', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Siblings:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.sibling1_name) doc.text(`Sibling 1: ${caseSheetData.sibling1_name}, Age: ${caseSheetData.sibling1_age || 'N/A'}`, 30, yPos), yPos += 5;
+        if (caseSheetData.sibling2_name) doc.text(`Sibling 2: ${caseSheetData.sibling2_name}, Age: ${caseSheetData.sibling2_age || 'N/A'}`, 30, yPos), yPos += 5;
+        yPos += 3;
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('Grandparents:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.paternal_grandfather_name) doc.text(`Paternal Grandfather: ${caseSheetData.paternal_grandfather_name}`, 30, yPos), yPos += 5;
+        if (caseSheetData.paternal_grandmother_name) doc.text(`Paternal Grandmother: ${caseSheetData.paternal_grandmother_name}`, 30, yPos), yPos += 5;
+        if (caseSheetData.maternal_grandfather_name) doc.text(`Maternal Grandfather: ${caseSheetData.maternal_grandfather_name}`, 30, yPos), yPos += 5;
+        if (caseSheetData.maternal_grandmother_name) doc.text(`Maternal Grandmother: ${caseSheetData.maternal_grandmother_name}`, 30, yPos), yPos += 5;
+        yPos += 3;
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('Family Medical History:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.family_speech_delay_history) doc.text(`Speech delay: ${caseSheetData.family_speech_delay_history}`, 30, yPos), yPos += 5;
+        if (caseSheetData.intellectual_disability_in_family) doc.text(`Intellectual disability: ${caseSheetData.intellectual_disability_in_family}`, 30, yPos), yPos += 5;
+        if (caseSheetData.developmental_delay_in_family) doc.text(`Developmental delay: ${caseSheetData.developmental_delay_in_family}`, 30, yPos), yPos += 5;
+        if (caseSheetData.autism_in_family) doc.text(`Autism: ${caseSheetData.autism_in_family}`, 30, yPos), yPos += 5;
+        if (caseSheetData.who_identified_first) doc.text(`Who first doubted delay: ${caseSheetData.who_identified_first}`, 30, yPos), yPos += 5;
+        yPos += 3;
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('Parental Concerns:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.parental_concerns) {
+          const concerns = Array.isArray(caseSheetData.parental_concerns) ? caseSheetData.parental_concerns : [caseSheetData.parental_concerns];
+          concerns.forEach((concern: string) => {
+            checkNewPage();
+            doc.text(`• ${concern}`, 30, yPos);
+            yPos += 5;
+          });
+        }
+        yPos += 5;
+        
+        // Section 5: Personal History
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 5: Personal History', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.conception_type) doc.text(`Conception type: ${caseSheetData.conception_type}`, 25, yPos), yPos += 5;
+        if (caseSheetData.term_type) doc.text(`Term type: ${caseSheetData.term_type}`, 25, yPos), yPos += 5;
+        if (caseSheetData.weeks_of_gestation) doc.text(`Weeks of gestation: ${caseSheetData.weeks_of_gestation}`, 25, yPos), yPos += 5;
+        if (caseSheetData.delivery_type) doc.text(`Delivery type: ${caseSheetData.delivery_type}`, 25, yPos), yPos += 5;
+        if (caseSheetData.birth_weight) doc.text(`Birth weight: ${caseSheetData.birth_weight} kg`, 25, yPos), yPos += 5;
+        if (caseSheetData.apgar_score) doc.text(`APGAR score: ${caseSheetData.apgar_score}`, 25, yPos), yPos += 5;
+        yPos += 5;
+        
+        // Section 6: After Birth History
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 6: After Birth History', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.cried_immediately) doc.text(`Cried immediately: ${caseSheetData.cried_immediately}`, 25, yPos), yPos += 5;
+        if (caseSheetData.nicu_admission) doc.text(`NICU admission: ${caseSheetData.nicu_admission}`, 25, yPos), yPos += 5;
+        if (caseSheetData.phototherapy_days) doc.text(`Phototherapy days: ${caseSheetData.phototherapy_days}`, 25, yPos), yPos += 5;
+        if (caseSheetData.et_tube_days) doc.text(`ET days: ${caseSheetData.et_tube_days}`, 25, yPos), yPos += 5;
+        if (caseSheetData.seizures_at_birth) doc.text(`Seizures at birth: ${caseSheetData.seizures_at_birth}`, 25, yPos), yPos += 5;
+        yPos += 5;
+        
+        // Section 7: Developmental History
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 7: Developmental History', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.social_smile_age) doc.text(`Social smile: ${caseSheetData.social_smile_age} months`, 25, yPos), yPos += 5;
+        if (caseSheetData.stranger_anxiety_age) doc.text(`Stranger anxiety: ${caseSheetData.stranger_anxiety_age} months`, 25, yPos), yPos += 5;
+        if (caseSheetData.name_call_response_months) doc.text(`Name call response: ${caseSheetData.name_call_response_months} months`, 25, yPos), yPos += 5;
+        if (caseSheetData.name_call_adequacy) doc.text(`Name call adequacy: ${caseSheetData.name_call_adequacy}`, 25, yPos), yPos += 5;
+        if (caseSheetData.language_milestone_delay) doc.text(`Language milestones delayed: ${caseSheetData.language_milestone_delay}`, 25, yPos), yPos += 5;
+        yPos += 5;
+        
+        // Section 8: Medical History
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 8: Medical History', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.seizures) doc.text(`Seizures: ${caseSheetData.seizures}`, 25, yPos), yPos += 5;
+        if (caseSheetData.febrile_seizure) doc.text(`Febrile seizure: ${caseSheetData.febrile_seizure}`, 25, yPos), yPos += 5;
+        if (caseSheetData.floppiness_or_stiffness) doc.text(`Floppiness/stiffness: ${caseSheetData.floppiness_or_stiffness}`, 25, yPos), yPos += 5;
+        if (caseSheetData.sleep_pattern) doc.text(`Sleep pattern: ${caseSheetData.sleep_pattern}`, 25, yPos), yPos += 5;
+        if (caseSheetData.screen_time_hours) doc.text(`Screen time: ${caseSheetData.screen_time_hours} hours/day`, 25, yPos), yPos += 5;
+        yPos += 5;
+        
+        // Section 9: Screening Results
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 9: Screening Results (Auto-filled)', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        doc.text('M-CHAT: ' + (mchatData ? 'Completed' : 'Not completed'), 25, yPos);
+        yPos += 5;
+        doc.text('DSM Checklist: ' + (dsmData ? 'Completed' : 'Not completed'), 25, yPos);
+        yPos += 5;
+        yPos += 5;
+        
+        // Section 10: Final Clinical Impression
+        checkNewPage(20);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 10: Final Clinical Impression', 20, yPos);
+        yPos += 6;
+        
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        if (caseSheetData.provisional_diagnosis) {
+          const diagLines = doc.splitTextToSize(`Provisional Diagnosis: ${caseSheetData.provisional_diagnosis}`, pageWidth - 50);
+          diagLines.forEach((line: string) => {
+            checkNewPage();
+            doc.text(line, 25, yPos);
+            yPos += 5;
+          });
+        }
+        
+        if (caseSheetData.recommended_therapies) {
+          doc.setFont('helvetica', 'bold');
+          doc.text('Recommended Therapies:', 25, yPos);
+          yPos += 5;
+          doc.setFont('helvetica', 'normal');
+          const therapies = Array.isArray(caseSheetData.recommended_therapies) ? caseSheetData.recommended_therapies : [caseSheetData.recommended_therapies];
+          therapies.forEach((therapy: string) => {
+            checkNewPage();
+            doc.text(`• ${therapy}`, 30, yPos);
+            yPos += 5;
+          });
+        }
+        
+        if (caseSheetData.frequency_per_week) doc.text(`Frequency per week: ${caseSheetData.frequency_per_week} sessions`, 25, yPos), yPos += 5;
       } else {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'italic');
@@ -178,9 +382,6 @@ export default function ChildProfilePage() {
       doc.setTextColor(0, 0, 0);
       doc.text('M-CHAT SCREENING', 20, yPos);
       yPos += 8;
-      
-      // Handle both array and single object responses
-      const mchatData = Array.isArray(mchat) ? mchat[0] : mchat;
       
       if (mchatData && Object.keys(mchatData).length > 0) {
         doc.setFontSize(10);
@@ -245,9 +446,6 @@ export default function ChildProfilePage() {
       doc.setTextColor(0, 0, 0);
       doc.text('DSM-5 CHECKLIST', 20, yPos);
       yPos += 8;
-
-      // Handle both array and single object responses
-      const dsmData = Array.isArray(dsm) ? dsm[0] : dsm;
 
       if (dsmData && Object.keys(dsmData).length > 0) {
         doc.setFontSize(10);
