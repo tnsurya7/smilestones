@@ -8,6 +8,13 @@ import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart
 import jsPDF from 'jspdf';
 import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast from '@/components/Toast';
+import { COGNITIVE_MILESTONES } from '@/data/cognitiveMilestones';
+import { FINE_MOTOR_SKILLS } from '@/data/fineMotorSkills';
+import { GROSS_MOTOR_SKILLS } from '@/data/grossMotorSkills';
+import { LANGUAGE_DEVELOPMENT } from '@/data/languageDevelopment';
+import { SOCIAL_EMOTIONAL } from '@/data/socialEmotional';
+import { MCHAT_QUESTIONS } from '@/data/mchatQuestions';
+import { DSM_QUESTIONS } from '@/data/dsmQuestions';
 
 export default function ChildProfilePage() {
   const { user, loading } = useAuth();
@@ -151,13 +158,22 @@ export default function ChildProfilePage() {
         doc.text(`Risk Level: ${mchatData.risk_level || 'N/A'}`, 20, yPos);
         yPos += 8;
         
-        // Add all M-CHAT answers
+        // Add all M-CHAT answers with questions
         if (mchatData.answers) {
           const answers = typeof mchatData.answers === 'string' ? JSON.parse(mchatData.answers) : mchatData.answers;
-          Object.keys(answers).forEach((q, idx) => {
+          MCHAT_QUESTIONS.forEach((question, idx) => {
             checkNewPage();
-            doc.text(`Q${idx + 1}: ${answers[q]}`, 20, yPos);
-            yPos += 5;
+            const answer = answers[question.id] || 'Not Answered';
+            const questionText = `${idx + 1}. ${question.text}`;
+            const lines = doc.splitTextToSize(questionText, pageWidth - 40);
+            lines.forEach((line: string) => {
+              doc.text(line, 20, yPos);
+              yPos += 5;
+            });
+            doc.setFont('helvetica', 'bold');
+            doc.text(`Answer: ${answer}`, 25, yPos);
+            doc.setFont('helvetica', 'normal');
+            yPos += 6;
           });
         }
       } else {
@@ -187,13 +203,40 @@ export default function ChildProfilePage() {
         doc.text(`Diagnosis: ${dsmData.diagnosis || 'N/A'}`, 20, yPos);
         yPos += 8;
         
-        // Add all DSM criteria
-        if (dsmData.criteria) {
-          const criteria = typeof dsmData.criteria === 'string' ? JSON.parse(dsmData.criteria) : dsmData.criteria;
-          Object.keys(criteria).forEach((c) => {
-            checkNewPage();
-            doc.text(`${c}: ${criteria[c] ? 'Yes' : 'No'}`, 20, yPos);
-            yPos += 5;
+        // Add all DSM criteria with questions
+        if (dsmData.answers) {
+          const answers = typeof dsmData.answers === 'string' ? JSON.parse(dsmData.answers) : dsmData.answers;
+          
+          Object.entries(DSM_QUESTIONS).forEach(([key, section]) => {
+            checkNewPage(15);
+            doc.setFont('helvetica', 'bold');
+            doc.text(section.title, 20, yPos);
+            yPos += 6;
+            doc.setFont('helvetica', 'normal');
+            
+            section.questions.forEach((question) => {
+              if (!question.isHeading) {
+                checkNewPage();
+                const answer = answers[question.id] || 'Not Answered';
+                const questionText = `• ${question.text}`;
+                const lines = doc.splitTextToSize(questionText, pageWidth - 45);
+                lines.forEach((line: string) => {
+                  doc.text(line, 25, yPos);
+                  yPos += 5;
+                });
+                doc.setFont('helvetica', 'bold');
+                doc.text(`Answer: ${answer}`, 30, yPos);
+                doc.setFont('helvetica', 'normal');
+                yPos += 6;
+              } else {
+                checkNewPage();
+                doc.setFont('helvetica', 'bold');
+                doc.text(question.text, 25, yPos);
+                doc.setFont('helvetica', 'normal');
+                yPos += 6;
+              }
+            });
+            yPos += 3;
           });
         }
       } else {
@@ -233,13 +276,21 @@ export default function ChildProfilePage() {
           
           if (assessment.answers) {
             const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
-            Object.keys(answers).forEach((q) => {
+            const milestones = COGNITIVE_MILESTONES[parseInt(assessment.age)] || [];
+            
+            milestones.forEach((milestone, idx) => {
               checkNewPage();
-              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              const answer = answers[milestone.id] || 'Not Answered';
+              const questionText = `${idx + 1}. ${milestone.text}`;
+              const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              doc.setFont('helvetica', 'bold');
+              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setFont('helvetica', 'normal');
+              yPos += 6;
             });
           }
           yPos += 5;
@@ -281,13 +332,21 @@ export default function ChildProfilePage() {
           
           if (assessment.answers) {
             const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
-            Object.keys(answers).forEach((q) => {
+            const skills = FINE_MOTOR_SKILLS[parseInt(assessment.age)] || [];
+            
+            skills.forEach((skill, idx) => {
               checkNewPage();
-              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              const answer = answers[skill.id] || 'Not Answered';
+              const questionText = `${idx + 1}. ${skill.text}`;
+              const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              doc.setFont('helvetica', 'bold');
+              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setFont('helvetica', 'normal');
+              yPos += 6;
             });
           }
           yPos += 5;
@@ -329,13 +388,21 @@ export default function ChildProfilePage() {
           
           if (assessment.answers) {
             const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
-            Object.keys(answers).forEach((q) => {
+            const skills = GROSS_MOTOR_SKILLS[parseInt(assessment.age)] || [];
+            
+            skills.forEach((skill, idx) => {
               checkNewPage();
-              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              const answer = answers[skill.id] || 'Not Answered';
+              const questionText = `${idx + 1}. ${skill.text}`;
+              const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              doc.setFont('helvetica', 'bold');
+              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setFont('helvetica', 'normal');
+              yPos += 6;
             });
           }
           yPos += 5;
@@ -377,13 +444,21 @@ export default function ChildProfilePage() {
           
           if (assessment.answers) {
             const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
-            Object.keys(answers).forEach((q) => {
+            const skills = LANGUAGE_DEVELOPMENT[parseInt(assessment.age)] || [];
+            
+            skills.forEach((skill, idx) => {
               checkNewPage();
-              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              const answer = answers[skill.id] || 'Not Answered';
+              const questionText = `${idx + 1}. ${skill.text}`;
+              const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              doc.setFont('helvetica', 'bold');
+              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setFont('helvetica', 'normal');
+              yPos += 6;
             });
           }
           yPos += 5;
@@ -425,13 +500,21 @@ export default function ChildProfilePage() {
           
           if (assessment.answers) {
             const answers = typeof assessment.answers === 'string' ? JSON.parse(assessment.answers) : assessment.answers;
-            Object.keys(answers).forEach((q) => {
+            const skills = SOCIAL_EMOTIONAL[parseInt(assessment.age)] || [];
+            
+            skills.forEach((skill, idx) => {
               checkNewPage();
-              const lines = doc.splitTextToSize(`${q}: ${answers[q]}`, pageWidth - 40);
+              const answer = answers[skill.id] || 'Not Answered';
+              const questionText = `${idx + 1}. ${skill.text}`;
+              const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              doc.setFont('helvetica', 'bold');
+              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setFont('helvetica', 'normal');
+              yPos += 6;
             });
           }
           yPos += 5;
