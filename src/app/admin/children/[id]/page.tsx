@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { getChildById } from '@/lib/api-client';
 import { ArrowLeft, FileText, ClipboardCheck, ListChecks, Activity, FileBarChart, Brain, Hand, Footprints, MessageSquare, Heart, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { addPDFHeader, addPDFWatermark, addPDFFooter } from '@/utils/pdfUtils';
 import Toast from '@/components/Toast';
 
 export default function ChildProfilePage() {
@@ -67,74 +68,35 @@ export default function ChildProfilePage() {
 
       // Create PDF with watermark
       const doc = new jsPDF();
-      let yPos = 20;
       const pageWidth = doc.internal.pageSize.width;
       const pageHeight = doc.internal.pageSize.height;
 
-      // Function to add watermark to current page
-      const addWatermark = () => {
-        doc.setFontSize(50);
-        doc.setTextColor(230, 230, 230);
-        doc.text('SMILESTONES', pageWidth / 2, pageHeight / 2, {
-          align: 'center',
-          angle: 45
-        });
-      };
-
-      // Function to add header with logo
-      const addHeader = () => {
-        doc.setFontSize(16);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text('SMILESTONES', 20, 15);
-        doc.setFontSize(8);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Child Development Centre', 20, 20);
-        doc.line(20, 22, pageWidth - 20, 22);
-      };
-
       // Function to check if new page is needed
       const checkNewPage = (spaceNeeded = 20) => {
-        if (yPos > pageHeight - 30) {
+        if (yPos > pageHeight - 40) {
+          addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+          addPDFWatermark(doc);
           doc.addPage();
-          addWatermark();
-          addHeader();
-          yPos = 30;
+          yPos = addPDFHeader({
+            doc,
+            title: 'COMPREHENSIVE CLINICAL REPORT (Continued)',
+          });
           return true;
         }
         return false;
       };
 
-      // Add watermark and header to first page
-      addWatermark();
-      addHeader();
-      yPos = 30;
-
-      // Title
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.text('COMPREHENSIVE CLINICAL REPORT', pageWidth / 2, yPos, { align: 'center' });
-      yPos += 15;
-
-      // Child Information
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Child Information', 20, yPos);
-      yPos += 7;
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Name: ${child.name}`, 20, yPos);
-      yPos += 6;
-      doc.text(`Age: ${child.age} years`, 20, yPos);
-      yPos += 6;
-      doc.text(`Diagnosis: ${child.diagnosis}`, 20, yPos);
-      yPos += 6;
-      doc.text(`Parent/Guardian: ${child.parent_name}`, 20, yPos);
-      yPos += 6;
-      doc.text(`Phone: ${child.phone}`, 20, yPos);
-      yPos += 6;
-      doc.text(`Registered: ${new Date(child.created_at).toLocaleDateString()}`, 20, yPos);
-      yPos += 12;
+      // Add header to first page
+      let yPos = addPDFHeader({
+        doc,
+        title: 'COMPREHENSIVE CLINICAL REPORT',
+        childName: child.name,
+        childAge: `${child.age} years`,
+        childDiagnosis: child.diagnosis,
+        parentName: child.parent_name,
+        phone: child.phone,
+        registeredDate: new Date(child.created_at).toLocaleDateString()
+      });
 
       // Case Sheet - Full Details
       if (caseSheet && caseSheet.length > 0) {
@@ -373,15 +335,12 @@ export default function ChildProfilePage() {
         });
       }
 
-      // Footer on all pages
+      // Footer and watermark on all pages
       const pageCount = doc.getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(100, 100, 100);
-        doc.text(`Page ${i} of ${pageCount}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
-        doc.text(`Generated: ${new Date().toLocaleString()}`, pageWidth / 2, pageHeight - 5, { align: 'center' });
+        addPDFWatermark(doc);
+        addPDFFooter(doc, i, pageCount);
       }
 
       // Save PDF
