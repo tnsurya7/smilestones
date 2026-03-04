@@ -77,10 +77,12 @@ export default function ChildProfilePage() {
           addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
           addPDFWatermark(doc);
           doc.addPage();
-          yPos = addPDFHeader({
-            doc,
-            title: 'COMPREHENSIVE CLINICAL REPORT (Continued)',
-          });
+          // For continuation pages, just add a simple header without full details
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(0, 0, 0);
+          doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+          yPos = 30;
           return true;
         }
         return false;
