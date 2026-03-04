@@ -196,13 +196,22 @@ export default function ChildProfilePage() {
           MCHAT_QUESTIONS.forEach((question, idx) => {
             checkNewPage();
             const answer = answers[question.id] || 'Not Answered';
-            const questionText = `${idx + 1}. ${question.text}`;
+const questionText = `${idx + 1}. ${question.text}`;
             const lines = doc.splitTextToSize(questionText, pageWidth - 40);
             lines.forEach((line: string) => {
               doc.text(line, 20, yPos);
               yPos += 5;
             });
-            doc.text(`Answer: ${answer}`, 25, yPos);
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
+              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
             yPos += 6;
           });
         }
@@ -250,13 +259,22 @@ export default function ChildProfilePage() {
               if (!question.isHeading) {
                 checkNewPage();
                 const answer = answers[question.id] || 'Not Answered';
-                const questionText = `• ${question.text}`;
+const questionText = `• ${question.text}`;
                 const lines = doc.splitTextToSize(questionText, pageWidth - 45);
                 lines.forEach((line: string) => {
                   doc.text(line, 25, yPos);
                   yPos += 5;
                 });
-                doc.text(`Answer: ${answer}`, 30, yPos);
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
+              doc.text(`Answer: ${answer}`, 30, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
                 yPos += 6;
               } else {
                 checkNewPage();
@@ -311,13 +329,22 @@ export default function ChildProfilePage() {
             milestones.forEach((milestone, idx) => {
               checkNewPage();
               const answer = answers[milestone.id] || 'Not Answered';
-              const questionText = `${idx + 1}. ${milestone.text}`;
+const questionText = `${idx + 1}. ${milestone.text}`;
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
               doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
           }
@@ -365,13 +392,22 @@ export default function ChildProfilePage() {
             skills.forEach((skill, idx) => {
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
-              const questionText = `${idx + 1}. ${skill.text}`;
+const questionText = `${idx + 1}. ${skill.text}`;
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
               doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
           }
@@ -419,13 +455,22 @@ export default function ChildProfilePage() {
             skills.forEach((skill, idx) => {
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
-              const questionText = `${idx + 1}. ${skill.text}`;
+const questionText = `${idx + 1}. ${skill.text}`;
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
               doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
           }
@@ -473,13 +518,22 @@ export default function ChildProfilePage() {
             skills.forEach((skill, idx) => {
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
-              const questionText = `${idx + 1}. ${skill.text}`;
+const questionText = `${idx + 1}. ${skill.text}`;
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
               doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
           }
@@ -527,13 +581,22 @@ export default function ChildProfilePage() {
             skills.forEach((skill, idx) => {
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
-              const questionText = `${idx + 1}. ${skill.text}`;
+const questionText = `${idx + 1}. ${skill.text}`;
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
+              // Color code answers
+              if (answer === 'Yes') {
+                doc.setTextColor(34, 197, 94); // Green
+              } else if (answer === 'No') {
+                doc.setTextColor(239, 68, 68); // Red
+              } else {
+                doc.setTextColor(0, 0, 0); // Black
+              }
               doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
           }
