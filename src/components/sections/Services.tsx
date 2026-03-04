@@ -221,9 +221,9 @@ const Services = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-                  <Link href="/contact" className="premium-gradient-btn primary">
+                  <Link href="/registration" className="premium-gradient-btn primary">
                     <Calendar className="btn-icon" />
-                    <span className="btn-text">Book Appointment</span>
+                    <span className="btn-text">Book Registration</span>
                     <div className="btn-gradient-overlay"></div>
                     <div className="btn-glow-effect"></div>
                   </Link>

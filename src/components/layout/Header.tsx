@@ -151,11 +151,11 @@ const Header = () => {
               {/* Mobile CTA Button */}
               <div className="mobile-cta-wrapper">
                 <Link 
-                  href="/contact" 
+                  href="/registration" 
                   className="mobile-cta-btn"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="btn-text">Book Appointment</span>
+                  <span className="btn-text">Book Registration</span>
                 </Link>
               </div>
 
