@@ -129,7 +129,7 @@ export default function ChildProfilePage() {
         // Add all case sheet fields
         const fields = Object.keys(caseSheetData);
         fields.forEach(field => {
-          if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at' && field !== 'data') {
+          if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at' && field !== 'data' && field !== 'auto_section') {
             checkNewPage();
             const label = field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
             const value = caseSheetData[field];
@@ -197,20 +197,22 @@ export default function ChildProfilePage() {
             checkNewPage();
             const answer = answers[question.id] || 'Not Answered';
 const questionText = `${idx + 1}. ${question.text}`;
-            const lines = doc.splitTextToSize(questionText, pageWidth - 40);
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
+              const lines = doc.splitTextToSize(questionText, pageWidth - 40);
             lines.forEach((line: string) => {
               doc.text(line, 20, yPos);
               yPos += 5;
             });
-              // Color code answers
+              doc.text('Answer: ', 25, yPos);
+              const answerX = 25 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
             yPos += 6;
           });
@@ -260,20 +262,22 @@ const questionText = `${idx + 1}. ${question.text}`;
                 checkNewPage();
                 const answer = answers[question.id] || 'Not Answered';
 const questionText = `• ${question.text}`;
-                const lines = doc.splitTextToSize(questionText, pageWidth - 45);
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
+              const lines = doc.splitTextToSize(questionText, pageWidth - 45);
                 lines.forEach((line: string) => {
                   doc.text(line, 25, yPos);
                   yPos += 5;
                 });
-              // Color code answers
+              doc.text('Answer: ', 30, yPos);
+              const answerX = 30 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 30, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
                 yPos += 6;
               } else {
@@ -330,20 +334,22 @@ const questionText = `• ${question.text}`;
               checkNewPage();
               const answer = answers[milestone.id] || 'Not Answered';
 const questionText = `${idx + 1}. ${milestone.text}`;
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              // Color code answers
+              doc.text('Answer: ', 25, yPos);
+              const answerX = 25 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
@@ -393,20 +399,22 @@ const questionText = `${idx + 1}. ${milestone.text}`;
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
 const questionText = `${idx + 1}. ${skill.text}`;
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              // Color code answers
+              doc.text('Answer: ', 25, yPos);
+              const answerX = 25 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
@@ -456,20 +464,22 @@ const questionText = `${idx + 1}. ${skill.text}`;
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
 const questionText = `${idx + 1}. ${skill.text}`;
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              // Color code answers
+              doc.text('Answer: ', 25, yPos);
+              const answerX = 25 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
@@ -519,20 +529,22 @@ const questionText = `${idx + 1}. ${skill.text}`;
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
 const questionText = `${idx + 1}. ${skill.text}`;
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              // Color code answers
+              doc.text('Answer: ', 25, yPos);
+              const answerX = 25 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
@@ -582,20 +594,22 @@ const questionText = `${idx + 1}. ${skill.text}`;
               checkNewPage();
               const answer = answers[skill.id] || 'Not Answered';
 const questionText = `${idx + 1}. ${skill.text}`;
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
               const lines = doc.splitTextToSize(questionText, pageWidth - 40);
               lines.forEach((line: string) => {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              // Color code answers
+              doc.text('Answer: ', 25, yPos);
+              const answerX = 25 + doc.getTextWidth('Answer: ');
+              // Color code only the answer value
               if (answer === 'Yes') {
                 doc.setTextColor(34, 197, 94); // Green
               } else if (answer === 'No') {
                 doc.setTextColor(239, 68, 68); // Red
-              } else {
-                doc.setTextColor(0, 0, 0); // Black
               }
-              doc.text(`Answer: ${answer}`, 25, yPos);
+              doc.text(answer, answerX, yPos);
               doc.setTextColor(0, 0, 0); // Reset to black
               yPos += 6;
             });
