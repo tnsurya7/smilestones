@@ -121,20 +121,6 @@ export default function AdminDashboard() {
       gradient: 'from-green-500 to-green-600',
     },
     {
-      title: 'Parents Appointments',
-      description: 'View parents bookings',
-      icon: Calendar,
-      href: '/admin/parent-appointments',
-      gradient: 'from-teal-500 to-teal-600',
-    },
-    {
-      title: 'Parents Registrations',
-      description: 'View therapy registrations',
-      icon: UserPlus,
-      href: '/admin/parent-registrations',
-      gradient: 'from-indigo-500 to-indigo-600',
-    },
-    {
       title: 'Parents Updates',
       description: 'Motivational messages & updates',
       icon: FileText,
@@ -200,7 +186,7 @@ export default function AdminDashboard() {
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {quickActions.map((action, index) => {
               const Icon = action.icon;
               return (
