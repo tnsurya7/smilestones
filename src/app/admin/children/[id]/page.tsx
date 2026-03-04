@@ -64,14 +64,18 @@ export default function ChildProfilePage() {
         fetch(`/api/social-emotional?child_id=${childId}`)
       ]);
 
-      const caseSheet = await caseSheetRes.json();
-      const mchat = await mchatRes.json();
-      const dsm = await dsmRes.json();
-      const cognitive = await cognitiveRes.json();
-      const fineMotor = await fineMotorRes.json();
-      const grossMotor = await grossMotorRes.json();
-      const language = await languageRes.json();
-      const social = await socialRes.json();
+      const caseSheet = caseSheetRes.ok ? await caseSheetRes.json() : [];
+      const mchat = mchatRes.ok ? await mchatRes.json() : [];
+      const dsm = dsmRes.ok ? await dsmRes.json() : [];
+      const cognitive = cognitiveRes.ok ? await cognitiveRes.json() : [];
+      const fineMotor = fineMotorRes.ok ? await fineMotorRes.json() : [];
+      const grossMotor = grossMotorRes.ok ? await grossMotorRes.json() : [];
+      const language = languageRes.ok ? await languageRes.json() : [];
+      const social = socialRes.ok ? await socialRes.json() : [];
+
+      console.log('Case Sheet Data:', caseSheet);
+      console.log('M-CHAT Data:', mchat);
+      console.log('DSM Data:', dsm);
 
       // Create PDF with watermark
       const doc = new jsPDF();
@@ -115,20 +119,29 @@ export default function ChildProfilePage() {
       doc.text('CASE SHEET', 20, yPos);
       yPos += 8;
       
-      if (caseSheet && caseSheet.length > 0) {
-        const cs = caseSheet[0];
+      // Handle both array and single object responses
+      const caseSheetData = Array.isArray(caseSheet) ? caseSheet[0] : caseSheet;
+      
+      if (caseSheetData && Object.keys(caseSheetData).length > 0) {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         
         // Add all case sheet fields
-        const fields = Object.keys(cs);
+        const fields = Object.keys(caseSheetData);
         fields.forEach(field => {
           if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at') {
             checkNewPage();
             const label = field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            const value = cs[field] || 'N/A';
-            doc.text(`${label}: ${value}`, 20, yPos);
-            yPos += 5;
+            const value = caseSheetData[field] || 'N/A';
+            
+            // Handle arrays (like recommended therapies)
+            const displayValue = Array.isArray(value) ? value.join(', ') : value;
+            
+            const lines = doc.splitTextToSize(`${label}: ${displayValue}`, pageWidth - 40);
+            lines.forEach((line: string) => {
+              doc.text(line, 20, yPos);
+              yPos += 5;
+            });
           }
         });
       } else {
@@ -149,11 +162,13 @@ export default function ChildProfilePage() {
       doc.text('M-CHAT SCREENING', 20, yPos);
       yPos += 8;
       
-      if (mchat && mchat.length > 0) {
-        const mchatData = mchat[0];
+      // Handle both array and single object responses
+      const mchatData = Array.isArray(mchat) ? mchat[0] : mchat;
+      
+      if (mchatData && Object.keys(mchatData).length > 0) {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Risk Score: ${mchatData.risk_score || 'N/A'}`, 20, yPos);
+        doc.text(`Risk Score: ${mchatData.risk_score || mchatData.total_score || 'N/A'}`, 20, yPos);
         yPos += 6;
         doc.text(`Risk Level: ${mchatData.risk_level || 'N/A'}`, 20, yPos);
         yPos += 8;
@@ -194,13 +209,15 @@ export default function ChildProfilePage() {
       doc.text('DSM-5 CHECKLIST', 20, yPos);
       yPos += 8;
 
-      if (dsm && dsm.length > 0) {
-        const dsmData = dsm[0];
+      // Handle both array and single object responses
+      const dsmData = Array.isArray(dsm) ? dsm[0] : dsm;
+
+      if (dsmData && Object.keys(dsmData).length > 0) {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Criteria Met: ${dsmData.criteria_met || 'N/A'}`, 20, yPos);
+        doc.text(`Criteria Met: ${dsmData.criteria_met || dsmData.meets_criteria || 'N/A'}`, 20, yPos);
         yPos += 6;
-        doc.text(`Diagnosis: ${dsmData.diagnosis || 'N/A'}`, 20, yPos);
+        doc.text(`Diagnosis: ${dsmData.diagnosis || dsmData.interpretation || 'N/A'}`, 20, yPos);
         yPos += 8;
         
         // Add all DSM criteria with questions
