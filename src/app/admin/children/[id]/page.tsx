@@ -129,13 +129,30 @@ export default function ChildProfilePage() {
         // Add all case sheet fields
         const fields = Object.keys(caseSheetData);
         fields.forEach(field => {
-          if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at') {
+          if (field !== 'id' && field !== 'child_id' && field !== 'created_at' && field !== 'updated_at' && field !== 'data') {
             checkNewPage();
             const label = field.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            const value = caseSheetData[field] || 'N/A';
+            const value = caseSheetData[field];
             
-            // Handle arrays (like recommended therapies)
-            const displayValue = Array.isArray(value) ? value.join(', ') : value;
+            // Skip if value is null or undefined
+            if (value === null || value === undefined) {
+              return;
+            }
+            
+            // Handle different value types
+            let displayValue;
+            if (Array.isArray(value)) {
+              displayValue = value.join(', ');
+            } else if (typeof value === 'object') {
+              displayValue = JSON.stringify(value);
+            } else {
+              displayValue = String(value);
+            }
+            
+            // Skip if empty
+            if (!displayValue || displayValue === '{}' || displayValue === '[]') {
+              return;
+            }
             
             const lines = doc.splitTextToSize(`${label}: ${displayValue}`, pageWidth - 40);
             lines.forEach((line: string) => {
@@ -185,9 +202,7 @@ export default function ChildProfilePage() {
               doc.text(line, 20, yPos);
               yPos += 5;
             });
-            doc.setFont('helvetica', 'bold');
             doc.text(`Answer: ${answer}`, 25, yPos);
-            doc.setFont('helvetica', 'normal');
             yPos += 6;
           });
         }
@@ -241,9 +256,7 @@ export default function ChildProfilePage() {
                   doc.text(line, 25, yPos);
                   yPos += 5;
                 });
-                doc.setFont('helvetica', 'bold');
                 doc.text(`Answer: ${answer}`, 30, yPos);
-                doc.setFont('helvetica', 'normal');
                 yPos += 6;
               } else {
                 checkNewPage();
@@ -304,9 +317,7 @@ export default function ChildProfilePage() {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              doc.setFont('helvetica', 'bold');
               doc.text(`Answer: ${answer}`, 25, yPos);
-              doc.setFont('helvetica', 'normal');
               yPos += 6;
             });
           }
@@ -360,9 +371,7 @@ export default function ChildProfilePage() {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              doc.setFont('helvetica', 'bold');
               doc.text(`Answer: ${answer}`, 25, yPos);
-              doc.setFont('helvetica', 'normal');
               yPos += 6;
             });
           }
@@ -416,9 +425,7 @@ export default function ChildProfilePage() {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              doc.setFont('helvetica', 'bold');
               doc.text(`Answer: ${answer}`, 25, yPos);
-              doc.setFont('helvetica', 'normal');
               yPos += 6;
             });
           }
@@ -472,9 +479,7 @@ export default function ChildProfilePage() {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              doc.setFont('helvetica', 'bold');
               doc.text(`Answer: ${answer}`, 25, yPos);
-              doc.setFont('helvetica', 'normal');
               yPos += 6;
             });
           }
@@ -528,9 +533,7 @@ export default function ChildProfilePage() {
                 doc.text(line, 20, yPos);
                 yPos += 5;
               });
-              doc.setFont('helvetica', 'bold');
               doc.text(`Answer: ${answer}`, 25, yPos);
-              doc.setFont('helvetica', 'normal');
               yPos += 6;
             });
           }
