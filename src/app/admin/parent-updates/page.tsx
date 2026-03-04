@@ -4,35 +4,20 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { getChildren, getParentUpdates, saveParentUpdates } from '@/lib/api-client';
-import { TextArea } from '@/components/admin/FormComponents';
-import { MessageSquare, Video, Award, Save, Search } from 'lucide-react';
-
-interface ParentUpdate {
-  childId: string;
-  achievements: string[];
-  motivationalMessages: string[];
-  videoLinks: string[];
-  lastUpdated: string;
-}
+import { getChildren } from '@/lib/api-client';
+import { MessageCircle, Search, User, Calendar, Phone, Stethoscope } from 'lucide-react';
 
 export default function ParentUpdatesPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [children, setChildren] = useState<any[]>([]);
-  const [selectedChildId, setSelectedChildId] = useState('');
+  const [selectedChild, setSelectedChild] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [updateData, setUpdateData] = useState<ParentUpdate>({
-    childId: '',
-    achievements: [],
-    motivationalMessages: [],
-    videoLinks: [],
-    lastUpdated: new Date().toISOString()
+  const [formData, setFormData] = useState({
+    achievementUpdates: '',
+    motivationalMessage: '',
+    notes: ''
   });
-  const [newAchievement, setNewAchievement] = useState('');
-  const [newMessage, setNewMessage] = useState('');
-  const [newVideoLink, setNewVideoLink] = useState('');
-  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
     if (!loading && !user) {
@@ -55,102 +40,49 @@ export default function ParentUpdatesPage() {
     }
   };
 
-  useEffect(() => {
-    if (selectedChildId) {
-      loadUpdateData(selectedChildId);
-    }
-  }, [selectedChildId]);
-
-  const loadUpdateData = async (childId: string) => {
-    try {
-      const data = await getParentUpdates(childId);
-      setUpdateData({
-        childId: childId,
-        achievements: data.achievements || [],
-        motivationalMessages: data.motivational_messages || [],
-        videoLinks: data.video_links || [],
-        lastUpdated: data.last_updated || new Date().toISOString()
-      });
-    } catch (error) {
-      console.error('Error loading updates:', error);
-      setUpdateData({
-        childId: childId,
-        achievements: [],
-        motivationalMessages: [],
-        videoLinks: [],
-        lastUpdated: new Date().toISOString()
-      });
-    }
+  const handleChildSelect = (child: any) => {
+    setSelectedChild(child);
+    // Reset form when selecting a new child
+    setFormData({
+      achievementUpdates: '',
+      motivationalMessage: '',
+      notes: ''
+    });
   };
 
-  const handleSave = async () => {
-    if (!selectedChildId) return;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleWhatsAppSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     
-    try {
-      await saveParentUpdates({
-        child_id: selectedChildId,
-        achievements: updateData.achievements,
-        motivational_messages: updateData.motivationalMessages,
-        video_links: updateData.videoLinks
-      });
-      
-      setSaveMessage('Saved successfully!');
-      setTimeout(() => setSaveMessage(''), 3000);
-      
-      // Reload data
-      await loadUpdateData(selectedChildId);
-    } catch (error) {
-      console.error('Error saving updates:', error);
-      alert('Failed to save updates. Please try again.');
-    }
-  };
+    if (!selectedChild) return;
 
-  const addAchievement = () => {
-    if (!newAchievement.trim()) return;
-    setUpdateData({
-      ...updateData,
-      achievements: [...updateData.achievements, newAchievement]
-    });
-    setNewAchievement('');
-  };
+    // Format the message for WhatsApp
+    const message = `*Parents Update - ${selectedChild.name}*
 
-  const removeAchievement = (index: number) => {
-    setUpdateData({
-      ...updateData,
-      achievements: updateData.achievements.filter((_, i) => i !== index)
-    });
-  };
+*Child Details:*
+Name: ${selectedChild.name}
+Age: ${selectedChild.age} years
+Diagnosis: ${selectedChild.diagnosis}
+Parent: ${selectedChild.parent_name}
+Phone: ${selectedChild.phone}
+Doctor: Dr. P. Sudhakar
 
-  const addMessage = () => {
-    if (!newMessage.trim()) return;
-    setUpdateData({
-      ...updateData,
-      motivationalMessages: [...updateData.motivationalMessages, newMessage]
-    });
-    setNewMessage('');
-  };
+${formData.achievementUpdates ? `*Achievement Updates:*\n${formData.achievementUpdates}\n\n` : ''}${formData.motivationalMessage ? `*Motivational Message:*\n${formData.motivationalMessage}\n\n` : ''}${formData.notes ? `*Notes:*\n${formData.notes}` : ''}`;
 
-  const removeMessage = (index: number) => {
-    setUpdateData({
-      ...updateData,
-      motivationalMessages: updateData.motivationalMessages.filter((_, i) => i !== index)
-    });
-  };
-
-  const addVideoLink = () => {
-    if (!newVideoLink.trim()) return;
-    setUpdateData({
-      ...updateData,
-      videoLinks: [...updateData.videoLinks, newVideoLink]
-    });
-    setNewVideoLink('');
-  };
-
-  const removeVideoLink = (index: number) => {
-    setUpdateData({
-      ...updateData,
-      videoLinks: updateData.videoLinks.filter((_, i) => i !== index)
-    });
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // WhatsApp URL with the child's phone number and message
+    const whatsappUrl = `https://wa.me/91${selectedChild.phone}?text=${encodedMessage}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
   };
 
   const filteredChildren = children.filter(child =>
@@ -171,13 +103,6 @@ export default function ParentUpdatesPage() {
     <div className="admin-dashboard min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <AdminPageHeader title="Parents Updates" />
-
-        {/* Save Message */}
-        {saveMessage && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm z-50">
-            {saveMessage}
-          </div>
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Child Selection */}
@@ -202,9 +127,9 @@ export default function ParentUpdatesPage() {
                 filteredChildren.map((child) => (
                   <button
                     key={child.id}
-                    onClick={() => setSelectedChildId(child.id)}
+                    onClick={() => handleChildSelect(child)}
                     className={`w-full text-left p-2.5 sm:p-3 rounded-lg transition-all ${
-                      selectedChildId === child.id
+                      selectedChild?.id === child.id
                         ? 'bg-blue-100 border-2 border-blue-500'
                         : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
                     }`}
@@ -218,160 +143,135 @@ export default function ParentUpdatesPage() {
           </div>
 
           {/* Updates Form */}
-          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            {!selectedChildId ? (
+          <div className="lg:col-span-2">
+            {!selectedChild ? (
               <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 text-center">
-                <MessageSquare className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-                <p className="text-gray-900 text-base sm:text-lg font-semibold">Select a child to manage updates</p>
+                <MessageCircle className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
+                <p className="text-gray-900 text-base sm:text-lg font-semibold">Select a child to send updates</p>
               </div>
             ) : (
-              <>
-                {/* Achievement Updates */}
+              <div className="space-y-4 sm:space-y-6">
+                {/* Child Profile Card */}
                 <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                    <Award className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900">Achievement Updates</h3>
-                  </div>
-
-                  <div className="flex gap-2 mb-3 sm:mb-4">
-                    <input
-                      type="text"
-                      value={newAchievement}
-                      onChange={(e) => setNewAchievement(e.target.value)}
-                      placeholder="Enter achievement..."
-                      className="flex-1 px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs sm:text-sm"
-                      onKeyPress={(e) => e.key === 'Enter' && addAchievement()}
-                    />
-                    <button
-                      onClick={addAchievement}
-                      className="px-3 sm:px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all text-xs sm:text-sm"
-                    >
-                      Add
-                    </button>
-                  </div>
-
-                  <div className="space-y-2">
-                    {updateData.achievements.map((achievement, idx) => (
-                      <div key={idx} className="flex items-center justify-between bg-yellow-50 p-2.5 sm:p-3 rounded-lg">
-                        <p className="text-xs sm:text-sm text-gray-900">{achievement}</p>
-                        <button
-                          onClick={() => removeAchievement(idx)}
-                          className="text-red-600 hover:text-red-700 text-xs sm:text-sm"
-                        >
-                          Remove
-                        </button>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Child Profile</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="flex items-start gap-3">
+                      <User className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-600">Name</p>
+                        <p className="text-sm font-semibold text-gray-900">{selectedChild.name}</p>
                       </div>
-                    ))}
-                    {updateData.achievements.length === 0 && (
-                      <p className="text-gray-900 text-xs sm:text-sm text-center py-3 sm:py-4 font-semibold">No achievements added yet</p>
-                    )}
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Calendar className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-600">Age</p>
+                        <p className="text-sm font-semibold text-gray-900">{selectedChild.age} years</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Stethoscope className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-600">Diagnosis</p>
+                        <p className="text-sm font-semibold text-gray-900">{selectedChild.diagnosis}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <User className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-600">Parent/Guardian</p>
+                        <p className="text-sm font-semibold text-gray-900">{selectedChild.parent_name}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Phone className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-600">Phone</p>
+                        <p className="text-sm font-semibold text-gray-900">{selectedChild.phone}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <Calendar className="w-5 h-5 text-teal-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-600">Registered</p>
+                        <p className="text-sm font-semibold text-gray-900">
+                          {new Date(selectedChild.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Motivational Messages */}
+                {/* Update Form */}
                 <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                    <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900">Motivational Messages</h3>
-                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Parents Update</h3>
+                  
+                  <form onSubmit={handleWhatsAppSubmit} className="space-y-4">
+                    {/* Achievement Updates */}
+                    <div>
+                      <label htmlFor="achievementUpdates" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
+                        Achievement Updates
+                      </label>
+                      <textarea
+                        id="achievementUpdates"
+                        name="achievementUpdates"
+                        value={formData.achievementUpdates}
+                        onChange={handleChange}
+                        rows={3}
+                        className="block w-full px-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                        placeholder="Enter achievement updates (optional)"
+                      />
+                    </div>
 
-                  <TextArea
-                    label=""
-                    name="newMessage"
-                    value={newMessage}
-                    onChange={setNewMessage}
-                    rows={3}
-                    placeholder="Write a motivational message for parents..."
-                  />
-                  <button
-                    onClick={addMessage}
-                    className="w-full mt-2 px-3 sm:px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all text-xs sm:text-sm"
-                  >
-                    Add Message
-                  </button>
+                    {/* Motivational Message */}
+                    <div>
+                      <label htmlFor="motivationalMessage" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
+                        Motivational Message
+                      </label>
+                      <textarea
+                        id="motivationalMessage"
+                        name="motivationalMessage"
+                        value={formData.motivationalMessage}
+                        onChange={handleChange}
+                        rows={3}
+                        className="block w-full px-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                        placeholder="Enter motivational message (optional)"
+                      />
+                    </div>
 
-                  <div className="space-y-2 mt-3 sm:mt-4">
-                    {updateData.motivationalMessages.map((message, idx) => (
-                      <div key={idx} className="bg-green-50 p-2.5 sm:p-3 rounded-lg">
-                        <p className="text-xs sm:text-sm text-gray-900 mb-2">{message}</p>
-                        <button
-                          onClick={() => removeMessage(idx)}
-                          className="text-red-600 hover:text-red-700 text-xs"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    ))}
-                    {updateData.motivationalMessages.length === 0 && (
-                      <p className="text-gray-900 text-xs sm:text-sm text-center py-3 sm:py-4 font-semibold">No messages added yet</p>
-                    )}
-                  </div>
+                    {/* Notes */}
+                    <div>
+                      <label htmlFor="notes" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
+                        Notes
+                      </label>
+                      <textarea
+                        id="notes"
+                        name="notes"
+                        value={formData.notes}
+                        onChange={handleChange}
+                        rows={3}
+                        className="block w-full px-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                        placeholder="Enter additional notes (optional)"
+                      />
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        className="w-full premium-gradient-btn primary flex items-center justify-center gap-2 py-3 md:py-4 text-sm md:text-base"
+                      >
+                        <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+                        <span>Send via WhatsApp</span>
+                      </button>
+                    </div>
+
+                    <p className="text-xs md:text-sm text-gray-600 text-center">
+                      This will open WhatsApp with the parent's number and pre-filled message
+                    </p>
+                  </form>
                 </div>
-
-                {/* Video Links */}
-                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                    <Video className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900">Video Links for Parents</h3>
-                  </div>
-
-                  <div className="flex gap-2 mb-3 sm:mb-4">
-                    <input
-                      type="url"
-                      value={newVideoLink}
-                      onChange={(e) => setNewVideoLink(e.target.value)}
-                      placeholder="Enter YouTube URL..."
-                      className="flex-1 px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs sm:text-sm"
-                      onKeyPress={(e) => e.key === 'Enter' && addVideoLink()}
-                    />
-                    <button
-                      onClick={addVideoLink}
-                      className="px-3 sm:px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-all text-xs sm:text-sm"
-                    >
-                      Add
-                    </button>
-                  </div>
-
-                  <div className="space-y-2">
-                    {updateData.videoLinks.map((link, idx) => (
-                      <div key={idx} className="flex items-center justify-between bg-purple-50 p-2.5 sm:p-3 rounded-lg">
-                        <a
-                          href={link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs sm:text-sm text-blue-600 hover:underline truncate flex-1"
-                        >
-                          {link}
-                        </a>
-                        <button
-                          onClick={() => removeVideoLink(idx)}
-                          className="text-red-600 hover:text-red-700 text-xs sm:text-sm ml-2"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    ))}
-                    {updateData.videoLinks.length === 0 && (
-                      <p className="text-gray-900 text-xs sm:text-sm text-center py-3 sm:py-4 font-semibold">No video links added yet</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Save Button */}
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSave}
-                    className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg sm:rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg flex items-center gap-2 text-sm sm:text-base"
-                  >
-                    <Save className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Save Updates
-                  </button>
-                </div>
-
-                <p className="text-xs text-gray-500 text-right">
-                  Last updated: {new Date(updateData.lastUpdated).toLocaleString()}
-                </p>
-              </>
+              </div>
             )}
           </div>
         </div>
