@@ -52,9 +52,9 @@ export default function RegistrationPage() {
       <Header />
       
       {/* Breadcrumbs */}
-      <div className="pt-6 pb-4 bg-gray-50">
+      <div className="pt-4 pb-3 md:pt-6 md:pb-4 bg-gray-50">
         <div className="container mx-auto px-4">
-          <nav className="text-sm text-gray-600">
+          <nav className="text-xs md:text-sm text-gray-600">
             <Link href="/" className="hover:text-blue-600">Home</Link> → 
             <span className="text-blue-600 font-medium"> Patient Registration</span>
           </nav>
@@ -62,30 +62,30 @@ export default function RegistrationPage() {
       </div>
 
       {/* Registration Form */}
-      <section className="py-12 md:py-20 section-gradient">
+      <section className="py-6 md:py-12 lg:py-20 section-gradient">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-8 md:mb-12">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-6 md:mb-8 lg:mb-12">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-2 md:mb-4">
                 Patient <span className="text-blue-600">Registration</span>
               </h1>
-              <p className="text-lg text-gray-600">
+              <p className="text-sm md:text-base lg:text-lg text-gray-600">
                 Fill in the details below to register your child
               </p>
             </div>
 
             {/* Form Card */}
-            <div className="universal-card hover-card-effect p-6 md:p-8">
-              <form onSubmit={handleWhatsAppSubmit} className="space-y-6">
+            <div className="universal-card hover-card-effect p-4 md:p-6 lg:p-8">
+              <form onSubmit={handleWhatsAppSubmit} className="space-y-4 md:space-y-6">
                 {/* Parent Name */}
                 <div>
-                  <label htmlFor="parentName" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label htmlFor="parentName" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
                     Parent Name <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400" />
+                      <User className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
                     </div>
                     <input
                       type="text"
@@ -94,7 +94,7 @@ export default function RegistrationPage() {
                       value={formData.parentName}
                       onChange={handleChange}
                       required
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                      className="block w-full pl-9 md:pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                       placeholder="Enter parent's full name"
                     />
                   </div>
@@ -102,12 +102,12 @@ export default function RegistrationPage() {
 
                 {/* Child Name */}
                 <div>
-                  <label htmlFor="childName" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label htmlFor="childName" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
                     Child Name <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400" />
+                      <User className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
                     </div>
                     <input
                       type="text"
@@ -116,7 +116,7 @@ export default function RegistrationPage() {
                       value={formData.childName}
                       onChange={handleChange}
                       required
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                      className="block w-full pl-9 md:pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                       placeholder="Enter child's full name"
                     />
                   </div>
@@ -124,12 +124,12 @@ export default function RegistrationPage() {
 
                 {/* Phone Number */}
                 <div>
-                  <label htmlFor="phoneNumber" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label htmlFor="phoneNumber" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
                     Phone Number <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400" />
+                      <Phone className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
                     </div>
                     <input
                       type="tel"
@@ -139,7 +139,7 @@ export default function RegistrationPage() {
                       onChange={handleChange}
                       required
                       pattern="[0-9]{10}"
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                      className="block w-full pl-9 md:pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                       placeholder="Enter 10-digit phone number"
                     />
                   </div>
@@ -147,12 +147,12 @@ export default function RegistrationPage() {
 
                 {/* Date of Registration */}
                 <div>
-                  <label htmlFor="dateOfRegistration" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label htmlFor="dateOfRegistration" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
                     Date of Registration <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Calendar className="h-5 w-5 text-gray-400" />
+                      <Calendar className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
                     </div>
                     <input
                       type="date"
@@ -161,19 +161,19 @@ export default function RegistrationPage() {
                       value={formData.dateOfRegistration}
                       onChange={handleChange}
                       required
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                      className="block w-full pl-9 md:pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                     />
                   </div>
                 </div>
 
                 {/* Referral Doctor Name */}
                 <div>
-                  <label htmlFor="referralDoctorName" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label htmlFor="referralDoctorName" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
                     Referral Doctor Name
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <UserCheck className="h-5 w-5 text-gray-400" />
+                      <UserCheck className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
                     </div>
                     <input
                       type="text"
@@ -181,7 +181,7 @@ export default function RegistrationPage() {
                       name="referralDoctorName"
                       value={formData.referralDoctorName}
                       onChange={handleChange}
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                      className="block w-full pl-9 md:pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                       placeholder="Enter referral doctor's name (optional)"
                     />
                   </div>
@@ -189,12 +189,12 @@ export default function RegistrationPage() {
 
                 {/* Referral Doctor Phone */}
                 <div>
-                  <label htmlFor="referralDoctorPhone" className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label htmlFor="referralDoctorPhone" className="block text-xs md:text-sm font-semibold text-gray-900 mb-1.5 md:mb-2">
                     Referral Doctor Phone No
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400" />
+                      <Phone className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
                     </div>
                     <input
                       type="tel"
@@ -203,24 +203,24 @@ export default function RegistrationPage() {
                       value={formData.referralDoctorPhone}
                       onChange={handleChange}
                       pattern="[0-9]{10}"
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                      className="block w-full pl-9 md:pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                       placeholder="Enter 10-digit phone number (optional)"
                     />
                   </div>
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-4">
+                <div className="pt-2 md:pt-4">
                   <button
                     type="submit"
-                    className="w-full premium-gradient-btn primary flex items-center justify-center gap-2 py-4"
+                    className="w-full premium-gradient-btn primary flex items-center justify-center gap-2 py-3 md:py-4 text-sm md:text-base"
                   >
-                    <MessageCircle className="w-5 h-5" />
+                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
                     <span>Send via WhatsApp</span>
                   </button>
                 </div>
 
-                <p className="text-sm text-gray-600 text-center mt-4">
+                <p className="text-xs md:text-sm text-gray-600 text-center mt-3 md:mt-4">
                   Clicking the button will open WhatsApp with your registration details pre-filled
                 </p>
               </form>
