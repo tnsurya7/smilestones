@@ -67,10 +67,10 @@ const Footer = () => {
             </p>
 
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
+              <a href="https://www.facebook.com/share/17Gd3KMWj6/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="w-10 h-10 bg-gradient-to-br from-pink-500 to-red-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
+              <a href="https://www.instagram.com/smilestonescdc?igsh=MThoc3dkYWxlMTNxeA==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gradient-to-br from-pink-500 to-red-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
                 <Instagram size={20} />
               </a>
               <a href="#" className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
