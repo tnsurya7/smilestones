@@ -383,10 +383,14 @@ export default function CaseSheetPage() {
       ['Date of Birth:', formData.dob || 'N/A'],
       ['Age:', formData.age ? `${formData.age} years` : 'N/A'],
       ['Gender:', formData.gender || 'N/A'],
+      ['Birth Order:', formData.birthOrder || 'N/A'],
       ['UHID:', formData.uhid || 'N/A'],
       ['Date of Assessment:', formData.dateOfAssessment || 'N/A'],
       ['Referred By:', formData.referredBy || 'N/A'],
-      ['Contact Number:', formData.contactNumber || 'N/A']
+      ['Locality:', formData.locality || 'N/A'],
+      ['Family Type:', formData.familyType || 'N/A'],
+      ['Contact Number:', formData.contactNumber || 'N/A'],
+      ['Address:', formData.address || 'N/A']
     ];
     
     section1.forEach(([label, value]) => {
@@ -426,29 +430,37 @@ export default function CaseSheetPage() {
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Father:', 14, yPos);
+    doc.text('Father:', 15, yPos);
     yPos += 6;
     doc.setFont('helvetica', 'normal');
     doc.text(`Name: ${formData.fatherName || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Age: ${formData.fatherAge || 'N/A'}`, 20, yPos);
     yPos += 5;
+    doc.text(`Time Spends with Child: ${formData.fatherTimeSpends || 'N/A'}`, 20, yPos);
+    yPos += 5;
     doc.text(`Education: ${formData.fatherEducation || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Occupation: ${formData.fatherOccupation || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Contact Number: ${formData.fatherContactNumber || 'N/A'}`, 20, yPos);
     yPos += 8;
     
     doc.setFont('helvetica', 'bold');
-    doc.text('Mother:', 14, yPos);
+    doc.text('Mother:', 15, yPos);
     yPos += 6;
     doc.setFont('helvetica', 'normal');
     doc.text(`Name: ${formData.motherName || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Age: ${formData.motherAge || 'N/A'}`, 20, yPos);
     yPos += 5;
+    doc.text(`Time Spends with Child: ${formData.motherTimeSpends || 'N/A'}`, 20, yPos);
+    yPos += 5;
     doc.text(`Education: ${formData.motherEducation || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Occupation: ${formData.motherOccupation || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Contact Number: ${formData.motherContactNumber || 'N/A'}`, 20, yPos);
     yPos += 8;
     
     // Section 3: Chief Complaints
@@ -529,6 +541,10 @@ export default function CaseSheetPage() {
         doc.text(`Sibling 2: ${formData.sibling2Name}, Age: ${formData.sibling2Age || 'N/A'}`, 20, yPos);
         yPos += 5;
       }
+      doc.text(`Milestones appropriate: ${formData.siblingMilestonesAppropriate || 'N/A'}`, 20, yPos);
+      yPos += 5;
+      doc.text(`Time spent with siblings: ${formData.timeSpentWithSiblings || 'N/A'} hours/day`, 20, yPos);
+      yPos += 5;
     } else {
       doc.text('None', 20, yPos);
       yPos += 5;
@@ -536,7 +552,7 @@ export default function CaseSheetPage() {
     yPos += 5;
     
     doc.setFont('helvetica', 'bold');
-    doc.text('Grandparents:', 14, yPos);
+    doc.text('Grandparents:', 15, yPos);
     yPos += 6;
     doc.setFont('helvetica', 'normal');
     doc.text(`Paternal Grandfather: ${formData.paternalGrandfatherName || 'N/A'}`, 20, yPos);
@@ -546,6 +562,8 @@ export default function CaseSheetPage() {
     doc.text(`Maternal Grandfather: ${formData.maternalGrandfatherName || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Maternal Grandmother: ${formData.maternalGrandmotherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Time spent with grandparents: ${formData.timeSpentWithGrandparents || 'N/A'} hours/day`, 20, yPos);
     yPos += 8;
     
     if (yPos > pageHeight - 60) {
@@ -562,6 +580,10 @@ export default function CaseSheetPage() {
     doc.text('Family Medical History:', 15, yPos);
     yPos += 6;
     doc.setFont('helvetica', 'normal');
+    doc.text(`Paternal family history: ${formData.paternalFamilyHistory || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Maternal family history: ${formData.maternalFamilyHistory || 'N/A'}`, 20, yPos);
+    yPos += 5;
     doc.text(`Speech delay: ${formData.familySpeechDelayHistory || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Intellectual disability: ${formData.intellectualDisabilityInFamily || 'N/A'}`, 20, yPos);
@@ -571,6 +593,10 @@ export default function CaseSheetPage() {
     doc.text(`Autism: ${formData.autismInFamily || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Who first doubted delay: ${formData.whoIdentifiedFirst || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Who suggested therapy: ${formData.whoSuggestedTherapy || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Residence type: ${formData.residenceType || 'N/A'}`, 20, yPos);
     yPos += 8;
     
     doc.setFont('helvetica', 'bold');
@@ -623,17 +649,23 @@ export default function CaseSheetPage() {
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Conception type: ${formData.conceptionType || 'N/A'}`, 14, yPos);
+    doc.text(`Conception type: ${formData.conceptionType || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Term type: ${formData.termType || 'N/A'}`, 14, yPos);
+    if (formData.pregnancyIssues && formData.pregnancyIssues.length > 0) {
+      doc.text(`Pregnancy issues: ${formData.pregnancyIssues.join(', ')}`, 15, yPos);
+      yPos += 5;
+    }
+    doc.text(`Term type: ${formData.termType || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Weeks of gestation: ${formData.weeksOfGestation || 'N/A'}`, 14, yPos);
+    doc.text(`Weeks of gestation: ${formData.weeksOfGestation || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Delivery type: ${formData.deliveryType || 'N/A'}`, 14, yPos);
+    doc.text(`Delivery type: ${formData.deliveryType || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Birth weight: ${formData.birthWeight || 'N/A'} kg`, 14, yPos);
+    doc.text(`Assistance required at birth: ${formData.assistanceRequiredAtBirth || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`APGAR score: ${formData.apgarScore || 'N/A'}`, 14, yPos);
+    doc.text(`Birth weight: ${formData.birthWeight || 'N/A'} kg`, 15, yPos);
+    yPos += 5;
+    doc.text(`APGAR score: ${formData.apgarScore || 'N/A'}`, 15, yPos);
     yPos += 8;
     
     // Section 6: After Birth History
@@ -653,15 +685,17 @@ export default function CaseSheetPage() {
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Cried immediately: ${formData.criedImmediately || 'N/A'}`, 14, yPos);
+    doc.text(`Cried immediately: ${formData.criedImmediately || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`NICU admission: ${formData.nicuAdmission || 'N/A'}`, 14, yPos);
+    doc.text(`NICU admission: ${formData.nicuAdmission || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Phototherapy days: ${formData.phototherapyDays || 'N/A'}`, 14, yPos);
+    doc.text(`Jaundice: ${formData.jaundice || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`ET days: ${formData.etTubeDays || 'N/A'}`, 14, yPos);
+    doc.text(`Phototherapy days: ${formData.phototherapyDays || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Seizures at birth: ${formData.seizuresAtBirth || 'N/A'}`, 14, yPos);
+    doc.text(`ET days: ${formData.etTubeDays || 'N/A'}`, 15, yPos);
+    yPos += 5;
+    doc.text(`Seizures at birth: ${formData.seizuresAtBirth || 'N/A'}`, 15, yPos);
     yPos += 8;
     
     // Section 7: Developmental History
