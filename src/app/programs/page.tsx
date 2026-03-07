@@ -195,17 +195,27 @@ export default function CoursesPage() {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="btn-primary text-center"
-                >
-                  <span>Enroll Now</span>
-                </button>
-                <Link href="/contact" className="btn-secondary text-center">
-                  <span>Contact for Details</span>
-                </Link>
-              </div>
+              {/* Enrollment Form - Shows inline when opened */}
+              <EnrollmentModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                courseName="Applied Behavior Analysis Technician (ABAT) Certification Course"
+              />
+
+              {/* Show buttons only when form is not open */}
+              {!isModalOpen && (
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                  <button 
+                    onClick={() => setIsModalOpen(true)}
+                    className="btn-primary text-center"
+                  >
+                    <span>Enroll Now</span>
+                  </button>
+                  <Link href="/contact" className="btn-secondary text-center">
+                    <span>Contact for Details</span>
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Why Choose Smilestones */}
@@ -287,13 +297,6 @@ export default function CoursesPage() {
 
       <FloatingButtons />
       <Footer />
-      
-      {/* Enrollment Modal */}
-      <EnrollmentModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        courseName="Applied Behavior Analysis Technician (ABAT) Certification Course"
-      />
     </main>
   );
 }
