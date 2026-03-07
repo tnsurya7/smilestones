@@ -1,6 +1,6 @@
 'use client';
 
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone, MessageCircle, Facebook, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -67,10 +67,7 @@ const FloatingButtons = () => {
             whileTap={{ scale: 0.95 }}
             aria-label="Contact us on WhatsApp"
           >
-            {/* Ripple effect */}
             <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-            
-            {/* Icon with subtle animation */}
             <motion.div
               animate={{ 
                 rotate: [0, -10, 10, 0],
@@ -84,13 +81,9 @@ const FloatingButtons = () => {
             >
               <MessageCircle size={26} strokeWidth={2} />
             </motion.div>
-            
-            {/* Tooltip */}
             <div className="floating-btn-tooltip">
               Chat on WhatsApp
             </div>
-            
-            {/* Shine effect */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-700"></div>
           </motion.a>
         </motion.div>
@@ -110,10 +103,7 @@ const FloatingButtons = () => {
             whileTap={{ scale: 0.95 }}
             aria-label="Call us now"
           >
-            {/* Ripple effect */}
             <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-            
-            {/* Icon with subtle animation */}
             <motion.div
               animate={{ 
                 rotate: [0, 15, -15, 0],
@@ -127,15 +117,85 @@ const FloatingButtons = () => {
             >
               <Phone size={26} strokeWidth={2} />
             </motion.div>
-            
-            {/* Tooltip */}
             <div className="floating-btn-tooltip">
               {isWithinBusinessHours() 
                 ? 'Call Now: +91 9445051166' 
                 : 'Closed (9 AM - 6 PM)'}
             </div>
-            
-            {/* Shine effect */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-700"></div>
+          </motion.a>
+        </motion.div>
+
+        {/* Facebook Button */}
+        <motion.div
+          initial={{ opacity: 0, x: 100, scale: 0.8 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.4 }}
+          className="relative group"
+        >
+          <motion.a
+            href="https://www.facebook.com/share/17Gd3KMWj6/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="floating-btn floating-btn-facebook text-white relative overflow-hidden"
+            whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Follow us on Facebook"
+          >
+            <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 3,
+                ease: "easeInOut"
+              }}
+            >
+              <Facebook size={26} strokeWidth={2} fill="currentColor" />
+            </motion.div>
+            <div className="floating-btn-tooltip">
+              Follow on Facebook
+            </div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-700"></div>
+          </motion.a>
+        </motion.div>
+
+        {/* Instagram Button */}
+        <motion.div
+          initial={{ opacity: 0, x: 100, scale: 0.8 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 1.6 }}
+          className="relative group"
+        >
+          <motion.a
+            href="https://www.instagram.com/smilestonescdc?igsh=MThoc3dkYWxlMTNxeA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="floating-btn floating-btn-instagram text-white relative overflow-hidden"
+            whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Follow us on Instagram"
+          >
+            <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 3.5,
+                ease: "easeInOut"
+              }}
+            >
+              <Instagram size={26} strokeWidth={2} />
+            </motion.div>
+            <div className="floating-btn-tooltip">
+              Follow on Instagram
+            </div>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-all duration-700"></div>
           </motion.a>
         </motion.div>
