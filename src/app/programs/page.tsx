@@ -1,15 +1,16 @@
+'use client';
+
+import { useState } from 'react';
 import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/ui/FloatingButtons';
+import EnrollmentModal from '@/components/ui/EnrollmentModal';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: 'Courses - Smilestones Child Development Centre',
-  description: 'Specialized courses including Smile CAMP, Parent Training, and School Support courses designed to help children and families succeed.',
-};
-
 export default function CoursesPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <main>
       <Header />
@@ -195,9 +196,12 @@ export default function CoursesPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <Link href="/contact" className="btn-primary text-center">
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="btn-primary text-center"
+                >
                   <span>Enroll Now</span>
-                </Link>
+                </button>
                 <Link href="/contact" className="btn-secondary text-center">
                   <span>Contact for Details</span>
                 </Link>
@@ -283,6 +287,13 @@ export default function CoursesPage() {
 
       <FloatingButtons />
       <Footer />
+      
+      {/* Enrollment Modal */}
+      <EnrollmentModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        courseName="Applied Behavior Analysis Technician (ABAT) Certification Course"
+      />
     </main>
   );
 }
