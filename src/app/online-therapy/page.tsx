@@ -3,7 +3,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/ui/FloatingButtons';
 import Link from 'next/link';
-import { Heart, Shield, Users, Clock, CheckCircle, Phone, MessageCircle } from 'lucide-react';
+import { Heart, Shield, Users, Clock, CheckCircle, Phone, MessageCircle, Baby, Brain, Focus, Zap, BookOpen, UserX, Smile } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const metadata: Metadata = {
   title: 'Online Child Therapy | Smilestones',
@@ -11,6 +12,51 @@ export const metadata: Metadata = {
 };
 
 export default function OnlineTherapyPage() {
+  const specialtyCards = [
+    {
+      title: 'Newborn Followup',
+      icon: Baby,
+      gradient: 'from-blue-500 to-cyan-500',
+      description: 'Comprehensive developmental monitoring for newborns',
+    },
+    {
+      title: 'Autism',
+      icon: Brain,
+      gradient: 'from-purple-500 to-pink-500',
+      description: 'Specialized support for autism spectrum disorders',
+    },
+    {
+      title: 'Attention Deficit',
+      icon: Focus,
+      gradient: 'from-green-500 to-teal-500',
+      description: 'Expert guidance for attention challenges',
+    },
+    {
+      title: 'Hyperactivity Disorder',
+      icon: Zap,
+      gradient: 'from-orange-500 to-red-500',
+      description: 'Managing hyperactivity with proven strategies',
+    },
+    {
+      title: 'Learning Problem',
+      icon: BookOpen,
+      gradient: 'from-indigo-500 to-blue-500',
+      description: 'Tailored solutions for learning difficulties',
+    },
+    {
+      title: 'Behavioural Issue',
+      icon: UserX,
+      gradient: 'from-red-500 to-pink-500',
+      description: 'Positive behavioral intervention and support',
+    },
+    {
+      title: 'Mental Health',
+      icon: Smile,
+      gradient: 'from-yellow-500 to-orange-500',
+      description: 'Holistic mental wellness for children',
+    },
+  ];
+
   const services = [
     {
       title: 'Online Kids Counselling',
@@ -98,6 +144,58 @@ export default function OnlineTherapyPage() {
             <p className="text-base md:text-lg text-gray-800 mb-6 md:mb-8 leading-relaxed px-4">
               Smilestones offers compassionate, expert-led therapy for anxiety, tantrums, attention issues, and emotional shutdowns.
             </p>
+
+            {/* Specialty Cards with Animations */}
+            <div className="mb-8 md:mb-10 overflow-hidden">
+              <div className="flex gap-4 animate-scroll-left">
+                {[...specialtyCards, ...specialtyCards].map((card, index) => {
+                  const IconComponent = card.icon;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -100 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: index * 0.1,
+                        ease: "easeOut"
+                      }}
+                      whileHover={{ 
+                        scale: 1.05,
+                        y: -5,
+                        transition: { duration: 0.2 }
+                      }}
+                      className="flex-shrink-0 w-64 md:w-72"
+                    >
+                      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${card.gradient} p-6 shadow-xl hover:shadow-2xl transition-all duration-300 h-full`}>
+                        {/* Animated background pattern */}
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="absolute top-0 right-0 w-20 h-20 bg-white rounded-full -mr-10 -mt-10"></div>
+                          <div className="absolute bottom-0 left-0 w-16 h-16 bg-white rounded-full -ml-8 -mb-8"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4 shadow-lg">
+                            <IconComponent className="w-8 h-8 text-white" />
+                          </div>
+                          
+                          <h3 className="text-xl font-bold text-white mb-2">
+                            {card.title}
+                          </h3>
+                          
+                          <p className="text-white/90 text-sm leading-relaxed">
+                            {card.description}
+                          </p>
+                        </div>
+
+                        {/* Shine effect on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 hover:opacity-20 transform -skew-x-12 -translate-x-full hover:translate-x-full transition-all duration-700"></div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
             
             <div className="universal-card p-6 md:p-8 mb-8 md:mb-10 max-w-2xl mx-auto hover-card-effect bg-white shadow-lg border border-gray-100">
               <p className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
