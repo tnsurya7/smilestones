@@ -125,7 +125,7 @@ export default function ServicesPage() {
 
           {/* Smile CAMP Images */}
           <div className="max-w-6xl mx-auto">
-            <div className="space-y-8 md:space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {/* First Image */}
               <div className="universal-card hover-card-effect hover-card-blue p-4 md:p-6">
                 <img 
@@ -140,6 +140,24 @@ export default function ServicesPage() {
                 <img 
                   src="/Smile camp second page.jpg" 
                   alt="Smile CAMP Program - Page 2" 
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </div>
+              
+              {/* Third Image */}
+              <div className="universal-card hover-card-effect hover-card-purple p-4 md:p-6">
+                <img 
+                  src="/1.png" 
+                  alt="Smilestones Services - Additional Information 1" 
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </div>
+              
+              {/* Fourth Image */}
+              <div className="universal-card hover-card-effect hover-card-indigo p-4 md:p-6">
+                <img 
+                  src="/2.png" 
+                  alt="Smilestones Services - Additional Information 2" 
                   className="w-full h-auto rounded-lg shadow-lg"
                 />
               </div>
