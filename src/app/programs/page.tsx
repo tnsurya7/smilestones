@@ -253,9 +253,6 @@ export default function CoursesPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-sm text-gray-600">
-                  Preference to candidates from Chennai, Pondicherry, Chengalpattu, and Tirunelveli.
-                </p>
               </div>
             </div>
           </div>

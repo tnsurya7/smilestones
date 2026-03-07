@@ -39,8 +39,8 @@ export default function OnlineTherapyPage() {
 
   const helpCategories = [
     {
-      title: 'Anxiety & Worries',
-      items: ['Social anxiety', 'General anxiety', 'Panic episodes', 'Specific fears'],
+      title: 'Autism Spectrum Disorder',
+      items: ['Social communication challenges', 'Repetitive behaviors', 'Sensory sensitivities', 'Developmental delays'],
       color: 'blue',
     },
     {
@@ -92,7 +92,7 @@ export default function OnlineTherapyPage() {
             </h1>
             
             <p className="text-lg md:text-xl text-gray-900 mb-3 md:mb-4 font-semibold">
-              Worried about your child's behavior, emotions, or school struggles?
+              Worried about your child's developmental behavior, emotions, or school struggles?
             </p>
             
             <p className="text-base md:text-lg text-gray-800 mb-6 md:mb-8 leading-relaxed px-4">
