@@ -173,14 +173,24 @@ export default function ChildProfilePage() {
         }
         if (formData.ageWhenNoticed) doc.text(`Age at which concern noticed (years): ${formData.ageWhenNoticed}`, 30, yPos), yPos += 5;
         if (formData.durationOfProblem) doc.text(`Duration of problem: ${formData.durationOfProblem}`, 30, yPos), yPos += 5;
+        yPos += 5;
         
-        // Section 2: Parent Details
-        checkNewPage(20);
+        // Start new page for Section 2
+        addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+        addPDFWatermark(doc);
+        doc.addPage();
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 2: Parent Details', 20, yPos);
+        doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+        yPos = 30;
+        
+        // Section 2: Family History
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 2: Family History', 20, yPos);
         yPos += 6;
         
+        // Father
         doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
         doc.text('Father:', 25, yPos);
@@ -188,78 +198,72 @@ export default function ChildProfilePage() {
         doc.setFont('helvetica', 'normal');
         if (formData.fatherName) doc.text(`Name: ${formData.fatherName}`, 30, yPos), yPos += 5;
         if (formData.fatherAge) doc.text(`Age: ${formData.fatherAge}`, 30, yPos), yPos += 5;
+        if (formData.fatherTimeSpends) doc.text(`Time Spends with Child: ${formData.fatherTimeSpends}`, 30, yPos), yPos += 5;
         if (formData.fatherEducation) doc.text(`Education: ${formData.fatherEducation}`, 30, yPos), yPos += 5;
         if (formData.fatherOccupation) doc.text(`Occupation: ${formData.fatherOccupation}`, 30, yPos), yPos += 5;
+        if (formData.fatherContactNumber) doc.text(`Contact Number: ${formData.fatherContactNumber}`, 30, yPos), yPos += 5;
         yPos += 3;
         
+        // Mother
+        checkNewPage(40);
         doc.setFont('helvetica', 'bold');
         doc.text('Mother:', 25, yPos);
         yPos += 5;
         doc.setFont('helvetica', 'normal');
         if (formData.motherName) doc.text(`Name: ${formData.motherName}`, 30, yPos), yPos += 5;
         if (formData.motherAge) doc.text(`Age: ${formData.motherAge}`, 30, yPos), yPos += 5;
+        if (formData.motherTimeSpends) doc.text(`Time Spends with Child: ${formData.motherTimeSpends}`, 30, yPos), yPos += 5;
         if (formData.motherEducation) doc.text(`Education: ${formData.motherEducation}`, 30, yPos), yPos += 5;
         if (formData.motherOccupation) doc.text(`Occupation: ${formData.motherOccupation}`, 30, yPos), yPos += 5;
-        yPos += 5;
+        if (formData.motherContactNumber) doc.text(`Contact Number: ${formData.motherContactNumber}`, 30, yPos), yPos += 5;
+        yPos += 3;
         
-        // Section 3: Chief Complaints
-        checkNewPage(20);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Section 3: Chief Complaints', 20, yPos);
-        yPos += 6;
-        
-        doc.setFontSize(9);
-        doc.setFont('helvetica', 'normal');
-        if (formData.chiefComplaints) {
-          const complaints = doc.splitTextToSize(`Parent's main concerns: ${formData.chiefComplaints}`, pageWidth - 50);
-          complaints.forEach((line: string) => {
-            checkNewPage();
-            doc.text(line, 25, yPos);
-            yPos += 5;
-          });
-        }
-        if (formData.ageWhenNoticed) doc.text(`Age when noticed: ${formData.ageWhenNoticed} years`, 25, yPos), yPos += 5;
-        if (formData.durationOfProblem) doc.text(`Duration of problem: ${formData.durationOfProblem}`, 25, yPos), yPos += 5;
-        yPos += 5;
-        
-        // Section 4: Family History
-        checkNewPage(20);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Section 4: Family History', 20, yPos);
-        yPos += 6;
-        
-        doc.setFontSize(9);
+        // Siblings
+        checkNewPage(30);
         doc.setFont('helvetica', 'bold');
         doc.text('Siblings:', 25, yPos);
         yPos += 5;
         doc.setFont('helvetica', 'normal');
-        if (formData.sibling1Name) doc.text(`Sibling 1: ${formData.sibling1Name}, Age: ${formData.sibling1Age || 'N/A'}`, 30, yPos), yPos += 5;
-        if (formData.sibling2Name) doc.text(`Sibling 2: ${formData.sibling2Name}, Age: ${formData.sibling2Age || 'N/A'}`, 30, yPos), yPos += 5;
+        if (formData.sibling1Name) doc.text(`Sibling 1 Name: ${formData.sibling1Name}`, 30, yPos), yPos += 5;
+        if (formData.sibling1Age) doc.text(`Sibling 1 Age: ${formData.sibling1Age}`, 30, yPos), yPos += 5;
+        if (formData.sibling2Name) doc.text(`Sibling 2 Name: ${formData.sibling2Name}`, 30, yPos), yPos += 5;
+        if (formData.sibling2Age) doc.text(`Sibling 2 Age: ${formData.sibling2Age}`, 30, yPos), yPos += 5;
+        if (formData.siblingMilestonesAppropriate) doc.text(`Sibling attained milestones appropriately: ${formData.siblingMilestonesAppropriate}`, 30, yPos), yPos += 5;
+        if (formData.timeSpentWithSiblings) doc.text(`Time spent with siblings (hours/day): ${formData.timeSpentWithSiblings}`, 30, yPos), yPos += 5;
         yPos += 3;
         
+        // Grandparents
+        checkNewPage(30);
         doc.setFont('helvetica', 'bold');
         doc.text('Grandparents:', 25, yPos);
         yPos += 5;
         doc.setFont('helvetica', 'normal');
-        if (formData.paternalGrandfatherName) doc.text(`Paternal Grandfather: ${formData.paternalGrandfatherName}`, 30, yPos), yPos += 5;
-        if (formData.paternalGrandmotherName) doc.text(`Paternal Grandmother: ${formData.paternalGrandmotherName}`, 30, yPos), yPos += 5;
-        if (formData.maternalGrandfatherName) doc.text(`Maternal Grandfather: ${formData.maternalGrandfatherName}`, 30, yPos), yPos += 5;
-        if (formData.maternalGrandmotherName) doc.text(`Maternal Grandmother: ${formData.maternalGrandmotherName}`, 30, yPos), yPos += 5;
+        if (formData.paternalGrandfatherName) doc.text(`Paternal Grandfather Name: ${formData.paternalGrandfatherName}`, 30, yPos), yPos += 5;
+        if (formData.paternalGrandmotherName) doc.text(`Paternal Grandmother Name: ${formData.paternalGrandmotherName}`, 30, yPos), yPos += 5;
+        if (formData.maternalGrandfatherName) doc.text(`Maternal Grandfather Name: ${formData.maternalGrandfatherName}`, 30, yPos), yPos += 5;
+        if (formData.maternalGrandmotherName) doc.text(`Maternal Grandmother Name: ${formData.maternalGrandmotherName}`, 30, yPos), yPos += 5;
+        if (formData.timeSpentWithGrandparents) doc.text(`Time spent with Grandparents (hours/day): ${formData.timeSpentWithGrandparents}`, 30, yPos), yPos += 5;
         yPos += 3;
         
+        // Family Medical History
+        checkNewPage(40);
         doc.setFont('helvetica', 'bold');
         doc.text('Family Medical History:', 25, yPos);
         yPos += 5;
         doc.setFont('helvetica', 'normal');
-        if (formData.familySpeechDelayHistory) doc.text(`Speech delay: ${formData.familySpeechDelayHistory}`, 30, yPos), yPos += 5;
-        if (formData.intellectualDisabilityInFamily) doc.text(`Intellectual disability: ${formData.intellectualDisabilityInFamily}`, 30, yPos), yPos += 5;
-        if (formData.developmentalDelayInFamily) doc.text(`Developmental delay: ${formData.developmentalDelayInFamily}`, 30, yPos), yPos += 5;
-        if (formData.autismInFamily) doc.text(`Autism: ${formData.autismInFamily}`, 30, yPos), yPos += 5;
-        if (formData.whoIdentifiedFirst) doc.text(`Who first doubted delay: ${formData.whoIdentifiedFirst}`, 30, yPos), yPos += 5;
+        if (formData.paternalFamilyHistory) doc.text(`Paternal family history: ${formData.paternalFamilyHistory}`, 30, yPos), yPos += 5;
+        if (formData.maternalFamilyHistory) doc.text(`Maternal family history: ${formData.maternalFamilyHistory}`, 30, yPos), yPos += 5;
+        if (formData.familySpeechDelayHistory) doc.text(`Family member has speech delay: ${formData.familySpeechDelayHistory}`, 30, yPos), yPos += 5;
+        if (formData.intellectualDisabilityInFamily) doc.text(`Intellectual disability in family: ${formData.intellectualDisabilityInFamily}`, 30, yPos), yPos += 5;
+        if (formData.developmentalDelayInFamily) doc.text(`Developmental delay in family: ${formData.developmentalDelayInFamily}`, 30, yPos), yPos += 5;
+        if (formData.autismInFamily) doc.text(`Autism in family: ${formData.autismInFamily}`, 30, yPos), yPos += 5;
+        if (formData.whoIdentifiedFirst) doc.text(`Who first doubted the delay: ${formData.whoIdentifiedFirst}`, 30, yPos), yPos += 5;
+        if (formData.whoSuggestedTherapy) doc.text(`Who suggested therapy: ${formData.whoSuggestedTherapy}`, 30, yPos), yPos += 5;
+        if (formData.residenceType) doc.text(`Residence type: ${formData.residenceType}`, 30, yPos), yPos += 5;
         yPos += 3;
         
+        // Parental Concerns
+        checkNewPage(20);
         doc.setFont('helvetica', 'bold');
         doc.text('Parental Concerns:', 25, yPos);
         yPos += 5;
@@ -272,93 +276,162 @@ export default function ChildProfilePage() {
             yPos += 5;
           });
         }
+        yPos += 3;
+        
+        // Family Tree
+        checkNewPage(55);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Family Tree:', 25, yPos);
+        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        doc.text('(Space for family tree diagram)', 30, yPos);
+        yPos += 50; // Reserve 50mm space for family tree
         yPos += 5;
         
-        // Section 5: Personal History
-        checkNewPage(20);
+        // Start new page for Section 3
+        addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+        addPDFWatermark(doc);
+        doc.addPage();
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 5: Personal History', 20, yPos);
+        doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+        yPos = 30;
+        
+        // Section 3: Personal History
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Section 3: Personal History', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
         if (formData.conceptionType) doc.text(`Conception type: ${formData.conceptionType}`, 25, yPos), yPos += 5;
+        if (formData.pregnancyIssues && formData.pregnancyIssues.length > 0) {
+          const issues = Array.isArray(formData.pregnancyIssues) ? formData.pregnancyIssues.join(', ') : formData.pregnancyIssues;
+          doc.text(`Any issues during pregnancy: ${issues}`, 25, yPos);
+          yPos += 5;
+        }
+        if (formData.deliveryType) doc.text(`Delivery type: ${formData.deliveryType}`, 25, yPos), yPos += 5;
+        if (formData.assistanceRequiredAtBirth) doc.text(`Assistance required at birth: ${formData.assistanceRequiredAtBirth}`, 25, yPos), yPos += 5;
         if (formData.termType) doc.text(`Term type: ${formData.termType}`, 25, yPos), yPos += 5;
         if (formData.weeksOfGestation) doc.text(`Weeks of gestation: ${formData.weeksOfGestation}`, 25, yPos), yPos += 5;
-        if (formData.deliveryType) doc.text(`Delivery type: ${formData.deliveryType}`, 25, yPos), yPos += 5;
-        if (formData.birthWeight) doc.text(`Birth weight: ${formData.birthWeight} kg`, 25, yPos), yPos += 5;
+        if (formData.birthWeight) doc.text(`Birth weight (kg): ${formData.birthWeight}`, 25, yPos), yPos += 5;
         if (formData.apgarScore) doc.text(`APGAR score: ${formData.apgarScore}`, 25, yPos), yPos += 5;
         yPos += 5;
         
-        // Section 6: After Birth History
-        checkNewPage(20);
+        // Section 4: After Birth History
+        checkNewPage(30);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 6: After Birth History', 20, yPos);
+        doc.text('Section 4: After Birth History', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
-        if (formData.criedImmediately) doc.text(`Cried immediately: ${formData.criedImmediately}`, 25, yPos), yPos += 5;
+        if (formData.criedImmediately) doc.text(`Cried immediately after birth: ${formData.criedImmediately}`, 25, yPos), yPos += 5;
         if (formData.nicuAdmission) doc.text(`NICU admission: ${formData.nicuAdmission}`, 25, yPos), yPos += 5;
-        if (formData.phototherapyDays) doc.text(`Phototherapy days: ${formData.phototherapyDays}`, 25, yPos), yPos += 5;
-        if (formData.etTubeDays) doc.text(`ET days: ${formData.etTubeDays}`, 25, yPos), yPos += 5;
-        if (formData.seizuresAtBirth) doc.text(`Seizures at birth: ${formData.seizuresAtBirth}`, 25, yPos), yPos += 5;
+        if (formData.jaundice) doc.text(`Jaundice: ${formData.jaundice}`, 25, yPos), yPos += 5;
+        if (formData.phototherapyDays) doc.text(`Phototherapy (days): ${formData.phototherapyDays}`, 25, yPos), yPos += 5;
+        if (formData.etTubeDays) doc.text(`ET (days): ${formData.etTubeDays}`, 25, yPos), yPos += 5;
+        if (formData.seizuresAtBirth) doc.text(`Seizures: ${formData.seizuresAtBirth}`, 25, yPos), yPos += 5;
         yPos += 5;
         
-        // Section 7: Developmental History
-        checkNewPage(20);
+        // Section 5: Developmental History
+        checkNewPage(30);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 7: Developmental History', 20, yPos);
+        doc.text('Section 5: Developmental History', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
-        if (formData.socialSmileAge) doc.text(`Social smile: ${formData.socialSmileAge} months`, 25, yPos), yPos += 5;
-        if (formData.strangerAnxietyAge) doc.text(`Stranger anxiety: ${formData.strangerAnxietyAge} months`, 25, yPos), yPos += 5;
-        if (formData.nameCallResponseMonths) doc.text(`Name call response: ${formData.nameCallResponseMonths} months`, 25, yPos), yPos += 5;
+        if (formData.socialSmileAge) doc.text(`Social smile (months): ${formData.socialSmileAge}`, 25, yPos), yPos += 5;
+        if (formData.strangerAnxietyAge) doc.text(`Stranger anxiety (months): ${formData.strangerAnxietyAge}`, 25, yPos), yPos += 5;
+        if (formData.nameCallResponseMonths) doc.text(`Name call response (months): ${formData.nameCallResponseMonths}`, 25, yPos), yPos += 5;
         if (formData.nameCallAdequacy) doc.text(`Name call adequacy: ${formData.nameCallAdequacy}`, 25, yPos), yPos += 5;
-        if (formData.languageMilestoneDelay) doc.text(`Language milestones delayed: ${formData.languageMilestoneDelay}`, 25, yPos), yPos += 5;
+        if (formData.languageMilestoneDelay) doc.text(`Language milestones delayed against expected for age: ${formData.languageMilestoneDelay}`, 25, yPos), yPos += 5;
         yPos += 5;
         
-        // Section 8: Medical History
-        checkNewPage(20);
+        // Section 6: Medical History
+        checkNewPage(30);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 8: Medical History', 20, yPos);
+        doc.text('Section 6: Medical History', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
         if (formData.seizures) doc.text(`Seizures: ${formData.seizures}`, 25, yPos), yPos += 5;
+        if (formData.seizureMedication) doc.text(`Seizure medication: ${formData.seizureMedication}`, 25, yPos), yPos += 5;
         if (formData.febrileSeizure) doc.text(`Febrile seizure: ${formData.febrileSeizure}`, 25, yPos), yPos += 5;
-        if (formData.floppinessOrStiffness) doc.text(`Floppiness/stiffness: ${formData.floppinessOrStiffness}`, 25, yPos), yPos += 5;
+        if (formData.floppinessOrStiffness) doc.text(`Mother never felt any floppiness or stiffness in early childhood: ${formData.floppinessOrStiffness}`, 25, yPos), yPos += 5;
         if (formData.sleepPattern) doc.text(`Sleep pattern: ${formData.sleepPattern}`, 25, yPos), yPos += 5;
-        if (formData.screenTimeHours) doc.text(`Screen time: ${formData.screenTimeHours} hours/day`, 25, yPos), yPos += 5;
+        if (formData.screenTimeHours) doc.text(`Screen time (hours/day): ${formData.screenTimeHours}`, 25, yPos), yPos += 5;
         yPos += 5;
         
-        // Section 9: Screening Results
-        checkNewPage(20);
+        // Section 7: Screening Results (Auto-filled)
+        checkNewPage(30);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 9: Screening Results (Auto-filled)', 20, yPos);
+        doc.text('Section 7: Screening Results (Auto-filled)', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text('M-CHAT Screening:', 25, yPos);
+        yPos += 5;
         doc.setFont('helvetica', 'normal');
-        doc.text('M-CHAT: ' + (mchatData ? 'Completed' : 'Not completed'), 25, yPos);
+        if (mchatData) {
+          doc.text(`Total Score: ${mchatData.risk_score || mchatData.total_score || 'N/A'} / 20`, 30, yPos);
+          yPos += 5;
+          doc.text(`Risk Level: ${mchatData.risk_level || 'N/A'}`, 30, yPos);
+          yPos += 5;
+        } else {
+          doc.text('Not completed', 30, yPos);
+          yPos += 5;
+        }
+        yPos += 3;
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text('DSM Checklist:', 25, yPos);
         yPos += 5;
-        doc.text('DSM Checklist: ' + (dsmData ? 'Completed' : 'Not completed'), 25, yPos);
-        yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (dsmData) {
+          const answers = typeof dsmData.answers === 'string' ? JSON.parse(dsmData.answers) : dsmData.answers;
+          // Count A criteria groups
+          let aCount = 0;
+          if (answers && answers['a1_abnormal_social_approach']) aCount++;
+          if (answers && (answers['a2_impairments_eye_contact'] || answers['a2_impairment_body_postures'])) aCount++;
+          if (answers && answers['a3_deficits_developing_relationships']) aCount++;
+          
+          // Count B criteria groups
+          let bCount = 0;
+          if (answers && (answers['b1_echolalia'] || answers['b1_repetitive_hand_movements'])) bCount++;
+          if (answers && answers['b2_adherence_routine']) bCount++;
+          if (answers && answers['b3_preoccupations']) bCount++;
+          if (answers && answers['b4_high_tolerance_pain']) bCount++;
+          
+          doc.text(`A Criteria: ${aCount} / 3 groups`, 30, yPos);
+          yPos += 5;
+          doc.text(`B Criteria: ${bCount} / 4 groups`, 30, yPos);
+          yPos += 5;
+          doc.text(`C (Early Onset): ${answers && answers['c_symptoms_present_early'] === 'Yes' ? 'Yes' : 'No'}`, 30, yPos);
+          yPos += 5;
+          doc.text(`D (Clinical Impairment): ${answers && answers['d_deficits_cause_impairment'] === 'Yes' ? 'Yes' : 'No'}`, 30, yPos);
+          yPos += 5;
+          doc.text(`Final: ${dsmData.diagnosis || dsmData.interpretation || 'N/A'}`, 30, yPos);
+          yPos += 5;
+        } else {
+          doc.text('Not completed', 30, yPos);
+          yPos += 5;
+        }
         yPos += 5;
         
-        // Section 10: Final Clinical Impression
-        checkNewPage(20);
+        // Section 8: Final Clinical Impression
+        checkNewPage(30);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 10: Final Clinical Impression', 20, yPos);
+        doc.text('Section 8: Final Clinical Impression', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
@@ -371,6 +444,7 @@ export default function ChildProfilePage() {
             yPos += 5;
           });
         }
+        yPos += 3;
         
         if (formData.recommendedTherapies && formData.recommendedTherapies.length > 0) {
           doc.setFont('helvetica', 'bold');
@@ -384,8 +458,19 @@ export default function ChildProfilePage() {
             yPos += 5;
           });
         }
+        yPos += 3;
         
         if (formData.frequencyPerWeek) doc.text(`Frequency per week: ${formData.frequencyPerWeek} sessions`, 25, yPos), yPos += 5;
+        yPos += 3;
+        
+        if (formData.doctorSignatureName) {
+          doc.setFont('helvetica', 'bold');
+          doc.text('Doctor Signature', 25, yPos);
+          yPos += 5;
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Name: ${formData.doctorSignatureName}`, 30, yPos);
+          yPos += 5;
+        }
       } else {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'italic');
