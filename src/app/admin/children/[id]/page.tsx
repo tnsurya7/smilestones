@@ -427,8 +427,16 @@ export default function ChildProfilePage() {
         }
         yPos += 5;
         
+        // Start new page for Section 8
+        addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+        addPDFWatermark(doc);
+        doc.addPage();
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+        yPos = 30;
+        
         // Section 8: Final Clinical Impression
-        checkNewPage(30);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
         doc.text('Section 8: Final Clinical Impression', 20, yPos);
