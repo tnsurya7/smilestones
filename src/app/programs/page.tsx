@@ -273,28 +273,6 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="universal-card hover-card-effect p-8 md:p-12 text-center max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
-              Ready to Start Your ABAT Certification?
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 px-4">
-              For detailed information regarding course schedules and fees, please contact us.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="btn-primary text-center">
-                <span>Contact Us</span>
-              </Link>
-              <a href="tel:+919445051166" className="btn-secondary text-center">
-                <span>Call: +91 9445051166</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <FloatingButtons />
       <Footer />
     </main>
