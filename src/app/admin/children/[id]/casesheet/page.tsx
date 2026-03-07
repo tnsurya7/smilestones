@@ -502,6 +502,148 @@ export default function CaseSheetPage() {
     doc.text(`Contact Number: ${formData.motherContactNumber || 'N/A'}`, 20, yPos);
     yPos += 8;
     
+    // Siblings
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+      doc.setFontSize(10);
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Siblings:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    if (formData.sibling1Name || formData.sibling2Name) {
+      if (formData.sibling1Name) {
+        doc.text(`Sibling 1 Name: ${formData.sibling1Name}`, 20, yPos);
+        yPos += 5;
+        doc.text(`Sibling 1 Age: ${formData.sibling1Age || 'N/A'}`, 20, yPos);
+        yPos += 5;
+      }
+      if (formData.sibling2Name) {
+        doc.text(`Sibling 2 Name: ${formData.sibling2Name}`, 20, yPos);
+        yPos += 5;
+        doc.text(`Sibling 2 Age: ${formData.sibling2Age || 'N/A'}`, 20, yPos);
+        yPos += 5;
+      }
+      doc.text(`Sibling attained milestones appropriately: ${formData.siblingMilestonesAppropriate || 'N/A'}`, 20, yPos);
+      yPos += 5;
+      doc.text(`Time spent with siblings (hours/day): ${formData.timeSpentWithSiblings || 'N/A'}`, 20, yPos);
+      yPos += 5;
+    } else {
+      doc.text('None', 20, yPos);
+      yPos += 5;
+    }
+    yPos += 5;
+    
+    // Grandparents
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+      doc.setFontSize(10);
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Grandparents:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Paternal Grandfather Name: ${formData.paternalGrandfatherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Paternal Grandmother Name: ${formData.paternalGrandmotherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Maternal Grandfather Name: ${formData.maternalGrandfatherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Maternal Grandmother Name: ${formData.maternalGrandmotherName || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Time spent with Grandparents (hours/day): ${formData.timeSpentWithGrandparents || 'N/A'}`, 20, yPos);
+    yPos += 8;
+    
+    // Family Medical History
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+      doc.setFontSize(10);
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Family Medical History:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Paternal family history: ${formData.paternalFamilyHistory || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Maternal family history: ${formData.maternalFamilyHistory || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Family member has speech delay: ${formData.familySpeechDelayHistory || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Intellectual disability in family: ${formData.intellectualDisabilityInFamily || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Developmental delay in family: ${formData.developmentalDelayInFamily || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Autism in family: ${formData.autismInFamily || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Who first doubted the delay: ${formData.whoIdentifiedFirst || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Who suggested therapy: ${formData.whoSuggestedTherapy || 'N/A'}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Residence type: ${formData.residenceType || 'N/A'}`, 20, yPos);
+    yPos += 8;
+    
+    // Parental Concerns
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+      doc.setFontSize(10);
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Parental Concerns:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    if (formData.parentalConcerns && formData.parentalConcerns.length > 0) {
+      formData.parentalConcerns.forEach((concern: string) => {
+        doc.text(`• ${concern}`, 20, yPos);
+        yPos += 5;
+      });
+    } else {
+      doc.text('None', 20, yPos);
+      yPos += 5;
+    }
+    yPos += 8;
+    
+    // Family Tree Space
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+      doc.setFontSize(10);
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.text('Family Tree:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text('(Space for family tree diagram)', 20, yPos);
+    yPos += 50; // Add 50mm space for family tree diagram
+    
     // Section 3: Personal History
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
