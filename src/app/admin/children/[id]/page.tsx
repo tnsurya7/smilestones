@@ -136,32 +136,43 @@ export default function ChildProfilePage() {
         
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
-        const section1Fields = [
-          ['Child Full Name', formData.childFullName],
-          ['Date of Birth', formData.dob],
-          ['Age', formData.age ? `${formData.age} years` : null],
-          ['Gender', formData.gender],
-          ['Birth Order', formData.birthOrder],
-          ['UHID', caseSheetData.uhid],
-          ['Date of Assessment', formData.dateOfAssessment],
-          ['Referred By', formData.referredBy],
-          ['Locality', formData.locality],
-          ['Family Type', formData.familyType],
-          ['Contact Number', formData.contactNumber],
-          ['Address', formData.address],
-          ['Chief Complaints - Parent\'s main concerns', formData.chiefComplaints],
-          ['Age at which concern noticed (years)', formData.ageWhenNoticed],
-          ['Duration of problem', formData.durationOfProblem]
-        ];
-        
-        section1Fields.forEach(([label, value]) => {
-          if (value) {
+        if (formData.childFullName) doc.text(`Child Full Name: ${formData.childFullName}`, 25, yPos), yPos += 5;
+        if (formData.dob) doc.text(`Date of Birth: ${formData.dob}`, 25, yPos), yPos += 5;
+        if (formData.age) doc.text(`Age (years): ${formData.age}`, 25, yPos), yPos += 5;
+        if (formData.gender) doc.text(`Gender: ${formData.gender}`, 25, yPos), yPos += 5;
+        if (formData.birthOrder) doc.text(`Birth Order: ${formData.birthOrder}`, 25, yPos), yPos += 5;
+        if (caseSheetData.uhid) doc.text(`UHID (Auto-generated): ${caseSheetData.uhid}`, 25, yPos), yPos += 5;
+        if (formData.dateOfAssessment) doc.text(`Date of Assessment: ${formData.dateOfAssessment}`, 25, yPos), yPos += 5;
+        if (formData.referredBy) doc.text(`Referred By: ${formData.referredBy}`, 25, yPos), yPos += 5;
+        if (formData.locality) doc.text(`Locality: ${formData.locality}`, 25, yPos), yPos += 5;
+        if (formData.familyType) doc.text(`Family Type: ${formData.familyType}`, 25, yPos), yPos += 5;
+        if (formData.contactNumber) doc.text(`Contact Number: ${formData.contactNumber}`, 25, yPos), yPos += 5;
+        if (formData.address) {
+          const addressLines = doc.splitTextToSize(`Address: ${formData.address}`, pageWidth - 50);
+          addressLines.forEach((line: string) => {
             checkNewPage();
-            doc.text(`${label}: ${value}`, 25, yPos);
+            doc.text(line, 25, yPos);
             yPos += 5;
-          }
-        });
+          });
+        }
+        yPos += 3;
+        
+        // Chief Complaints subsection
+        checkNewPage(20);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Chief Complaints', 25, yPos);
         yPos += 5;
+        doc.setFont('helvetica', 'normal');
+        if (formData.chiefComplaints) {
+          const complaints = doc.splitTextToSize(`Parent's main concerns: ${formData.chiefComplaints}`, pageWidth - 50);
+          complaints.forEach((line: string) => {
+            checkNewPage();
+            doc.text(line, 30, yPos);
+            yPos += 5;
+          });
+        }
+        if (formData.ageWhenNoticed) doc.text(`Age at which concern noticed (years): ${formData.ageWhenNoticed}`, 30, yPos), yPos += 5;
+        if (formData.durationOfProblem) doc.text(`Duration of problem: ${formData.durationOfProblem}`, 30, yPos), yPos += 5;
         
         // Section 2: Parent Details
         checkNewPage(20);
