@@ -1,15 +1,11 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons from '@/components/ui/FloatingButtons';
 import Link from 'next/link';
 import { Heart, Shield, Users, Clock, CheckCircle, Phone, MessageCircle, Baby, Brain, Focus, Zap, BookOpen, UserX, Smile } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-export const metadata: Metadata = {
-  title: 'Online Child Therapy | Smilestones',
-  description: 'Compassionate online therapy for children. Support for anxiety, behavior challenges, mood concerns, and emotional development from certified child therapists.',
-};
 
 export default function OnlineTherapyPage() {
   const specialtyCards = [
