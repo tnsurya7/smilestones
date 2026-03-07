@@ -57,8 +57,18 @@ export default function MCHATPage() {
 
   const calculateScore = (currentAnswers: Record<string, string>) => {
     let score = 0;
-    Object.values(currentAnswers).forEach(answer => {
-      if (answer === 'No') score++;
+    
+    // Questions 2, 5, 12 are reverse-scored (Yes = 1 point, No = 0 points)
+    const reverseQuestions = ['q2', 'q5', 'q12'];
+    
+    Object.entries(currentAnswers).forEach(([questionId, answer]) => {
+      if (reverseQuestions.includes(questionId)) {
+        // Reverse scoring: Yes = 1 point, No = 0 points
+        if (answer === 'Yes') score++;
+      } else {
+        // Normal scoring: No = 1 point, Yes = 0 points
+        if (answer === 'No') score++;
+      }
     });
 
     setTotalScore(score);
