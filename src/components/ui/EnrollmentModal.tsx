@@ -65,30 +65,49 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
   if (!isOpen) return null;
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200 shadow-lg mb-8 relative">
+    <div className="bg-white rounded-xl p-6 md:p-8 border-2 border-blue-500 shadow-2xl mb-8 relative">
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors bg-white rounded-full p-1 shadow-md"
+        className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors bg-gray-100 rounded-full p-1.5 hover:bg-gray-200"
       >
         <X className="w-5 h-5" />
       </button>
 
-      {/* Header */}
-      <div className="mb-5">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">
-          📝 Enrollment Form
-        </h3>
-        <p className="text-sm text-gray-700 font-medium">
-          Fill in your details to proceed with enrollment
-        </p>
+      {/* Header with Icon */}
+      <div className="mb-6 flex items-start gap-4">
+        {/* SVG Icon */}
+        <div className="flex-shrink-0">
+          <svg 
+            className="w-12 h-12 text-blue-600" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+            />
+          </svg>
+        </div>
+        
+        <div className="flex-1">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+            Enrollment Form
+          </h3>
+          <p className="text-sm text-gray-600 font-medium">
+            Fill in your details to proceed with enrollment
+          </p>
+        </div>
       </div>
 
       {/* Form */}
       <div className="space-y-4">
         {/* Name */}
         <div>
-          <label className="block text-sm font-semibold text-gray-900 mb-1">
+          <label className="block text-sm font-bold text-gray-900 mb-2">
             Full Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -96,7 +115,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
             placeholder="Enter your name"
             required
           />
@@ -104,7 +123,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
 
         {/* Phone */}
         <div>
-          <label className="block text-sm font-semibold text-gray-900 mb-1">
+          <label className="block text-sm font-bold text-gray-900 mb-2">
             Phone Number <span className="text-red-500">*</span>
           </label>
           <input
@@ -112,7 +131,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
             placeholder="+91 XXXXX XXXXX"
             required
           />
@@ -120,14 +139,14 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
 
         {/* Qualification */}
         <div>
-          <label className="block text-sm font-semibold text-gray-900 mb-1">
+          <label className="block text-sm font-bold text-gray-900 mb-2">
             Qualification
           </label>
           <select
             name="qualification"
             value={formData.qualification}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
           >
             <option value="">Select qualification</option>
             <option value="High School">High School</option>
@@ -143,7 +162,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
 
         {/* Message */}
         <div>
-          <label className="block text-sm font-semibold text-gray-900 mb-1">
+          <label className="block text-sm font-bold text-gray-900 mb-2">
             Message (Optional)
           </label>
           <textarea
@@ -151,7 +170,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
             value={formData.message}
             onChange={handleChange}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
             placeholder="Any questions or additional information..."
           />
         </div>
@@ -168,7 +187,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
         </button>
         <button
           onClick={onClose}
-          className="sm:w-auto px-4 py-2 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+          className="sm:w-auto px-6 py-3 border-2 border-gray-400 text-gray-700 font-bold rounded-lg hover:bg-gray-100 transition-colors"
         >
           Cancel
         </button>
@@ -176,5 +195,6 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
     </div>
   );
 }
+
 
 
