@@ -485,6 +485,18 @@ export default function CaseSheetPage() {
     doc.text(`Contact Number: ${formData.fatherContactNumber || 'N/A'}`, 20, yPos);
     yPos += 8;
     
+    // Check if we need a new page before Mother section
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+      doc.setFontSize(10);
+    }
+    
     doc.setFont('helvetica', 'bold');
     doc.text('Mother:', 15, yPos);
     yPos += 6;
