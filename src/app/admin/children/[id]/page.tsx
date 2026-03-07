@@ -128,10 +128,10 @@ export default function ChildProfilePage() {
       const formData = caseSheetData?.data || {};
       
       if (caseSheetData && Object.keys(formData).length > 0) {
-        // Section 1: Child Identification
+        // Section 1: Child Identification & Chief Complaints
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('Section 1: Child Identification Details', 20, yPos);
+        doc.text('Section 1: Child Identification & Chief Complaints', 20, yPos);
         yPos += 6;
         
         doc.setFontSize(9);
@@ -141,11 +141,17 @@ export default function ChildProfilePage() {
           ['Date of Birth', formData.dob],
           ['Age', formData.age ? `${formData.age} years` : null],
           ['Gender', formData.gender],
+          ['Birth Order', formData.birthOrder],
           ['UHID', caseSheetData.uhid],
           ['Date of Assessment', formData.dateOfAssessment],
           ['Referred By', formData.referredBy],
+          ['Locality', formData.locality],
+          ['Family Type', formData.familyType],
           ['Contact Number', formData.contactNumber],
-          ['Address', formData.address]
+          ['Address', formData.address],
+          ['Chief Complaints - Parent\'s main concerns', formData.chiefComplaints],
+          ['Age at which concern noticed (years)', formData.ageWhenNoticed],
+          ['Duration of problem', formData.durationOfProblem]
         ];
         
         section1Fields.forEach(([label, value]) => {
@@ -377,10 +383,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for M-CHAT
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // M-CHAT - All Questions
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
@@ -441,10 +454,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for DSM
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // DSM - All Criteria
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
@@ -524,10 +544,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for Cognitive Milestones
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // Cognitive Milestones - All Questions
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
@@ -600,10 +627,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for Fine Motor Skills
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // Fine Motor Skills - All Questions
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
@@ -676,10 +710,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for Gross Motor Skills
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // Gross Motor Skills - All Questions
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
@@ -752,10 +793,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for Language Development
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // Language Development - All Questions
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
@@ -828,10 +876,17 @@ export default function ChildProfilePage() {
         doc.setTextColor(0, 0, 0);
         yPos += 5;
       }
-      yPos += 10;
+
+      // Start new page for Social-Emotional Development
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      addPDFWatermark(doc);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('COMPREHENSIVE CLINICAL REPORT (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
 
       // Social-Emotional - All Questions
-      checkNewPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(0, 0, 0);
