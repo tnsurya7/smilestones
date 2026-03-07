@@ -370,10 +370,10 @@ export default function CaseSheetPage() {
       registeredDate: child?.created_at ? new Date(child.created_at).toLocaleDateString() : undefined
     });
     
-    // Section 1: Child Identification
+    // Section 1: Child Identification & Chief Complaints
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 1: Child Identification Details', 15, yPos);
+    doc.text('Section 1: Child Identification & Chief Complaints', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -413,7 +413,46 @@ export default function CaseSheetPage() {
     });
     yPos += 5;
     
-    // Section 2: Parent Details
+    // Chief Complaints (part of Section 1)
+    if (yPos > pageHeight - 60) {
+      addPDFWatermark(doc);
+      addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+      doc.addPage();
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+      yPos = 30;
+    }
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Chief Complaints:', 15, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    const complaints = doc.splitTextToSize(`Parent's main concerns: ${formData.chiefComplaints || 'N/A'}`, 180);
+    complaints.forEach((line: string) => {
+      if (yPos > pageHeight - 40) {
+        addPDFWatermark(doc);
+        addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
+        doc.addPage();
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('CLINICAL CASE SHEET (Continued)', pageWidth / 2, 20, { align: 'center' });
+        yPos = 30;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+      }
+      doc.text(line, 15, yPos);
+      yPos += 5;
+    });
+    yPos += 2;
+    doc.text(`Age at which concern noticed (years): ${formData.ageWhenNoticed || 'N/A'}`, 15, yPos);
+    yPos += 5;
+    doc.text(`Duration of problem: ${formData.durationOfProblem || 'N/A'}`, 15, yPos);
+    yPos += 8;
+    
+    // Section 2: Family History
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -425,7 +464,7 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 2: Parent Details', 15, yPos);
+    doc.text('Section 2: Family History', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -534,16 +573,20 @@ export default function CaseSheetPage() {
     doc.setFont('helvetica', 'normal');
     if (formData.sibling1Name || formData.sibling2Name) {
       if (formData.sibling1Name) {
-        doc.text(`Sibling 1: ${formData.sibling1Name}, Age: ${formData.sibling1Age || 'N/A'}`, 20, yPos);
+        doc.text(`Sibling 1 Name: ${formData.sibling1Name}`, 20, yPos);
+        yPos += 5;
+        doc.text(`Sibling 1 Age: ${formData.sibling1Age || 'N/A'}`, 20, yPos);
         yPos += 5;
       }
       if (formData.sibling2Name) {
-        doc.text(`Sibling 2: ${formData.sibling2Name}, Age: ${formData.sibling2Age || 'N/A'}`, 20, yPos);
+        doc.text(`Sibling 2 Name: ${formData.sibling2Name}`, 20, yPos);
+        yPos += 5;
+        doc.text(`Sibling 2 Age: ${formData.sibling2Age || 'N/A'}`, 20, yPos);
         yPos += 5;
       }
-      doc.text(`Milestones appropriate: ${formData.siblingMilestonesAppropriate || 'N/A'}`, 20, yPos);
+      doc.text(`Sibling attained milestones appropriately: ${formData.siblingMilestonesAppropriate || 'N/A'}`, 20, yPos);
       yPos += 5;
-      doc.text(`Time spent with siblings: ${formData.timeSpentWithSiblings || 'N/A'} hours/day`, 20, yPos);
+      doc.text(`Time spent with siblings (hours/day): ${formData.timeSpentWithSiblings || 'N/A'}`, 20, yPos);
       yPos += 5;
     } else {
       doc.text('None', 20, yPos);
@@ -555,15 +598,15 @@ export default function CaseSheetPage() {
     doc.text('Grandparents:', 15, yPos);
     yPos += 6;
     doc.setFont('helvetica', 'normal');
-    doc.text(`Paternal Grandfather: ${formData.paternalGrandfatherName || 'N/A'}`, 20, yPos);
+    doc.text(`Paternal Grandfather Name: ${formData.paternalGrandfatherName || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Paternal Grandmother: ${formData.paternalGrandmotherName || 'N/A'}`, 20, yPos);
+    doc.text(`Paternal Grandmother Name: ${formData.paternalGrandmotherName || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Maternal Grandfather: ${formData.maternalGrandfatherName || 'N/A'}`, 20, yPos);
+    doc.text(`Maternal Grandfather Name: ${formData.maternalGrandfatherName || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Maternal Grandmother: ${formData.maternalGrandmotherName || 'N/A'}`, 20, yPos);
+    doc.text(`Maternal Grandmother Name: ${formData.maternalGrandmotherName || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Time spent with grandparents: ${formData.timeSpentWithGrandparents || 'N/A'} hours/day`, 20, yPos);
+    doc.text(`Time spent with Grandparents (hours/day): ${formData.timeSpentWithGrandparents || 'N/A'}`, 20, yPos);
     yPos += 8;
     
     if (yPos > pageHeight - 60) {
@@ -584,15 +627,15 @@ export default function CaseSheetPage() {
     yPos += 5;
     doc.text(`Maternal family history: ${formData.maternalFamilyHistory || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Speech delay: ${formData.familySpeechDelayHistory || 'N/A'}`, 20, yPos);
+    doc.text(`Family member has speech delay: ${formData.familySpeechDelayHistory || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Intellectual disability: ${formData.intellectualDisabilityInFamily || 'N/A'}`, 20, yPos);
+    doc.text(`Intellectual disability in family: ${formData.intellectualDisabilityInFamily || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Developmental delay: ${formData.developmentalDelayInFamily || 'N/A'}`, 20, yPos);
+    doc.text(`Developmental delay in family: ${formData.developmentalDelayInFamily || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Autism: ${formData.autismInFamily || 'N/A'}`, 20, yPos);
+    doc.text(`Autism in family: ${formData.autismInFamily || 'N/A'}`, 20, yPos);
     yPos += 5;
-    doc.text(`Who first doubted delay: ${formData.whoIdentifiedFirst || 'N/A'}`, 20, yPos);
+    doc.text(`Who first doubted the delay: ${formData.whoIdentifiedFirst || 'N/A'}`, 20, yPos);
     yPos += 5;
     doc.text(`Who suggested therapy: ${formData.whoSuggestedTherapy || 'N/A'}`, 20, yPos);
     yPos += 5;
@@ -632,7 +675,7 @@ export default function CaseSheetPage() {
     // Add blank space for family tree (40mm height)
     yPos += 40;
     
-    // Section 5: Personal History
+    // Section 3: Personal History
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -644,7 +687,7 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 5: Personal History', 15, yPos);
+    doc.text('Section 3: Personal History', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -652,23 +695,23 @@ export default function CaseSheetPage() {
     doc.text(`Conception type: ${formData.conceptionType || 'N/A'}`, 15, yPos);
     yPos += 5;
     if (formData.pregnancyIssues && formData.pregnancyIssues.length > 0) {
-      doc.text(`Pregnancy issues: ${formData.pregnancyIssues.join(', ')}`, 15, yPos);
+      doc.text(`Any issues during pregnancy: ${formData.pregnancyIssues.join(', ')}`, 15, yPos);
       yPos += 5;
     }
-    doc.text(`Term type: ${formData.termType || 'N/A'}`, 15, yPos);
-    yPos += 5;
-    doc.text(`Weeks of gestation: ${formData.weeksOfGestation || 'N/A'}`, 15, yPos);
-    yPos += 5;
     doc.text(`Delivery type: ${formData.deliveryType || 'N/A'}`, 15, yPos);
     yPos += 5;
     doc.text(`Assistance required at birth: ${formData.assistanceRequiredAtBirth || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Birth weight: ${formData.birthWeight || 'N/A'} kg`, 15, yPos);
+    doc.text(`Term type: ${formData.termType || 'N/A'}`, 15, yPos);
+    yPos += 5;
+    doc.text(`Weeks of gestation: ${formData.weeksOfGestation || 'N/A'}`, 15, yPos);
+    yPos += 5;
+    doc.text(`Birth weight (kg): ${formData.birthWeight || 'N/A'}`, 15, yPos);
     yPos += 5;
     doc.text(`APGAR score: ${formData.apgarScore || 'N/A'}`, 15, yPos);
     yPos += 8;
     
-    // Section 6: After Birth History
+    // Section 4: After Birth History
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -680,25 +723,25 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 6: After Birth History', 15, yPos);
+    doc.text('Section 4: After Birth History', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Cried immediately: ${formData.criedImmediately || 'N/A'}`, 15, yPos);
+    doc.text(`Cried immediately after birth: ${formData.criedImmediately || 'N/A'}`, 15, yPos);
     yPos += 5;
     doc.text(`NICU admission: ${formData.nicuAdmission || 'N/A'}`, 15, yPos);
     yPos += 5;
     doc.text(`Jaundice: ${formData.jaundice || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Phototherapy days: ${formData.phototherapyDays || 'N/A'}`, 15, yPos);
+    doc.text(`Phototherapy (days): ${formData.phototherapyDays || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`ET days: ${formData.etTubeDays || 'N/A'}`, 15, yPos);
+    doc.text(`ET (days): ${formData.etTubeDays || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Seizures at birth: ${formData.seizuresAtBirth || 'N/A'}`, 15, yPos);
+    doc.text(`Seizures: ${formData.seizuresAtBirth || 'N/A'}`, 15, yPos);
     yPos += 8;
     
-    // Section 7: Developmental History
+    // Section 5: Developmental History
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -710,23 +753,23 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 7: Developmental History', 15, yPos);
+    doc.text('Section 5: Developmental History', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Social smile: ${formData.socialSmileAge || 'N/A'} months`, 14, yPos);
+    doc.text(`Social smile (months): ${formData.socialSmileAge || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Stranger anxiety: ${formData.strangerAnxietyAge || 'N/A'} months`, 14, yPos);
+    doc.text(`Stranger anxiety (months): ${formData.strangerAnxietyAge || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Name call response: ${formData.nameCallResponseMonths || 'N/A'} months`, 14, yPos);
+    doc.text(`Name call response (months): ${formData.nameCallResponseMonths || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Name call adequacy: ${formData.nameCallAdequacy || 'N/A'}`, 14, yPos);
+    doc.text(`Name call adequacy: ${formData.nameCallAdequacy || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Language milestones delayed: ${formData.languageMilestoneDelay || 'N/A'}`, 14, yPos);
+    doc.text(`Language milestones delayed against expected for age: ${formData.languageMilestoneDelay || 'N/A'}`, 15, yPos);
     yPos += 8;
     
-    // Section 8: Medical History
+    // Section 6: Medical History
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -738,27 +781,27 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 8: Medical History', 15, yPos);
+    doc.text('Section 6: Medical History', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Seizures: ${formData.seizures || 'N/A'}`, 14, yPos);
+    doc.text(`Seizures: ${formData.seizures || 'N/A'}`, 15, yPos);
     yPos += 5;
     if (formData.seizures === 'Yes') {
-      doc.text(`Seizure medication: ${formData.seizureMedication || 'N/A'}`, 14, yPos);
+      doc.text(`Seizure medication: ${formData.seizureMedication || 'N/A'}`, 15, yPos);
       yPos += 5;
     }
-    doc.text(`Febrile seizure: ${formData.febrileSeizure || 'N/A'}`, 14, yPos);
+    doc.text(`Febrile seizure: ${formData.febrileSeizure || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Floppiness/stiffness: ${formData.floppinessOrStiffness || 'N/A'}`, 14, yPos);
+    doc.text(`Mother never felt any floppiness or stiffness in early childhood: ${formData.floppinessOrStiffness || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Sleep pattern: ${formData.sleepPattern || 'N/A'}`, 14, yPos);
+    doc.text(`Sleep pattern: ${formData.sleepPattern || 'N/A'}`, 15, yPos);
     yPos += 5;
-    doc.text(`Screen time: ${formData.screenTimeHours || 'N/A'} hours/day`, 14, yPos);
+    doc.text(`Screen time (hours/day): ${formData.screenTimeHours || 'N/A'}`, 15, yPos);
     yPos += 8;
     
-    // Section 9: Auto-filled
+    // Section 7: Screening Results (Auto-filled)
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -770,7 +813,7 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 9: Screening Results (Auto-filled)', 15, yPos);
+    doc.text('Section 7: Screening Results (Auto-filled)', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -810,7 +853,7 @@ export default function CaseSheetPage() {
       yPos += 8;
     }
     
-    // Section 10: Final Clinical Impression
+    // Section 8: Final Clinical Impression
     if (yPos > pageHeight - 60) {
       addPDFWatermark(doc);
       addPDFFooter(doc, doc.getCurrentPageInfo().pageNumber, 1);
@@ -822,7 +865,7 @@ export default function CaseSheetPage() {
     }
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Section 10: Final Clinical Impression', 15, yPos);
+    doc.text('Section 8: Final Clinical Impression', 15, yPos);
     yPos += 8;
     
     doc.setFontSize(10);
@@ -871,9 +914,17 @@ export default function CaseSheetPage() {
     }
     yPos += 3;
     
-    doc.text(`Frequency per week: ${formData.frequencyPerWeek || 'N/A'} sessions`, 15, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Frequency per week:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${formData.frequencyPerWeek || 'N/A'} sessions`, 20, yPos);
     yPos += 5;
-    doc.text(`Doctor Signature: ${formData.doctorSignatureName || 'N/A'}`, 15, yPos);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Doctor Signature Name:', 15, yPos);
+    yPos += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${formData.doctorSignatureName || 'N/A'}`, 20, yPos);
     
     // Add watermark and footer to all pages
     const pageCount = doc.getNumberOfPages();
