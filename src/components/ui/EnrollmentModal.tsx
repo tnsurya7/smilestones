@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Send } from 'lucide-react';
+import { X, MessageCircle } from 'lucide-react';
 
 interface EnrollmentModalProps {
   isOpen: boolean;
@@ -12,10 +12,8 @@ interface EnrollmentModalProps {
 export default function EnrollmentModal({ isOpen, onClose, courseName }: EnrollmentModalProps) {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     phone: '',
     qualification: '',
-    experience: '',
     message: ''
   });
 
@@ -38,24 +36,17 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Enrollm
 
 *Course:* ${courseName}
 
-*Personal Details:*
-Name: ${formData.name}
-Email: ${formData.email || 'Not provided'}
-Phone: ${formData.phone}
-
+*Name:* ${formData.name}
+*Phone:* ${formData.phone}
 *Qualification:* ${formData.qualification || 'Not provided'}
-*Experience:* ${formData.experience || 'Not provided'}
 
-*Additional Message:*
-${formData.message || 'None'}
-
----
-I am interested in enrolling for this course. Please provide more details.`;
+*Message:*
+${formData.message || 'I am interested in enrolling for this course. Please provide more details.'}`;
 
     // Encode message for URL
     const encodedMessage = encodeURIComponent(message);
     
-    // WhatsApp number (replace with actual number)
+    // WhatsApp number
     const whatsappNumber = '919445051166';
     
     // Open WhatsApp
@@ -65,10 +56,8 @@ I am interested in enrolling for this course. Please provide more details.`;
     onClose();
     setFormData({
       name: '',
-      email: '',
       phone: '',
       qualification: '',
-      experience: '',
       message: ''
     });
   };
@@ -85,23 +74,22 @@ I am interested in enrolling for this course. Please provide more details.`;
 
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 md:p-8 transform transition-all">
+        <div className="relative bg-white rounded-xl shadow-xl w-full max-w-md p-6 transform transition-all">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
 
           {/* Header */}
-          <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-              Course Enrollment
-            </h2>
-            <p className="text-lg text-blue-600 font-semibold">{courseName}</p>
-            <p className="text-sm text-gray-600 mt-2">
-              Fill in your details and send via WhatsApp to complete your enrollment
+          <div className="mb-5">
+            <h3 className="text-xl font-bold text-gray-900 mb-1">
+              Enroll Now
+            </h3>
+            <p className="text-sm text-gray-600">
+              Fill in your details to proceed
             </p>
           </div>
 
@@ -117,24 +105,9 @@ I am interested in enrolling for this course. Please provide more details.`;
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                placeholder="Enter your full name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                placeholder="Enter your name"
                 required
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-1">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                placeholder="your.email@example.com"
               />
             </div>
 
@@ -148,7 +121,7 @@ I am interested in enrolling for this course. Please provide more details.`;
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="+91 XXXXX XXXXX"
                 required
               />
@@ -157,19 +130,19 @@ I am interested in enrolling for this course. Please provide more details.`;
             {/* Qualification */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-1">
-                Highest Qualification
+                Qualification
               </label>
               <select
                 name="qualification"
                 value={formData.qualification}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
               >
                 <option value="">Select qualification</option>
                 <option value="High School">High School</option>
                 <option value="Undergraduate">Undergraduate</option>
                 <option value="Postgraduate">Postgraduate</option>
-                <option value="Psychology">Psychology Degree</option>
+                <option value="Psychology">Psychology</option>
                 <option value="Child Development">Child Development</option>
                 <option value="Social Work">Social Work</option>
                 <option value="Education">Education</option>
@@ -177,49 +150,34 @@ I am interested in enrolling for this course. Please provide more details.`;
               </select>
             </div>
 
-            {/* Experience */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-1">
-                Relevant Experience
-              </label>
-              <input
-                type="text"
-                name="experience"
-                value={formData.experience}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                placeholder="e.g., 2 years in special education"
-              />
-            </div>
-
             {/* Message */}
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-1">
-                Additional Message
+                Message (Optional)
               </label>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="Any questions or additional information..."
               />
             </div>
           </div>
 
           {/* Actions */}
-          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <div className="mt-6 flex flex-col gap-3">
             <button
               onClick={handleWhatsAppSubmit}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="btn-primary w-full justify-center"
             >
-              <Send className="w-5 h-5" />
+              <MessageCircle className="w-5 h-5" />
               <span>Send via WhatsApp</span>
             </button>
             <button
               onClick={onClose}
-              className="sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+              className="w-full px-4 py-2 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>
@@ -229,3 +187,4 @@ I am interested in enrolling for this course. Please provide more details.`;
     </div>
   );
 }
+
