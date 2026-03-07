@@ -65,21 +65,21 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
   if (!isOpen) return null;
 
   return (
-    <div className="bg-white rounded-xl p-6 md:p-8 border-2 border-blue-500 shadow-2xl mb-8 relative">
+    <div className="bg-white rounded-lg md:rounded-xl p-4 md:p-6 border-2 border-blue-500 shadow-xl mb-6 md:mb-8 relative">
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors bg-gray-100 rounded-full p-1.5 hover:bg-gray-200"
+        className="absolute top-2 right-2 md:top-3 md:right-3 text-gray-500 hover:text-gray-700 transition-colors bg-gray-100 rounded-full p-1 md:p-1.5 hover:bg-gray-200"
       >
-        <X className="w-5 h-5" />
+        <X className="w-4 h-4 md:w-5 md:h-5" />
       </button>
 
       {/* Header with Icon */}
-      <div className="mb-6 flex items-start gap-4">
+      <div className="mb-4 md:mb-6 flex items-start gap-3 md:gap-4 pr-8">
         {/* SVG Icon */}
         <div className="flex-shrink-0">
           <svg 
-            className="w-12 h-12 text-blue-600" 
+            className="w-8 h-8 md:w-12 md:h-12 text-blue-600" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -94,20 +94,20 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
         </div>
         
         <div className="flex-1">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+          <h3 className="text-lg md:text-2xl font-bold text-gray-900 mb-1">
             Enrollment Form
           </h3>
-          <p className="text-sm text-gray-600 font-medium">
-            Fill in your details to proceed with enrollment
+          <p className="text-xs md:text-sm text-gray-600 font-medium">
+            Fill in your details to proceed
           </p>
         </div>
       </div>
 
       {/* Form */}
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         {/* Name */}
         <div>
-          <label className="block text-sm font-bold text-gray-900 mb-2">
+          <label className="block text-xs md:text-sm font-bold text-gray-900 mb-1 md:mb-2">
             Full Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -115,7 +115,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
+            className="w-full px-3 py-2 md:px-4 md:py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base text-gray-900 bg-white font-medium"
             placeholder="Enter your name"
             required
           />
@@ -123,7 +123,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
 
         {/* Phone */}
         <div>
-          <label className="block text-sm font-bold text-gray-900 mb-2">
+          <label className="block text-xs md:text-sm font-bold text-gray-900 mb-1 md:mb-2">
             Phone Number <span className="text-red-500">*</span>
           </label>
           <input
@@ -131,7 +131,7 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
+            className="w-full px-3 py-2 md:px-4 md:py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base text-gray-900 bg-white font-medium"
             placeholder="+91 XXXXX XXXXX"
             required
           />
@@ -139,14 +139,14 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
 
         {/* Qualification */}
         <div>
-          <label className="block text-sm font-bold text-gray-900 mb-2">
+          <label className="block text-xs md:text-sm font-bold text-gray-900 mb-1 md:mb-2">
             Qualification
           </label>
           <select
             name="qualification"
             value={formData.qualification}
             onChange={handleChange}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
+            className="w-full px-3 py-2 md:px-4 md:py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base text-gray-900 bg-white font-medium"
           >
             <option value="">Select qualification</option>
             <option value="High School">High School</option>
@@ -162,32 +162,32 @@ ${formData.message || 'I am interested in enrolling for this course. Please prov
 
         {/* Message */}
         <div>
-          <label className="block text-sm font-bold text-gray-900 mb-2">
+          <label className="block text-xs md:text-sm font-bold text-gray-900 mb-1 md:mb-2">
             Message (Optional)
           </label>
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
-            rows={3}
-            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white font-medium"
-            placeholder="Any questions or additional information..."
+            rows={2}
+            className="w-full px-3 py-2 md:px-4 md:py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base text-gray-900 bg-white font-medium"
+            placeholder="Any questions..."
           />
         </div>
       </div>
 
       {/* Actions */}
-      <div className="mt-6 flex flex-col sm:flex-row gap-3">
+      <div className="mt-4 md:mt-6 flex flex-col gap-2 md:gap-3">
         <button
           onClick={handleWhatsAppSubmit}
-          className="btn-primary flex-1 justify-center"
+          className="btn-primary w-full justify-center text-sm md:text-base py-2.5 md:py-3"
         >
-          <MessageCircle className="w-5 h-5" />
+          <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
           <span>Send via WhatsApp</span>
         </button>
         <button
           onClick={onClose}
-          className="sm:w-auto px-6 py-3 border-2 border-gray-400 text-gray-700 font-bold rounded-lg hover:bg-gray-100 transition-colors"
+          className="w-full px-4 py-2 md:py-2.5 border-2 border-gray-400 text-gray-700 text-sm md:text-base font-bold rounded-lg hover:bg-gray-100 transition-colors"
         >
           Cancel
         </button>
