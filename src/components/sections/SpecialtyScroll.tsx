@@ -35,7 +35,7 @@ export default function SpecialtyScroll() {
   ];
 
   return (
-    <div className="w-full overflow-hidden bg-transparent py-4 md:py-6">
+    <div className="w-full overflow-hidden bg-transparent py-2 md:py-3">
       <div className="specialty-scroll-container">
         <div className="specialty-scroll-track-detailed">
           {/* Render items multiple times for seamless loop */}
