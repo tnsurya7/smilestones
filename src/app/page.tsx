@@ -1,7 +1,6 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
-import SpecialtyScroll from '@/components/sections/SpecialtyScroll';
 import About from '@/components/sections/About';
 import MissionVision from '@/components/sections/MissionVision';
 import Philosophy from '@/components/sections/Philosophy';
@@ -15,7 +14,6 @@ export default function Home() {
     <main>
       <Header />
       <Hero />
-      <SpecialtyScroll />
       <About />
       <MissionVision />
       <Philosophy />

@@ -2505,40 +2505,28 @@ html {
   width: 100%;
 }
 
-.specialty-scroll-track {
+.specialty-scroll-track-detailed {
   display: flex;
   gap: 1rem;
-  animation: scrollLeft 30s linear infinite;
+  animation: scrollLeftSeamless 40s linear infinite;
   width: fit-content;
 }
 
-.specialty-scroll-track:hover {
+@media (min-width: 768px) {
+  .specialty-scroll-track-detailed {
+    gap: 1.5rem;
+  }
+}
+
+.specialty-scroll-track-detailed:hover {
   animation-play-state: paused;
 }
 
-.specialty-card {
-  flex-shrink: 0;
-  padding: 0.5rem 1.25rem;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid #e2e8f0;
-  border-radius: 9999px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.specialty-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
-  border-color: #3b82f6;
-}
-
-@keyframes scrollLeft {
+@keyframes scrollLeftSeamless {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-33.333%));
   }
 }

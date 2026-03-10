@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Phone, MessageCircle, Calendar } from 'lucide-react';
+import SpecialtyScroll from './SpecialtyScroll';
 
 // Counter component for animated numbers
 const AnimatedCounter = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
@@ -405,6 +406,16 @@ const Hero = () => {
             </motion.div>
           </motion.div>
         </div>
+        
+        {/* Specialty Scroll Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          className="mt-8 md:mt-12 lg:mt-16"
+        >
+          <SpecialtyScroll />
+        </motion.div>
       </div>
     </section>
   );
