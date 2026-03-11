@@ -108,12 +108,12 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 py-2 md:py-4 lg:py-8 relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16">
-          {/* Left content */}
+          {/* Heading and Description - Order 1 on mobile */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center lg:text-left space-y-4 md:space-y-6 lg:space-y-8 order-1"
+            className="text-center lg:text-left space-y-3 md:space-y-4 lg:space-y-6 order-1 lg:col-span-1"
           >
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -142,153 +142,14 @@ const Hero = () => {
             >
               Professional child development centre providing evidence-based therapy and support for children with developmental needs.
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col lg:grid lg:grid-cols-2 gap-2 md:gap-3 lg:gap-4 items-center lg:items-start"
-            >
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -2 }} 
-                whileTap={{ scale: 0.95 }}
-                className="premium-btn-wrapper w-full"
-              >
-                <Link href="/registration" className="premium-gradient-btn primary text-xs md:text-sm py-2 md:py-3 w-full justify-center">
-                  <Calendar size={16} className="btn-icon md:w-5 md:h-5" />
-                  <span className="btn-text">Book Registration</span>
-                  <div className="btn-gradient-overlay"></div>
-                  <div className="btn-glow-effect"></div>
-                </Link>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -2 }} 
-                whileTap={{ scale: 0.95 }}
-                className="premium-btn-wrapper w-full"
-              >
-                <Link href="/programs" className="premium-gradient-btn primary text-xs md:text-sm py-2 md:py-3 w-full justify-center">
-                  <Calendar size={16} className="btn-icon md:w-5 md:h-5" />
-                  <span className="btn-text">View Courses</span>
-                  <div className="btn-gradient-overlay"></div>
-                  <div className="btn-glow-effect"></div>
-                </Link>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -2 }} 
-                whileTap={{ scale: 0.95 }}
-                className="premium-btn-wrapper w-full"
-              >
-                <a 
-                  href="tel:+919445051166" 
-                  onClick={handleCallClick}
-                  className={`premium-gradient-btn secondary blue text-xs md:text-sm py-2 md:py-3 w-full justify-center ${!isWithinBusinessHours() ? 'opacity-75' : ''}`}
-                >
-                  <Phone size={16} className="btn-icon md:w-5 md:h-5" />
-                  <span className="btn-text">{isWithinBusinessHours() ? 'Call Now' : 'Call (Closed)'}</span>
-                  <div className="btn-gradient-overlay"></div>
-                  <div className="btn-glow-effect"></div>
-                </a>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -2 }} 
-                whileTap={{ scale: 0.95 }}
-                className="premium-btn-wrapper w-full"
-              >
-                <a 
-                  href="https://wa.me/919445051166" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="premium-gradient-btn secondary green text-xs md:text-sm py-2 md:py-3 w-full justify-center"
-                >
-                  <MessageCircle size={16} className="btn-icon md:w-5 md:h-5" />
-                  <span className="btn-text">WhatsApp</span>
-                  <div className="btn-gradient-overlay"></div>
-                  <div className="btn-glow-effect"></div>
-                </a>
-              </motion.div>
-            </motion.div>
-
-            {/* Statistics cards - Mobile only */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="w-full lg:hidden"
-            >
-              <div className="grid grid-cols-3 gap-2 md:gap-3">
-                <motion.div 
-                  className="universal-card text-center p-2 md:p-3"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={1500} suffix="+" />
-                  </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Children Screened</div>
-                </motion.div>
-                <motion.div 
-                  className="universal-card text-center p-2 md:p-3"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={600} suffix="+" />
-                  </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Autism Managed</div>
-                </motion.div>
-                <motion.div 
-                  className="universal-card text-center p-2 md:p-3"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={600} suffix="+" />
-                  </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Parents Trained</div>
-                </motion.div>
-                <motion.div 
-                  className="universal-card text-center p-2 md:p-3"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={1000} suffix="+" />
-                  </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Newborn Followup</div>
-                </motion.div>
-                <motion.div 
-                  className="universal-card text-center p-2 md:p-3"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={12} suffix="+" />
-                  </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Pediatrician Workshops</div>
-                </motion.div>
-                <motion.div 
-                  className="universal-card text-center p-2 md:p-3"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-0.5">
-                    <AnimatedCounter value={700} suffix="+" />
-                  </div>
-                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Teacher Trained</div>
-                </motion.div>
-              </div>
-            </motion.div>
           </motion.div>
 
-          {/* Right content - Premium founder card */}
+          {/* Doctor Card - Order 2 on mobile, appears in right column on desktop */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative float-element order-4 lg:order-3 space-y-4"
+            className="relative float-element order-2 lg:row-span-2 space-y-4"
           >
             <motion.div 
               className="universal-card p-4 md:p-6 lg:p-8 text-center relative overflow-hidden"
@@ -405,6 +266,146 @@ const Hero = () => {
               </motion.div>
             </motion.div>
           </motion.div>
+
+          {/* Buttons - Order 3 on mobile */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col lg:grid lg:grid-cols-2 gap-2 md:gap-3 lg:gap-4 items-center lg:items-start order-3 lg:col-span-1"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }} 
+              whileTap={{ scale: 0.95 }}
+              className="premium-btn-wrapper w-full"
+            >
+              <Link href="/registration" className="premium-gradient-btn primary text-xs md:text-sm py-2 md:py-3 w-full justify-center">
+                <Calendar size={16} className="btn-icon md:w-5 md:h-5" />
+                <span className="btn-text">Book Registration</span>
+                <div className="btn-gradient-overlay"></div>
+                <div className="btn-glow-effect"></div>
+              </Link>
+            </motion.div>
+            
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }} 
+              whileTap={{ scale: 0.95 }}
+              className="premium-btn-wrapper w-full"
+            >
+              <Link href="/programs" className="premium-gradient-btn primary text-xs md:text-sm py-2 md:py-3 w-full justify-center">
+                <Calendar size={16} className="btn-icon md:w-5 md:h-5" />
+                <span className="btn-text">View Courses</span>
+                <div className="btn-gradient-overlay"></div>
+                <div className="btn-glow-effect"></div>
+              </Link>
+            </motion.div>
+            
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }} 
+              whileTap={{ scale: 0.95 }}
+              className="premium-btn-wrapper w-full"
+            >
+              <a 
+                href="tel:+919445051166" 
+                onClick={handleCallClick}
+                className={`premium-gradient-btn secondary blue text-xs md:text-sm py-2 md:py-3 w-full justify-center ${!isWithinBusinessHours() ? 'opacity-75' : ''}`}
+              >
+                <Phone size={16} className="btn-icon md:w-5 md:h-5" />
+                <span className="btn-text">{isWithinBusinessHours() ? 'Call Now' : 'Call (Closed)'}</span>
+                <div className="btn-gradient-overlay"></div>
+                <div className="btn-glow-effect"></div>
+              </a>
+            </motion.div>
+            
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }} 
+              whileTap={{ scale: 0.95 }}
+              className="premium-btn-wrapper w-full"
+            >
+              <a 
+                href="https://wa.me/919445051166" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="premium-gradient-btn secondary green text-xs md:text-sm py-2 md:py-3 w-full justify-center"
+              >
+                <MessageCircle size={16} className="btn-icon md:w-5 md:h-5" />
+                <span className="btn-text">WhatsApp</span>
+                <div className="btn-gradient-overlay"></div>
+                <div className="btn-glow-effect"></div>
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* Statistics cards - Mobile only, Order 4 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="w-full lg:hidden order-4 lg:col-span-1"
+          >
+              <div className="grid grid-cols-3 gap-2 md:gap-3">
+                <motion.div 
+                  className="universal-card text-center p-2 md:p-3"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-0.5">
+                    <AnimatedCounter value={1500} suffix="+" />
+                  </div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Children Screened</div>
+                </motion.div>
+                <motion.div 
+                  className="universal-card text-center p-2 md:p-3"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent mb-0.5">
+                    <AnimatedCounter value={600} suffix="+" />
+                  </div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Autism Managed</div>
+                </motion.div>
+                <motion.div 
+                  className="universal-card text-center p-2 md:p-3"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-0.5">
+                    <AnimatedCounter value={600} suffix="+" />
+                  </div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Parents Trained</div>
+                </motion.div>
+                <motion.div 
+                  className="universal-card text-center p-2 md:p-3"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent mb-0.5">
+                    <AnimatedCounter value={1000} suffix="+" />
+                  </div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Newborn Followup</div>
+                </motion.div>
+                <motion.div 
+                  className="universal-card text-center p-2 md:p-3"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-0.5">
+                    <AnimatedCounter value={12} suffix="+" />
+                  </div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Pediatrician Workshops</div>
+                </motion.div>
+                <motion.div 
+                  className="universal-card text-center p-2 md:p-3"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-lg md:text-xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-0.5">
+                    <AnimatedCounter value={700} suffix="+" />
+                  </div>
+                  <div className="text-[8px] md:text-[10px] text-gray-600 leading-tight">Teacher Trained</div>
+                </motion.div>
+              </div>
+            </motion.div>
         </div>
         
         {/* Specialty Scroll Cards */}
