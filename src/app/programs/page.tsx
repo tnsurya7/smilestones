@@ -37,7 +37,7 @@ export default function CoursesPage() {
           </div>
           
           {/* Program Images */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto mb-6">
             <div className="bg-gray-100 rounded-lg overflow-hidden">
               <img 
                 src="/7287a954-7940-49f6-9cca-4db37db0b942.jpg" 
@@ -53,11 +53,27 @@ export default function CoursesPage() {
               />
             </div>
           </div>
+
+          {/* Batch Information */}
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center">
+              <div className="inline-block bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-full shadow-lg">
+                <p className="text-lg md:text-xl font-bold">
+                  (Batch 8) Started
+                </p>
+              </div>
+              <div className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg">
+                <p className="text-lg md:text-xl font-bold">
+                  Next Batch Starting in May
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ABAT Course Details */}
-      <section className="py-12 md:py-20 section-gradient">
+      <section className="-mt-8 pb-12 md:-mt-12 md:pb-20 section-gradient">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             {/* Main Course Card */}
