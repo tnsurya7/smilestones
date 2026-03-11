@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Philosophy = () => {
   return (
-    <section className="py-12 md:py-20 bg-white">
+    <section className="-mt-4 py-6 md:-mt-6 md:py-8 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h2 

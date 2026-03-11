@@ -64,7 +64,7 @@ export default function CoursesPage() {
               </div>
               <div className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg">
                 <p className="text-lg md:text-xl font-bold">
-                  Next Batch Starting in May
+                  Next Batch Starting in May 2026
                 </p>
               </div>
             </div>

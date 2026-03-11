@@ -25,7 +25,7 @@ export default function AboutPage() {
       </div>
 
       {/* About Hero */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className="py-6 md:py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
@@ -39,7 +39,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-12 md:py-20 section-gradient">
+      <section className="-mt-24 py-8 md:-mt-32 md:py-12 section-gradient">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <div className="universal-card p-6 md:p-8 hover-card-effect hover-card-blue">
@@ -59,7 +59,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Philosophy */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className="-mt-8 py-6 md:-mt-12 md:py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8">Our Philosophy</h2>
@@ -79,7 +79,7 @@ export default function AboutPage() {
       <Services />
 
       {/* Leadership */}
-      <section className="py-12 md:py-20 section-gradient">
+      <section className="-mt-8 py-6 md:-mt-12 md:py-8 section-gradient">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">Leadership</h2>
@@ -114,7 +114,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Approach */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className="-mt-8 py-6 md:-mt-12 md:py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">Our Approach</h2>

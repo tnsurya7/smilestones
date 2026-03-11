@@ -38,7 +38,7 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="-mt-4 py-8 md:-mt-6 md:py-12 bg-white">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <motion.div

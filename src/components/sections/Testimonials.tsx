@@ -24,7 +24,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-20 section-bg-gradient">
+    <section className="-mt-4 py-6 md:-mt-6 md:py-8 section-bg-gradient">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <motion.div

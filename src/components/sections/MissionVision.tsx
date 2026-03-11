@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const MissionVision = () => {
   return (
-    <section className="py-12 md:py-20 section-gradient">
+    <section className="-mt-4 py-6 md:-mt-6 md:py-8 section-gradient">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <motion.div 

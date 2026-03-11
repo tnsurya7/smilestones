@@ -5,7 +5,7 @@ import { Microscope, Users, Target } from 'lucide-react';
 
 const OurApproach = () => {
   return (
-    <section className="py-12 md:py-20 section-gradient">
+    <section className="-mt-4 py-6 md:-mt-6 md:py-8 section-gradient">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 md:mb-16">
           <motion.h2 
