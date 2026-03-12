@@ -4,14 +4,14 @@ import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, Youtube } fr
 const Footer = () => {
   const branches = [
     {
-      name: 'Chennai - Anna Nagar',
-      address: 'W-629, West Gate Road, Opp SBOA JC West Gate, D-Sector, Syndicate Bank colony, Anna nagar West extension, Chennai, Tamil Nadu 600101',
+      name: 'Chennai - Trustpuram',
+      address: 'No 35, Puliyur 2nd main road, Trustpuram, Chennai, Tamil Nadu 600024',
       phone: '+91 9445051166',
     },
     {
-      name: 'Chennai - Trustpuram',
-      address: 'No 35, Puliyur 2nd main road, Trustpuram, Chennai, Tamil Nadu 600024',
-      phone: '+91 8300230491',
+      name: 'Chennai - Anna Nagar',
+      address: 'W-629, West Gate Road, Opp SBOA JC West Gate, D-Sector, Syndicate Bank colony, Anna nagar West extension, Chennai, Tamil Nadu 600101',
+      phone: '+91 9445051166',
     },
     {
       name: 'Puducherry',
